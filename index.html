@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CV Generator · PDF Export</title>
+  <title>CV Generator · Direct PDF Download</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
-  <!-- html2pdf.js library: robust client-side PDF generation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -143,9 +143,12 @@
     .btn:hover { background: var(--ink); color: #fff; }
     .btn.primary { background: var(--ink); color: #fff; }
     .btn.primary:hover { background: #333; }
-    .btn:active { transform: translateY(0.5px); }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
 
-    /* ══ CV PAGE (exact print-ready layout) ══ */
+    /* ══ CV PAGE ══ */
     #cv-output { display: none; width: 100%; flex-direction: column; align-items: center; }
 
     .page {
@@ -218,6 +221,8 @@
       justify-content: space-between;
       align-items: baseline;
       margin-bottom: 4px;
+      flex-wrap: wrap;
+      gap: 6px;
     }
     .exp-title { font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; }
     .exp-date { font-family: var(--font-mono); font-size: 8px; color: var(--ink-muted); white-space: nowrap; }
@@ -243,6 +248,8 @@
       justify-content: space-between;
       align-items: baseline;
       margin-bottom: 5px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .edu-degree { font-family: var(--font-mono); font-size: 9px; font-weight: 600; }
     .edu-inst { font-size: 8px; color: var(--ink-muted); margin-top: 1px; }
@@ -257,7 +264,7 @@
     }
     .cv-footer span { font-family: var(--font-mono); font-size: 7px; color: var(--rule); letter-spacing: .08em; }
 
-    /* ══ LOADER NOTIFICATION ══ */
+    /* Toast notification */
     .pdf-toast {
       position: fixed;
       bottom: 24px;
@@ -275,7 +282,6 @@
       pointer-events: none;
       z-index: 1000;
       white-space: nowrap;
-      backdrop-filter: blur(4px);
       background: rgba(0,0,0,0.85);
     }
     .pdf-toast.show {
@@ -283,31 +289,26 @@
       transform: translateX(-50%) scale(1);
     }
 
-    @media print {
-      /* keep print hidden because we use direct download only */
-      body { background: none; }
-      .toolbar, #upload-screen, .pdf-toast { display: none !important; }
-    }
     @media (max-width: 640px) {
       .page { padding: 20px; }
       .cv-header { flex-direction: column; align-items: flex-start; }
       .cv-contact { align-items: flex-start; }
       .toolbar { justify-content: center; }
+      .pdf-toast { white-space: normal; width: 90%; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-<!-- minimalist toast -->
-<div id="pdf-toast" class="pdf-toast">📄 Generating PDF, please wait...</div>
+<div id="pdf-toast" class="pdf-toast">📄 Ready</div>
 
-<!-- ══ UPLOAD SCREEN ══ -->
+<!-- UPLOAD SCREEN -->
 <div id="upload-screen">
   <div>
-    <div class="upload-heading">CV Generator · PDF Export</div>
+    <div class="upload-heading">CV Generator · Direct PDF</div>
     <p class="upload-sub">
       Drop your <code style="font-size:12px">.json</code> file below — or paste raw JSON —<br/>
-      instantly generate & <strong>download PDF file</strong> (no printer dialog).
+      instantly generate & <strong>download PDF file directly</strong>.
     </p>
   </div>
 
@@ -324,143 +325,158 @@
 
   <span class="or-divider">— or paste JSON directly —</span>
 
-  <textarea class="paste-area" id="json-paste"
-    placeholder='{ "personal_information": { "full_name": "Your Name", ... }, "technical_skills": {...}, "work_experience": [...], "education": [...] }'></textarea>
+  <textarea class="paste-area" id="json-paste"></textarea>
 
   <span class="error-msg" id="error-msg">⚠ Invalid JSON — please check your file and try again.</span>
 
   <button class="btn primary" onclick="handlePaste()" style="align-self:stretch;padding:12px;">
-    Generate CV & Download PDF →
+    Generate CV →
   </button>
 
   <p style="font-family:var(--font-mono);font-size:9px;color:var(--ink-muted);text-align:center;line-height:2;">
-    Expects the same JSON structure as <code>anh_hao_nguyen_cv_data.json</code><br/>
-    All data stays in your browser — nothing is sent anywhere. PDF is generated client-side.
+    All data stays in your browser — nothing is sent anywhere.<br/>
+    Click "Download PDF" after generating to save your CV.
   </p>
 </div>
 
-<!-- ══ CV OUTPUT (preview + download controller) ══ -->
+<!-- CV OUTPUT -->
 <div id="cv-output">
   <div class="toolbar">
-    <button class="btn primary" id="save-pdf-btn">📎 Export as PDF (file)</button>
+    <button class="btn primary" id="download-pdf-btn">⬇ Download PDF</button>
     <button class="btn" onclick="resetApp()">↩ Load new JSON</button>
   </div>
   <div class="page" id="cv-page"></div>
 </div>
 
 <script>
-  // --------------------------------------------------------------
-  //  PDF GENERATION via html2pdf (direct file download, no print)
-  // --------------------------------------------------------------
-  let currentCVData = null;        // store latest valid CV data
-  let currentNameForFile = "CV";
+  let currentCVData = null;
+  let isGeneratingPDF = false;
 
-  // Show temporary toast message
-  function showToast(message, duration = 1800) {
+  function showToast(message, duration = 2000) {
     const toast = document.getElementById('pdf-toast');
-    toast.textContent = message || "📄 Generating PDF...";
+    toast.textContent = message;
     toast.classList.add('show');
     setTimeout(() => {
       toast.classList.remove('show');
     }, duration);
   }
 
-  // generate and force-download PDF file from the current CV preview element
-  async function downloadCVAsPDF() {
-    const cvElement = document.getElementById('cv-page');
-    if (!cvElement || !currentCVData) {
+  async function downloadPDF() {
+    if (!currentCVData) {
       showToast("⚠️ No CV loaded. Please generate a CV first.", 2000);
       return;
     }
 
-    // brief loading feedback
-    showToast("📑 Creating PDF document, please wait...", 2500);
-    
-    // Prepare filename: "FirstName_LastName_CV.pdf" fallback
-    let fileName = "CV_Document.pdf";
+    if (isGeneratingPDF) {
+      showToast("⏳ PDF generation in progress...", 1500);
+      return;
+    }
+
+    const element = document.getElementById('cv-page');
+    if (!element || !element.innerHTML.trim()) {
+      showToast("⚠️ CV content is empty. Please regenerate.", 2000);
+      return;
+    }
+
+    isGeneratingPDF = true;
+    const downloadBtn = document.getElementById('download-pdf-btn');
+    const originalBtnText = downloadBtn.textContent;
+    downloadBtn.textContent = '⏳ Generating...';
+    downloadBtn.disabled = true;
+
+    showToast("📑 Rendering PDF, please wait...", 3000);
+
     try {
+      // Get filename
+      let fileName = "CV_Document.pdf";
       const personal = currentCVData.personal_information || {};
       const fullName = (personal.full_name || "").trim();
       if (fullName) {
         const safeName = fullName.replace(/[^a-z0-9]/gi, '_').substring(0, 40);
         fileName = `${safeName}_CV.pdf`;
-      } else {
-        fileName = "generated_cv.pdf";
       }
-    } catch(e) { fileName = "cv_export.pdf"; }
 
-    // html2pdf configuration: A4 portrait, high quality, no printer prompt
-    const opt = {
-      margin:        [0, 0, 0, 0],     // no extra margin (the .page already has inner padding)
-      filename:      fileName,
-      image:         { type: 'jpeg', quality: 0.98 },
-      html2canvas:   { scale: 2, letterRendering: true, useCORS: false, logging: false },
-      jsPDF:         { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-    
-    // Clone the .page element to avoid any live style modifications & ensure full rendering
-    const originalPage = document.getElementById('cv-page');
-    const cloneContainer = document.createElement('div');
-    cloneContainer.style.position = 'absolute';
-    cloneContainer.style.top = '-9999px';
-    cloneContainer.style.left = '-9999px';
-    cloneContainer.style.width = '210mm';
-    cloneContainer.style.background = '#fff';
-    cloneContainer.appendChild(originalPage.cloneNode(true));
-    document.body.appendChild(cloneContainer);
-    
-    // Ensure cloned element has exact same styling & proper dimensions
-    const clonedPage = cloneContainer.querySelector('.page');
-    if (clonedPage) {
-      clonedPage.style.margin = '0';
-      clonedPage.style.boxShadow = 'none';
-      clonedPage.style.padding = '14mm';   // keep consistency
-    }
-    
-    try {
-      // Use html2pdf from the global library
-      await html2pdf().set(opt).from(cloneContainer).save();
-      showToast("✅ PDF exported successfully!", 1500);
-    } catch (err) {
-      console.error("PDF generation error:", err);
-      showToast("❌ PDF error: " + (err.message || "unknown"), 2500);
+      // Create a high-quality canvas
+      const canvas = await html2canvas(element, {
+        scale: 3,
+        backgroundColor: '#ffffff',
+        logging: false,
+        useCORS: false,
+        allowTaint: false,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight
+      });
+
+      const imgData = canvas.toDataURL('image/jpeg', 1.0);
+      const { jsPDF } = window.jspdf;
+      
+      // Calculate dimensions for A4 (210mm x 297mm)
+      const imgWidth = 210; // mm
+      const pageHeight = 297; // mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
+      let pdf = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      
+      // Add first page
+      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+      
+      // Add more pages if content exceeds one page
+      let heightLeft = imgHeight - pageHeight;
+      let pageNum = 1;
+      
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        pageNum++;
+      }
+      
+      // Save the PDF
+      pdf.save(fileName);
+      showToast(`✅ PDF saved as "${fileName}"`, 2500);
+      
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      showToast("❌ PDF generation failed. Please try again.", 3000);
     } finally {
-      // remove temporary clone
-      document.body.removeChild(cloneContainer);
+      isGeneratingPDF = false;
+      downloadBtn.textContent = originalBtnText;
+      downloadBtn.disabled = false;
     }
   }
 
-  // --------------------------------------------------------------
-  // RENDER CV FROM JSON (same visual engine, stores currentCVData)
-  // --------------------------------------------------------------
-  function renderCV(d) {
-    currentCVData = d;  // store for later PDF export
-    const p      = d.personal_information ?? {};
-    const skills = d.technical_skills ?? {};
-    const jobs   = d.work_experience ?? [];
-    const edu    = d.education ?? [];
-    const name   = p.full_name ?? 'Your Name';
-    currentNameForFile = name;
+  function esc(s) {
+    return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
 
-    /* Skills helper */
+  function renderCV(d) {
+    currentCVData = d;
+    const p = d.personal_information ?? {};
+    const skills = d.technical_skills ?? {};
+    const jobs = d.work_experience ?? [];
+    const edu = d.education ?? [];
+    const name = p.full_name || 'Your Name';
+
     function skillRow(label, arr) {
       if (!arr?.length) return '';
       return `<span class="sk-label">${esc(label)}</span><span class="sk-value">${arr.map(esc).join(', ')}</span>`;
     }
+
     const skillsHTML = [
-      skillRow('Languages',         skills.programming_languages),
-      skillRow('Frameworks',        skills.frameworks_and_libraries),
-      skillRow('Styling',           skills.styling),
+      skillRow('Languages', skills.programming_languages),
+      skillRow('Frameworks', skills.frameworks_and_libraries),
+      skillRow('Styling', skills.styling),
       skillRow('Tooling & Testing', skills.tooling_and_testing),
-      skillRow('Database',          skills.database),
-      skillRow('Other',             skills.other_technologies),
+      skillRow('Database', skills.database),
+      skillRow('Other', skills.other_technologies),
     ].filter(Boolean).join('');
 
-    /* Experience */
     const expHTML = jobs.map(job => {
       const items = job.key_achievements ?? job.responsibilities ?? [];
       const bullets = items.map(item => {
-        let text = typeof item === 'string' ? item : (item.achievement ?? '');
+        let text = typeof item === 'string' ? item : (item.achievement || '');
         if (typeof item === 'object' && item.method) text += ' ' + item.method;
         return `<li>${esc(text)}</li>`;
       }).join('');
@@ -472,14 +488,13 @@
         <div class="exp-entry">
           <div class="exp-header">
             <span class="exp-title">${esc(job.position)} — ${esc(job.company)}</span>
-            <span class="exp-date">${esc(job.duration ?? '')}</span>
+            <span class="exp-date">${esc(job.duration || '')}</span>
           </div>
           <ul class="exp-bullets">${bullets}</ul>
           ${techLine}
         </div>`;
     }).join('');
 
-    /* Education */
     const eduHTML = edu.map(e => `
       <div class="edu-entry">
         <div>
@@ -487,26 +502,22 @@
           <div class="edu-inst">${esc(e.institution)}${e.location ? ', ' + esc(e.location) : ''}</div>
         </div>
         <div class="edu-right">
-          <div class="edu-date">${esc(e.duration ?? '')}</div>
-          ${e.grade ? `<div class="edu-grade">GPA: ${esc(e.grade)}</div>` : ''}
+          <div class="edu-date">${esc(e.duration || '')}</div>
+          ${e.grade ? `<div class="edu-grade">${esc(e.grade)}</div>` : ''}
         </div>
       </div>`).join('');
 
-    /* Contact */
     const contactHTML = [
       p.location ? `<span class="loc">${esc(p.location)}</span>` : '',
-      p.phone    ? `<span>${esc(p.phone)}</span>` : '',
-      p.email    ? `<a href="mailto:${esc(p.email)}">${esc(p.email)}</a>` : '',
-      p.github   ? `<a href="https://${esc(p.github)}" target="_blank">${esc(p.github)}</a>` : '',
+      p.phone ? `<span>${esc(p.phone)}</span>` : '',
+      p.email ? `<a href="mailto:${esc(p.email)}">${esc(p.email)}</a>` : '',
+      p.github ? `<a href="https://${esc(p.github)}" target="_blank">${esc(p.github)}</a>` : '',
       p.linkedin ? `<a href="https://${esc(p.linkedin)}" target="_blank">${esc(p.linkedin)}</a>` : '',
-      p.website  ? `<a href="${esc(p.website)}" target="_blank">${esc(p.website)}</a>` : '',
+      p.website ? `<a href="${esc(p.website)}" target="_blank">${esc(p.website)}</a>` : '',
     ].filter(Boolean).join('');
 
-    const role = esc(
-      d.professional_summary?.current_role ?? d.metadata?.career_stage ?? ''
-    ).toUpperCase();
+    const role = esc(d.professional_summary?.current_role || d.metadata?.career_stage || '').toUpperCase();
 
-    // Insert into DOM
     document.getElementById('cv-page').innerHTML = `
       <header class="cv-header">
         <div class="cv-name">${esc(name)}</div>
@@ -514,7 +525,7 @@
       </header>
 
       ${skillsHTML ? `<section class="section">
-        <div class="section-title">Skills</div>
+        <div class="section-title">Technical Skills</div>
         <div class="skills-grid">${skillsHTML}</div>
       </section>` : ''}
 
@@ -533,35 +544,24 @@
         <span>${role}</span>
       </div>`;
 
-    // Show output panel
-    const out = document.getElementById('cv-output');
-    out.style.display = 'flex';
+    document.getElementById('cv-output').style.display = 'flex';
     document.getElementById('upload-screen').style.display = 'none';
+    
+    showToast("✓ CV generated! Click 'Download PDF' to save.", 2000);
   }
-
-  // --------------------------------------------------------------
-  // Input & JSON processing
-  // --------------------------------------------------------------
-  const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
   function processJSON(raw) {
     const errEl = document.getElementById('error-msg');
     try {
       const data = JSON.parse(raw);
-      // basic validation: at least personal_information is object? but we accept any valid json.
-      if (data && typeof data === 'object') {
-        errEl.classList.remove('visible');
-        renderCV(data);
-      } else {
-        throw new Error('Invalid CV object');
-      }
+      errEl.classList.remove('visible');
+      renderCV(data);
     } catch (e) {
       errEl.classList.add('visible');
-      console.warn(e);
+      console.error(e);
     }
   }
 
-  // File upload handling
   function readFile(file) {
     const r = new FileReader();
     r.onload = e => processJSON(e.target.result);
@@ -570,14 +570,11 @@
 
   function handlePaste() {
     const raw = document.getElementById('json-paste').value.trim();
-    if (raw) processJSON(raw);
-    else {
+    if (raw) {
+      processJSON(raw);
+    } else {
       document.getElementById('error-msg').classList.add('visible');
-      document.getElementById('error-msg').textContent = "⚠️ Please paste JSON data first.";
-      setTimeout(() => {
-        if(document.getElementById('error-msg').textContent.includes("paste")) 
-          document.getElementById('error-msg').classList.remove('visible');
-      }, 2000);
+      showToast("⚠️ Please paste JSON data first", 2000);
     }
   }
 
@@ -587,49 +584,28 @@
     document.getElementById('json-paste').value = '';
     if(fileInput) fileInput.value = '';
     currentCVData = null;
-    const errEl = document.getElementById('error-msg');
-    errEl.classList.remove('visible');
+    document.getElementById('error-msg').classList.remove('visible');
   }
 
-  // Drag & Drop setup
-  const dropZone  = document.getElementById('drop-zone');
+  // Drag & drop handlers
+  const dropZone = document.getElementById('drop-zone');
   const fileInput = document.getElementById('json-file-input');
 
   dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-  dropZone.addEventListener('dragleave', ()  => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
   dropZone.addEventListener('drop', e => {
-    e.preventDefault(); dropZone.classList.remove('drag-over');
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
     if (e.dataTransfer.files[0]) readFile(e.dataTransfer.files[0]);
   });
   fileInput.addEventListener('change', () => { if (fileInput.files[0]) readFile(fileInput.files[0]); });
 
-  // Attach PDF download event listener dynamically after DOM ready
-  document.addEventListener('DOMContentLoaded', () => {
-    const exportBtn = document.getElementById('save-pdf-btn');
-    if (exportBtn) {
-      exportBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (!currentCVData) {
-          showToast("⚠️ No CV loaded. Please generate a CV first.", 2000);
-          return;
-        }
-        downloadCVAsPDF();
-      });
-    }
-  });
+  // PDF download button
+  document.getElementById('download-pdf-btn').addEventListener('click', downloadPDF);
   
-  // Also handle when generate button & direct generation: we attach default event
-  // Ensure that after paste/generation, PDF button works.
-  // Expose helper to window for inline calls
+  // Expose functions globally
   window.handlePaste = handlePaste;
   window.resetApp = resetApp;
-  window.processJSON = processJSON;
-  window.readFile = readFile;
-  
-  // additional friendly helper: if "Generate CV →" button in upload calls handlePaste, already defined.
-  // Add secondary protection: also link the paste action to process valid json.
-  const generateBtn = document.querySelector('.btn.primary[onclick="handlePaste()"]');
-  if (generateBtn) generateBtn.onclick = (e) => { handlePaste(); };
 </script>
 </body>
 </html>
