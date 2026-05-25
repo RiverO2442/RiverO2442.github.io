@@ -1,0 +1,234 @@
+{
+  "personal_information": {
+    "full_name": "Anh Hao Nguyen",
+    "location": "Lincoln, England",
+    "phone": "07704591076",
+    "email": "nguyen.anhhao.840@gmail.com",
+    "github": "github.com/RiverO2442"
+  },
+  "professional_summary": {
+    "current_role": "Front-end Developer",
+    "total_experience_years": 3,
+    "specializations": [
+      "React.js development",
+      "Micro front-end architecture",
+      "Cross-platform development (React Native)",
+      "Performance optimization",
+      "Testing and quality assurance"
+    ]
+  },
+  "technical_skills": {
+    "programming_languages": [
+      "JavaScript (ES6+)",
+      "TypeScript",
+      "Python"
+    ],
+    "frameworks_and_libraries": [
+      "React.js",
+      "Vue.js",
+      "Angular",
+      "React Native",
+      "Redux",
+      "React Query"
+    ],
+    "styling": [
+      "HTML5",
+      "SASS",
+      "LESS",
+      "Tailwind CSS",
+      "React Bootstrap",
+      "Ant Design"
+    ],
+    "tooling_and_testing": [
+      "NPM",
+      "Yarn",
+      "Webpack",
+      "Vite",
+      "Jest",
+      "Vitest",
+      "React Testing Library"
+    ],
+    "database": [
+      "MySQL"
+    ],
+    "other_technologies": [
+      "RESTful APIs",
+      "React-i18next (internationalization)",
+      "AI-assisted development tools (Cursor, GitHub Copilot)"
+    ]
+  },
+  "work_experience": [
+    {
+      "position": "Front-end Developer",
+      "company": "VETC",
+      "location": null,
+      "duration": "March 2024 - Jan 2025",
+      "duration_months": 11,
+      "key_achievements": [
+        {
+          "achievement": "Reduced average feature implementation time by ~25%",
+          "method": "Integrating AI-assisted development tools (Cursor, GitHub Copilot) into the team workflow for spec parsing, code generation, and debugging",
+          "impact": "25% time reduction",
+          "category": "productivity"
+        },
+        {
+          "achievement": "Increased test coverage by 30%",
+          "method": "Using Jest and Vitest",
+          "impact": "Reduced production regressions by 15% across core modules",
+          "category": "quality_assurance"
+        },
+        {
+          "achievement": "Improved data consistency and reduced integration issues",
+          "method": "Collaborated cross-functionally with backend engineers and BA teams to design scalable API flows",
+          "impact": "Better integration quality",
+          "category": "collaboration"
+        },
+        {
+          "achievement": "Improved mobile user experience and code reuse",
+          "method": "Developed cross-platform features using React Native",
+          "impact": "Cross-platform code reuse",
+          "category": "development"
+        },
+        {
+          "achievement": "Enabled multi-language support and expanded product accessibility",
+          "method": "Implemented internationalization using React-i18next",
+          "impact": "Multi-language support",
+          "category": "accessibility"
+        },
+        {
+          "achievement": "Enabled modular development, independent deployments, and faster feature delivery",
+          "method": "Developed and contributed to a micro front-end architecture",
+          "impact": "Faster delivery across teams",
+          "category": "architecture"
+        }
+      ],
+      "technologies_used": [
+        "React",
+        "React Query",
+        "React Bootstrap",
+        "Jest",
+        "React Testing Library"
+      ],
+      "responsibilities": [
+        "Feature development with AI-assisted tools",
+        "Test implementation and coverage improvement",
+        "Cross-functional collaboration with backend and BA teams",
+        "Cross-platform mobile development",
+        "Internationalization implementation",
+        "Micro front-end architecture development"
+      ]
+    },
+    {
+      "position": "Front-end Developer",
+      "company": "Unicloud",
+      "location": null,
+      "duration": "Jan 2022 - Dec 2023",
+      "duration_months": 24,
+      "key_achievements": [
+        {
+          "achievement": "Developed and maintained a web-based banking platform",
+          "method": "Used by external partner banks",
+          "impact": "Production banking platform",
+          "category": "development"
+        }
+      ],
+      "technologies_used": [
+        "React",
+        "Redux",
+        "Ant Design",
+        "REST APIs"
+      ],
+      "responsibilities": [
+        "Developed and maintained web-based banking platform used by external partner banks",
+        "Built responsive and reusable React components for dashboards, forms, and data visualisation",
+        "Integrated frontend applications with RESTful APIs to display real-time financial data",
+        "Focused on performance, usability, and cross-browser compatibility in production environment"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "MSc Computer Science",
+      "institution": "University of Lincoln",
+      "location": "Lincoln, England",
+      "duration": "Jan 2025 - April 2026",
+      "status": "In Progress",
+      "grade": "Distinction",
+      "graduation_year": 2026
+    },
+    {
+      "degree": "B.E in Software Engineering",
+      "institution": "University of Information Technology",
+      "location": null,
+      "duration": "Aug 2018 - Jun 2022",
+      "status": "Completed",
+      "grade": "1st",
+      "graduation_year": 2022
+    }
+  ],
+  "key_competencies": [
+    {
+      "competency": "Frontend Development",
+      "evidence": [
+        "3 years professional experience",
+        "Multiple framework expertise (React, Vue, Angular)",
+        "Production banking platform development"
+      ]
+    },
+    {
+      "competency": "Testing & Quality Assurance",
+      "evidence": [
+        "30% increase in test coverage",
+        "15% reduction in production regressions",
+        "Jest, Vitest, React Testing Library experience"
+      ]
+    },
+    {
+      "competency": "Performance Optimization",
+      "evidence": [
+        "25% reduction in feature implementation time",
+        "Focus on performance and cross-browser compatibility"
+      ]
+    },
+    {
+      "competency": "Cross-functional Collaboration",
+      "evidence": [
+        "Worked with backend engineers and BA teams",
+        "Designed scalable API flows",
+        "Reduced integration issues"
+      ]
+    },
+    {
+      "competency": "Modern Architecture",
+      "evidence": [
+        "Micro front-end architecture experience",
+        "Independent deployments and modular development"
+      ]
+    },
+    {
+      "competency": "Mobile Development",
+      "evidence": [
+        "React Native cross-platform development",
+        "Code reuse across platforms"
+      ]
+    },
+    {
+      "competency": "Internationalization",
+      "evidence": [
+        "React-i18next implementation",
+        "Multi-language support"
+      ]
+    }
+  ],
+  "industry_experience": [
+    "Financial Technology (Banking Platform)",
+    "Enterprise Software",
+    "Web Applications"
+  ],
+  "metadata": {
+    "cv_version": "2025",
+    "last_updated": "January 2025",
+    "career_stage": "Mid-level Frontend Developer",
+    "current_status": "Pursuing MSc while available for opportunities"
+  }
+}
