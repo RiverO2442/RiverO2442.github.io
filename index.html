@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CV Generator · PDF Export</title>
+  <title>CV Generator · Direct PDF Download</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
   <!-- pdfmake: real text-based PDF with clickable links (replaces html2pdf) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
@@ -159,9 +159,12 @@
     .btn:hover { background: var(--ink); color: #fff; }
     .btn.primary { background: var(--ink); color: #fff; }
     .btn.primary:hover { background: #333; }
-    .btn:active { transform: translateY(0.5px); }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
 
-    /* ══ CV PAGE (exact print-ready layout) ══ */
+    /* ══ CV PAGE ══ */
     #cv-output { display: none; width: 100%; flex-direction: column; align-items: center; }
 
     .page {
@@ -234,6 +237,8 @@
       justify-content: space-between;
       align-items: baseline;
       margin-bottom: 4px;
+      flex-wrap: wrap;
+      gap: 6px;
     }
     .exp-title { font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; }
     .exp-date { font-family: var(--font-mono); font-size: 8px; color: var(--ink-muted); white-space: nowrap; }
@@ -259,6 +264,8 @@
       justify-content: space-between;
       align-items: baseline;
       margin-bottom: 5px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .edu-degree { font-family: var(--font-mono); font-size: 9px; font-weight: 600; }
     .edu-inst { font-size: 8px; color: var(--ink-muted); margin-top: 1px; }
@@ -273,7 +280,7 @@
     }
     .cv-footer span { font-family: var(--font-mono); font-size: 7px; color: var(--rule); letter-spacing: .08em; }
 
-    /* ══ LOADER NOTIFICATION ══ */
+    /* Toast notification */
     .pdf-toast {
       position: fixed;
       bottom: 24px;
@@ -291,7 +298,6 @@
       pointer-events: none;
       z-index: 1000;
       white-space: nowrap;
-      backdrop-filter: blur(4px);
       background: rgba(0,0,0,0.85);
     }
     .pdf-toast.show {
@@ -308,6 +314,7 @@
       .cv-header { flex-direction: column; align-items: flex-start; }
       .cv-contact { align-items: flex-start; }
       .toolbar { justify-content: center; }
+      .pdf-toast { white-space: normal; width: 90%; text-align: center; }
     }
   </style>
 </head>
@@ -316,10 +323,10 @@
 <!-- minimalist toast -->
 <div id="pdf-toast" class="pdf-toast">Generating PDF...</div>
 
-<!-- ══ UPLOAD SCREEN ══ -->
+<!-- UPLOAD SCREEN -->
 <div id="upload-screen">
   <div>
-    <div class="upload-heading">CV Generator · PDF Export</div>
+    <div class="upload-heading">CV Generator · Direct PDF</div>
     <p class="upload-sub">
       Drop your <code style="font-size:12px">.json</code> file below — or paste raw JSON —<br/>
       instantly generate &amp; <strong>download PDF with clickable links</strong>.
@@ -339,8 +346,7 @@
 
   <span class="or-divider">— or paste JSON directly —</span>
 
-  <textarea class="paste-area" id="json-paste"
-    placeholder='{ "personal_information": { "full_name": "Your Name", ... }, "technical_skills": {...}, "work_experience": [...], "education": [...] }'></textarea>
+  <textarea class="paste-area" id="json-paste"></textarea>
 
   <span class="error-msg" id="error-msg">Invalid JSON — please check your file and try again.</span>
 
@@ -358,7 +364,7 @@
   </p>
 </div>
 
-<!-- ══ CV OUTPUT (preview + download controller) ══ -->
+<!-- CV OUTPUT -->
 <div id="cv-output">
   <div class="toolbar">
     <button class="btn primary" id="save-pdf-btn">Export as PDF (clickable links)</button>
@@ -605,8 +611,8 @@
       skillRow('Frameworks',        skills.frameworks_and_libraries),
       skillRow('Styling',           skills.styling),
       skillRow('Tooling & Testing', skills.tooling_and_testing),
-      skillRow('Database',          skills.database),
-      skillRow('Other',             skills.other_technologies),
+      skillRow('Database', skills.database),
+      skillRow('Other', skills.other_technologies),
     ].filter(Boolean).join('');
 
     var expHTML = jobs.map(function(job) {
@@ -664,6 +670,8 @@
 
     document.getElementById('cv-output').style.display = 'flex';
     document.getElementById('upload-screen').style.display = 'none';
+    
+    showToast("✓ CV generated! Click 'Download PDF' to save.", 2000);
   }
 
   // ─────────────────────────────────────────────────────────────
