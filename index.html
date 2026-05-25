@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Anh Hao Nguyen — Frontend Developer</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  <!-- PDF generation: visual render + real clickable link annotations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <style>
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -240,25 +243,27 @@
        PRINT STYLES — hides everything
        except the .page, preserves links
        ════════════════════════════════════ */
-    @media print {
-      @page {
-        size: A4 portrait;
-        margin: 0;
-      }
-      body {
-        background: none !important;
-        padding: 0 !important;
-        display: block !important;
-      }
-      .toolbar { display: none !important; }
-      .page {
-        width: 210mm !important;
-        max-width: 210mm !important;
-        box-shadow: none !important;
-        padding: 14mm 16mm !important;
-      }
-      /* Ensure links show their href as text color (not blue) */
-      a { color: var(--muted) !important; text-decoration: none !important; }
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      background: rgba(0,0,0,.85);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 10px 22px;
+      border-radius: 40px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s, transform .2s;
+      white-space: nowrap;
+      z-index: 200;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     @media (max-width: 640px) {
@@ -267,13 +272,17 @@
       .exp-header { flex-direction: column; gap: 2px; }
       .edu-entry { flex-direction: column; gap: 2px; }
     }
+
+    .btn:disabled { opacity: .55; cursor: not-allowed; }
   </style>
 </head>
 <body>
 
-<!-- ── Floating toolbar (hidden on print) ── -->
+<div class="toast" id="toast"></div>
+
+<!-- ── Floating toolbar ── -->
 <div class="toolbar">
-  <button class="btn" onclick="window.print()">Save as PDF</button>
+  <button class="btn" id="pdf-btn" onclick="downloadCVAsPDF()">Download PDF</button>
   <a class="btn outline" href="anh_hao_nguyen_cv_data.json" download>Download JSON</a>
 </div>
 
@@ -428,5 +437,126 @@
 
 </div>
 
+<script>
+// ─────────────────────────────────────────────────────────────────
+// Toast helper
+// ─────────────────────────────────────────────────────────────────
+function showToast(msg, ms) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function() { t.classList.remove('show'); }, ms || 2000);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Download PDF — html2canvas (visual) + pdf-lib (clickable links)
+// ─────────────────────────────────────────────────────────────────
+async function downloadCVAsPDF() {
+  var btn = document.getElementById('pdf-btn');
+  btn.disabled = true;
+  btn.textContent = 'Generating…';
+  showToast('Rendering page…', 8000);
+
+  try {
+    var cvPage = document.querySelector('.page');
+
+    // ── 1. Collect all link positions BEFORE canvas render ──────
+    var pageRect = cvPage.getBoundingClientRect();
+    var anchors  = Array.from(cvPage.querySelectorAll('a[href]'));
+    var linkData = anchors.map(function(a) {
+      var r = a.getBoundingClientRect();
+      return {
+        href:   a.getAttribute('href'),
+        left:   r.left   - pageRect.left,
+        top:    r.top    - pageRect.top,
+        width:  r.width,
+        height: r.height
+      };
+    });
+
+    // ── 2. Render CV to canvas (2× for sharpness) ───────────────
+    var canvas = await html2canvas(cvPage, {
+      scale:           2,
+      useCORS:         false,
+      logging:         false,
+      backgroundColor: '#ffffff',
+      // Force exact page dimensions so coordinates are reliable
+      width:  pageRect.width,
+      height: pageRect.height
+    });
+
+    // ── 3. Create PDF with pdf-lib ───────────────────────────────
+    var A4_W = 595.28;   // A4 width  in PDF points
+    var A4_H = 841.89;   // A4 height in PDF points
+
+    var pdfDoc = await PDFLib.PDFDocument.create();
+    var page   = pdfDoc.addPage([A4_W, A4_H]);
+
+    // ── 4. Embed canvas image as page background ─────────────────
+    var imgDataUrl = canvas.toDataURL('image/png');
+    var base64     = imgDataUrl.split(',')[1];
+    var binStr     = atob(base64);
+    var imgBytes   = new Uint8Array(binStr.length);
+    for (var i = 0; i < binStr.length; i++) imgBytes[i] = binStr.charCodeAt(i);
+
+    var embeddedImg = await pdfDoc.embedPng(imgBytes);
+    page.drawImage(embeddedImg, { x: 0, y: 0, width: A4_W, height: A4_H });
+
+    // ── 5. Add clickable URI annotations for every link ──────────
+    // Scale factors: browser px → PDF points
+    var sx = A4_W / pageRect.width;
+    var sy = A4_H / pageRect.height;
+
+    linkData.forEach(function(ld) {
+      var pdfX  =  ld.left                  * sx;
+      var pdfY  = (pageRect.height - ld.top - ld.height) * sy;  // PDF origin = bottom-left
+      var pdfW  =  ld.width                 * sx;
+      var pdfH  =  ld.height                * sy;
+
+      // Build URI Action dict
+      var uriAction = pdfDoc.context.obj({
+        Type: 'Action',
+        S:    'URI',
+        URI:  PDFLib.PDFString.of(ld.href)
+      });
+      var uriRef = pdfDoc.context.register(uriAction);
+
+      // Build Link Annotation dict referencing the action
+      var annot = pdfDoc.context.obj({
+        Type:    'Annot',
+        Subtype: 'Link',
+        Rect:    [pdfX, pdfY, pdfX + pdfW, pdfY + pdfH],
+        Border:  [0, 0, 0],
+        A:       uriRef
+      });
+      var annotRef = pdfDoc.context.register(annot);
+
+      page.node.addAnnot(annotRef);
+    });
+
+    // ── 6. Save and trigger download ─────────────────────────────
+    var pdfBytes = await pdfDoc.save();
+    var blob     = new Blob([pdfBytes], { type: 'application/pdf' });
+    var url      = URL.createObjectURL(blob);
+    var link     = document.createElement('a');
+    link.href     = url;
+    link.download = 'Anh_Hao_Nguyen_CV.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+
+    showToast('PDF downloaded — links are clickable!', 3000);
+
+  } catch (err) {
+    console.error(err);
+    showToast('Error: ' + (err.message || 'PDF generation failed'), 4000);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Download PDF';
+  }
+}
+</script>
 </body>
 </html>
