@@ -44,6 +44,22 @@
       "technologies_used": ["React", "Redux", "Ant Design", "REST APIs"]
     }
   ],
+  "personal_projects": [
+    {
+      "name": "L.I.V.E",
+      "subtitle": "Learn. Improve. Visualise. Empower",
+      "description": "Interactive Educational Platform on Diabetes Management through Gamification · Full-stack web app · MSc Computer Science project, University of Lincoln",
+      "duration": "Jun 2025 – Sep 2025",
+      "responsibilities": [
+        "Built a gamified learning platform to help users manage diabetes, featuring interactive modules, user authentication, and audit logging.",
+        "Developed React (Vite) frontend and FastAPI backend with PostgreSQL database.",
+        "Deployed with Docker to Microsoft Azure using CI/CD pipeline (automated builds and deployments).",
+        "Implemented secure login + guest access, tracking user interactions for analytics and engagement.",
+        "Demonstrated full ownership: from design, development, through testing, to a polished product."
+      ],
+      "technologies_used": ["React", "Vite", "FastAPI", "PostgreSQL", "Docker", "Azure", "CI/CD"]
+    }
+  ],
   "education": [
     {
       "degree": "MSc Computer Science",
