@@ -3,144 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CV Generator · Direct PDF Download</title>
+  <title>Anh Hao Nguyen — Frontend Developer</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
-  <!-- pdfmake: real text-based PDF with clickable links (replaces html2pdf) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
   <style>
+    /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --ink:       #1a1a1a;
-      --ink-muted: #666;
-      --rule:      #d0d0d0;
-      --bg-app:    #e8e6e1;
-      --font-body: 'IBM Plex Sans', sans-serif;
+      --muted:     #555;
+      --rule:      #d4d4d4;
+      --accent:    #1a1a1a;
+      --font-sans: 'IBM Plex Sans', sans-serif;
       --font-mono: 'IBM Plex Mono', monospace;
     }
 
+    /* ── Screen wrapper ── */
     body {
-      background: var(--bg-app);
-      font-family: var(--font-body);
+      background: #e8e6e1;
+      font-family: var(--font-sans);
       color: var(--ink);
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 32px 16px 80px;
+      padding: 40px 16px 80px;
     }
 
-    /* ══ UPLOAD SCREEN ══ */
-    #upload-screen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 60vh;
-      gap: 20px;
-      width: 100%;
-      max-width: 520px;
-    }
-
-    .upload-heading {
-      font-family: var(--font-mono);
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -.02em;
-      text-align: center;
-    }
-    .upload-sub {
-      font-size: 13px;
-      color: var(--ink-muted);
-      text-align: center;
-      line-height: 1.7;
-      margin-top: 6px;
-    }
-
-    .drop-zone {
-      width: 100%;
-      border: 2px dashed #aaa;
-      padding: 36px 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      transition: border-color .2s, background .2s;
-      background: rgba(255,255,255,.5);
-    }
-    .drop-zone:hover, .drop-zone.drag-over {
-      border-color: var(--ink);
-      background: rgba(255,255,255,.9);
-    }
-    .drop-zone svg { opacity: .35; }
-    .drop-zone-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-    }
-    #json-file-input { display: none; }
-
-    .or-divider {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--ink-muted);
-      letter-spacing: .1em;
-    }
-
-    .paste-area {
-      width: 100%;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      padding: 12px;
-      border: 1.5px solid var(--rule);
-      background: rgba(255,255,255,.7);
-      color: var(--ink);
-      resize: vertical;
-      min-height: 100px;
-      outline: none;
-      transition: border-color .2s;
-    }
-    .paste-area:focus { border-color: var(--ink); }
-
-    .error-msg {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: #c0392b;
-      display: none;
-      align-self: flex-start;
-    }
-    .error-msg.visible { display: block; }
-
-    .example-btn {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: .06em;
-      color: var(--ink-muted);
-      background: none;
-      border: 1.5px solid var(--rule);
-      padding: 8px 16px;
-      cursor: pointer;
-      width: 100%;
-      transition: border-color .2s, color .2s;
-    }
-    .example-btn:hover { border-color: var(--ink); color: var(--ink); }
-
-    /* ══ TOOLBAR ══ */
+    /* ── Floating toolbar (screen only) ── */
     .toolbar {
+      position: fixed;
+      top: 20px;
+      right: 24px;
       display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-      align-self: flex-end;
-      max-width: 210mm;
-      width: 100%;
-      justify-content: flex-end;
-      flex-wrap: wrap;
+      gap: 10px;
+      z-index: 100;
     }
     .btn {
       font-family: var(--font-mono);
@@ -150,688 +47,362 @@
       text-transform: uppercase;
       padding: 8px 18px;
       border: 1.5px solid var(--ink);
-      background: transparent;
+      background: var(--ink);
+      color: #fff;
       cursor: pointer;
-      color: var(--ink);
-      transition: background .15s, color .15s;
-      border-radius: 0;
+      transition: background .15s;
     }
-    .btn:hover { background: var(--ink); color: #fff; }
-    .btn.primary { background: var(--ink); color: #fff; }
-    .btn.primary:hover { background: #333; }
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    .btn:hover { background: #333; }
+    .btn.outline { background: transparent; color: var(--ink); }
+    .btn.outline:hover { background: var(--ink); color: #fff; }
 
-    /* ══ CV PAGE ══ */
-    #cv-output { display: none; width: 100%; flex-direction: column; align-items: center; }
-
+    /* ── CV page card ── */
     .page {
       background: #fff;
       width: 210mm;
       max-width: 100%;
-      padding: 14mm;
-      box-shadow: 0 4px 40px rgba(0,0,0,.15);
+      padding: 16mm 18mm 16mm 18mm;
+      box-shadow: 0 4px 40px rgba(0,0,0,.14);
     }
 
-    .cv-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      border-bottom: 2px solid var(--ink);
-      padding-bottom: 8px;
-      margin-bottom: 12px;
-      gap: 12px;
-    }
+    /* ── Header ── */
     .cv-name {
       font-family: var(--font-mono);
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 600;
       letter-spacing: -.02em;
       line-height: 1.1;
+      margin-bottom: 6px;
     }
-    .cv-contact { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-    .cv-contact span, .cv-contact a {
+
+    .cv-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 0;
       font-family: var(--font-mono);
-      font-size: 8.5px;
-      color: var(--ink-muted);
+      font-size: 8px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .cv-contact a {
+      color: var(--muted);
       text-decoration: none;
     }
     .cv-contact a:hover { text-decoration: underline; }
-    .cv-contact .loc { font-size: 9px; font-weight: 500; color: var(--ink); }
-
-    .section { margin-bottom: 11px; }
-    .section-title {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-      border-bottom: 1px solid var(--rule);
-      padding-bottom: 3px;
-      margin-bottom: 7px;
+    .sep {
+      margin: 0 8px;
+      color: var(--rule);
     }
 
+    /* ── Section ── */
+    .section {
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+
+    /* ── Profile ── */
+    .profile-text {
+      font-size: 8.5px;
+      line-height: 1.65;
+      color: var(--ink);
+    }
+
+    /* ── Skills grid ── */
     .skills-grid {
       display: grid;
-      grid-template-columns: 90px 1fr;
+      grid-template-columns: 110px 1fr;
       row-gap: 4px;
       font-size: 8.5px;
       line-height: 1.5;
     }
     .sk-label {
       font-family: var(--font-mono);
-      font-size: 8px;
+      font-size: 7.5px;
       font-weight: 500;
-      color: var(--ink-muted);
+      color: var(--muted);
       padding-top: 1px;
     }
     .sk-value { color: var(--ink); }
 
-    .exp-entry { margin-bottom: 9px; }
+    /* ── Experience ── */
+    .exp-entry { margin-bottom: 10px; }
     .exp-entry:last-child { margin-bottom: 0; }
     .exp-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
       margin-bottom: 4px;
-      flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
     }
-    .exp-title { font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; }
-    .exp-date { font-family: var(--font-mono); font-size: 8px; color: var(--ink-muted); white-space: nowrap; }
-
-    .exp-bullets { list-style: none; }
+    .exp-title {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 600;
+    }
+    .exp-date {
+      font-family: var(--font-mono);
+      font-size: 7.5px;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .exp-bullets {
+      list-style: none;
+      margin-bottom: 4px;
+    }
     .exp-bullets li {
-      font-size: 8.5px;
-      line-height: 1.55;
+      font-size: 8px;
+      line-height: 1.6;
       color: var(--ink);
-      padding-left: 10px;
+      padding-left: 12px;
       position: relative;
       margin-bottom: 2px;
     }
     .exp-bullets li::before {
-      content: '—'; position: absolute; left: 0;
-      color: var(--ink-muted); font-size: 8px;
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+      font-size: 7.5px;
     }
-    .exp-tech { margin-top: 4px; font-family: var(--font-mono); font-size: 7.5px; color: var(--ink-muted); }
+    .exp-tech {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      color: var(--muted);
+    }
     .exp-tech strong { color: var(--ink); font-weight: 500; }
 
+    /* ── Education ── */
     .edu-entry {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 5px;
-      flex-wrap: wrap;
+      margin-bottom: 6px;
       gap: 8px;
     }
-    .edu-degree { font-family: var(--font-mono); font-size: 9px; font-weight: 600; }
-    .edu-inst { font-size: 8px; color: var(--ink-muted); margin-top: 1px; }
+    .edu-entry:last-child { margin-bottom: 0; }
+    .edu-degree {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 600;
+    }
+    .edu-inst {
+      font-size: 8px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
     .edu-right { text-align: right; flex-shrink: 0; }
-    .edu-date { font-family: var(--font-mono); font-size: 7.5px; color: var(--ink-muted); }
-    .edu-grade { font-family: var(--font-mono); font-size: 7.5px; font-weight: 500; }
+    .edu-date {
+      font-family: var(--font-mono);
+      font-size: 7.5px;
+      color: var(--muted);
+    }
+    .edu-grade {
+      font-family: var(--font-mono);
+      font-size: 7.5px;
+      font-weight: 500;
+      color: var(--ink);
+    }
 
+    /* ── Footer ── */
     .cv-footer {
       border-top: 1px solid var(--rule);
-      margin-top: 12px; padding-top: 5px;
-      display: flex; justify-content: space-between;
+      margin-top: 14px;
+      padding-top: 5px;
+      display: flex;
+      justify-content: space-between;
     }
-    .cv-footer span { font-family: var(--font-mono); font-size: 7px; color: var(--rule); letter-spacing: .08em; }
-
-    /* Toast notification */
-    .pdf-toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%) scale(0.95);
-      background: #1a1a1a;
-      color: white;
+    .cv-footer span {
       font-family: var(--font-mono);
-      font-size: 12px;
-      padding: 10px 22px;
-      border-radius: 40px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      opacity: 0;
-      transition: opacity 0.2s ease, transform 0.2s;
-      pointer-events: none;
-      z-index: 1000;
-      white-space: nowrap;
-      background: rgba(0,0,0,0.85);
-    }
-    .pdf-toast.show {
-      opacity: 1;
-      transform: translateX(-50%) scale(1);
+      font-size: 6.5px;
+      color: var(--rule);
+      letter-spacing: .1em;
     }
 
-    @media print {
-      body { background: none; }
-      .toolbar, #upload-screen, .pdf-toast { display: none !important; }
+    /* ── Header rule ── */
+    .header-rule {
+      border: none;
+      border-top: 2px solid var(--ink);
+      margin-bottom: 12px;
     }
+
+    /* ════════════════════════════════════
+       PRINT STYLES — hides everything
+       except the .page, preserves links
+       ════════════════════════════════════ */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+      body {
+        background: none !important;
+        padding: 0 !important;
+        display: block !important;
+      }
+      .toolbar { display: none !important; }
+      .page {
+        width: 210mm !important;
+        max-width: 210mm !important;
+        box-shadow: none !important;
+        padding: 14mm 16mm !important;
+      }
+      /* Ensure links show their href as text color (not blue) */
+      a { color: var(--muted) !important; text-decoration: none !important; }
+    }
+
     @media (max-width: 640px) {
       .page { padding: 20px; }
-      .cv-header { flex-direction: column; align-items: flex-start; }
-      .cv-contact { align-items: flex-start; }
-      .toolbar { justify-content: center; }
-      .pdf-toast { white-space: normal; width: 90%; text-align: center; }
+      .toolbar { top: 10px; right: 10px; }
+      .exp-header { flex-direction: column; gap: 2px; }
+      .edu-entry { flex-direction: column; gap: 2px; }
     }
   </style>
 </head>
 <body>
 
-<!-- minimalist toast -->
-<div id="pdf-toast" class="pdf-toast">Generating PDF...</div>
+<!-- ── Floating toolbar (hidden on print) ── -->
+<div class="toolbar">
+  <button class="btn" onclick="window.print()">Save as PDF</button>
+  <a class="btn outline" href="anh_hao_nguyen_cv_data.json" download>Download JSON</a>
+</div>
 
-<!-- UPLOAD SCREEN -->
-<div id="upload-screen">
-  <div>
-    <div class="upload-heading">CV Generator · Direct PDF</div>
-    <p class="upload-sub">
-      Drop your <code style="font-size:12px">.json</code> file below — or paste raw JSON —<br/>
-      instantly generate &amp; <strong>download PDF with clickable links</strong>.
+<!-- ── CV page ── -->
+<div class="page">
+
+  <!-- Header -->
+  <div class="cv-name">Anh Hao Nguyen</div>
+
+  <div class="cv-contact">
+    <span>07704591076</span>
+    <span class="sep">|</span>
+    <a href="mailto:nguyen.anhhao.840@gmail.com">nguyen.anhhao.840@gmail.com</a>
+    <span class="sep">|</span>
+    <a href="https://github.com/RiverO2442" target="_blank">github.com/RiverO2442</a>
+    <span class="sep">|</span>
+    <a href="https://linkedin.com/in/RiverO2442" target="_blank">linkedin.com/in/RiverO2442</a>
+    <span class="sep">|</span>
+    <span>Lincoln, England</span>
+  </div>
+
+  <hr class="header-rule" />
+
+  <!-- Profile -->
+  <section class="section">
+    <div class="section-title">Profile</div>
+    <p class="profile-text">
+      MSc Computer Science student at the University of Lincoln with 3+ years of frontend development
+      experience in ReactJS and enterprise platforms. Built and maintained a banking platform used by
+      external partner banks. Skilled in React, Vue, Angular, advanced state management,
+      micro-frontend architecture, testing, and internationalisation.
     </p>
+  </section>
+
+  <!-- Skills -->
+  <section class="section">
+    <div class="section-title">Skills</div>
+    <div class="skills-grid">
+      <span class="sk-label">Frontend</span>
+      <span class="sk-value">React.js, Vue.js, Angular, React Native, Tailwind CSS, React Bootstrap, Ant Design</span>
+
+      <span class="sk-label">Languages</span>
+      <span class="sk-value">JavaScript (ES6+), TypeScript, Python</span>
+
+      <span class="sk-label">State Mgmt</span>
+      <span class="sk-value">Redux, Redux Toolkit, React Query, Context API</span>
+
+      <span class="sk-label">Build Tooling</span>
+      <span class="sk-value">Vite, Webpack, NPM, Yarn</span>
+
+      <span class="sk-label">Testing</span>
+      <span class="sk-value">Jest, Vitest, React Testing Library</span>
+
+      <span class="sk-label">Other</span>
+      <span class="sk-value">Micro-frontend architecture, RESTful APIs, React-i18next, Agile / Scrum</span>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="section">
+    <div class="section-title">Work Experience</div>
+
+    <div class="exp-entry">
+      <div class="exp-header">
+        <span class="exp-title">Frontend Developer — VETC</span>
+        <span class="exp-date">Mar 2024 – Jan 2025</span>
+      </div>
+      <ul class="exp-bullets">
+        <li>Reduced average feature implementation time by ~25% by integrating AI-assisted development tools (Cursor, GitHub Copilot) into the team workflow for spec parsing, code generation, and debugging.</li>
+        <li>Increased test coverage by 30% using Jest and Vitest, reducing production regressions by 15% across core modules.</li>
+        <li>Collaborated cross-functionally with backend engineers and BA teams to design scalable API flows, improving data consistency and reducing integration issues.</li>
+        <li>Developed cross-platform features using React Native, improving mobile user experience and code reuse.</li>
+        <li>Implemented internationalisation using React-i18next, enabling multi-language support and expanding product accessibility.</li>
+        <li>Developed and contributed to a micro-frontend architecture, enabling modular development, independent deployments, and faster feature delivery.</li>
+      </ul>
+      <div class="exp-tech"><strong>Technologies:</strong> React, React Query, React Bootstrap, Jest, React Testing Library</div>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-header">
+        <span class="exp-title">Frontend Developer — Unicloud</span>
+        <span class="exp-date">Jan 2022 – Dec 2023</span>
+      </div>
+      <ul class="exp-bullets">
+        <li>Developed and maintained a web-based banking platform used by external partner banks.</li>
+        <li>Built responsive and reusable React components for dashboards, forms, and data visualisation.</li>
+        <li>Integrated frontend applications with RESTful APIs to display real-time financial data.</li>
+        <li>Focused on performance, usability, and cross-browser compatibility in a production environment.</li>
+      </ul>
+      <div class="exp-tech"><strong>Technologies:</strong> React, Redux, Ant Design, REST APIs</div>
+    </div>
+
+  </section>
+
+  <!-- Education -->
+  <section class="section">
+    <div class="section-title">Education</div>
+
+    <div class="edu-entry">
+      <div>
+        <div class="edu-degree">MSc Computer Science</div>
+        <div class="edu-inst">University of Lincoln — Lincoln, England</div>
+      </div>
+      <div class="edu-right">
+        <div class="edu-date">Jan 2025 – Apr 2026</div>
+        <div class="edu-grade">Distinction (In Progress)</div>
+      </div>
+    </div>
+
+    <div class="edu-entry">
+      <div>
+        <div class="edu-degree">B.E. in Software Engineering</div>
+        <div class="edu-inst">University of Information Technology — Ho Chi Minh City, Vietnam</div>
+      </div>
+      <div class="edu-right">
+        <div class="edu-date">Aug 2018 – Jun 2022</div>
+        <div class="edu-grade">First Class</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+  <div class="cv-footer">
+    <span>ANH HAO NGUYEN · CV 2025</span>
+    <span>FRONTEND DEVELOPER</span>
   </div>
 
-  <div class="drop-zone" id="drop-zone" onclick="document.getElementById('json-file-input').click()">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-      <polyline points="14 2 14 8 20 8"/>
-      <line x1="12" y1="18" x2="12" y2="12"/>
-      <polyline points="9 15 12 12 15 15"/>
-    </svg>
-    <span class="drop-zone-label">Click or drag &amp; drop your .json file here</span>
-    <input type="file" id="json-file-input" accept=".json,application/json" />
-  </div>
-
-  <span class="or-divider">— or paste JSON directly —</span>
-
-  <textarea class="paste-area" id="json-paste"></textarea>
-
-  <span class="error-msg" id="error-msg">Invalid JSON — please check your file and try again.</span>
-
-  <button class="btn primary" onclick="handlePaste()" style="align-self:stretch;padding:12px;">
-    Generate CV &amp; Download PDF →
-  </button>
-
-  <button class="example-btn" onclick="downloadExampleJSON()">
-    Download example-cv.json (fill in your data)
-  </button>
-
-  <p style="font-family:var(--font-mono);font-size:9px;color:var(--ink-muted);text-align:center;line-height:2;">
-    All data stays in your browser — nothing is sent anywhere.<br/>
-    PDF is generated client-side with real text &amp; clickable links.
-  </p>
 </div>
 
-<!-- CV OUTPUT -->
-<div id="cv-output">
-  <div class="toolbar">
-    <button class="btn primary" id="save-pdf-btn">Export as PDF (clickable links)</button>
-    <button class="btn" onclick="resetApp()">Load new JSON</button>
-  </div>
-  <div class="page" id="cv-page"></div>
-</div>
-
-<script>
-  // ─────────────────────────────────────────────────────────────
-  //  State
-  // ─────────────────────────────────────────────────────────────
-  let currentCVData = null;
-
-  // ─────────────────────────────────────────────────────────────
-  //  Toast
-  // ─────────────────────────────────────────────────────────────
-  function showToast(message, duration) {
-    duration = duration || 1800;
-    const toast = document.getElementById('pdf-toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(function() { toast.classList.remove('show'); }, duration);
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  //  PDF GENERATION — pdfmake (real text + clickable links)
-  // ─────────────────────────────────────────────────────────────
-  function downloadCVAsPDF() {
-    var d = currentCVData;
-    if (!d) { showToast('No CV loaded.', 2000); return; }
-
-    showToast('Building PDF with real text & links...', 3500);
-
-    var p      = d.personal_information  || {};
-    var skills = d.technical_skills      || {};
-    var jobs   = d.work_experience       || [];
-    var edu    = d.education             || [];
-
-    // ── Contact block (stacked, right-aligned in header) ──────
-    var contactStack = [];
-    if (p.location)  contactStack.push({ text: p.location,  style: 'contactLoc' });
-    if (p.phone)     contactStack.push({ text: p.phone,     style: 'contact' });
-    if (p.email)     contactStack.push({ text: p.email,     link: 'mailto:' + p.email, style: 'contactLink' });
-    if (p.github) {
-      var ghUrl = p.github.startsWith('http') ? p.github : 'https://' + p.github;
-      contactStack.push({ text: p.github, link: ghUrl, style: 'contactLink' });
-    }
-    if (p.linkedin) {
-      var liUrl = p.linkedin.startsWith('http') ? p.linkedin : 'https://' + p.linkedin;
-      contactStack.push({ text: p.linkedin, link: liUrl, style: 'contactLink' });
-    }
-    if (p.website) {
-      var wsUrl = p.website.startsWith('http') ? p.website : 'https://' + p.website;
-      contactStack.push({ text: p.website, link: wsUrl, style: 'contactLink' });
-    }
-
-    // ── Skills table rows ─────────────────────────────────────
-    var skillMap = [
-      ['Languages',         skills.programming_languages],
-      ['Frameworks',        skills.frameworks_and_libraries],
-      ['Styling',           skills.styling],
-      ['Tooling & Testing', skills.tooling_and_testing],
-      ['Database',          skills.database],
-      ['Other',             skills.other_technologies],
-    ];
-    var skillRows = skillMap
-      .filter(function(pair) { return pair[1] && pair[1].length; })
-      .map(function(pair) {
-        return [
-          { text: pair[0], style: 'skLabel' },
-          { text: pair[1].join(', '), style: 'skValue' }
-        ];
-      });
-
-    // ── Experience entries ────────────────────────────────────
-    var expBlocks = [];
-    for (var i = 0; i < jobs.length; i++) {
-      var job = jobs[i];
-      var rawBullets = job.key_achievements || job.responsibilities || [];
-      var bulletTexts = rawBullets.map(function(item) {
-        if (typeof item === 'string') return item;
-        var t = item.achievement || '';
-        if (item.method) t += ' ' + item.method;
-        return t;
-      });
-      var tech = job.technologies_used || [];
-
-      var jobStack = [
-        {
-          columns: [
-            { text: (job.position || '') + ' — ' + (job.company || ''), style: 'expTitle', width: '*' },
-            { text: job.duration || '', style: 'expDate', width: 'auto' }
-          ],
-          columnGap: 8
-        }
-      ];
-      if (bulletTexts.length) {
-        jobStack.push({ ul: bulletTexts, style: 'bullets', margin: [0, 3, 0, 3] });
-      }
-      if (tech.length) {
-        jobStack.push({
-          text: [{ text: 'Technologies: ', bold: true, color: '#1a1a1a', fontSize: 7.5 }, { text: tech.join(', '), fontSize: 7.5, color: '#666' }],
-          margin: [0, 2, 0, 0]
-        });
-      }
-      expBlocks.push({ stack: jobStack, margin: [0, 0, 0, 9] });
-    }
-
-    // ── Education entries ─────────────────────────────────────
-    var eduBlocks = [];
-    for (var j = 0; j < edu.length; j++) {
-      var e = edu[j];
-      var leftStack = [
-        { text: e.degree || '', style: 'eduDeg' },
-        { text: (e.institution || '') + (e.location ? ', ' + e.location : ''), style: 'eduInst' }
-      ];
-      var rightStack = [
-        { text: e.duration || '', style: 'eduDate' }
-      ];
-      if (e.grade) rightStack.push({ text: 'GPA: ' + e.grade, style: 'eduGrade' });
-
-      eduBlocks.push({
-        columns: [
-          { stack: leftStack, width: '*' },
-          { stack: rightStack, width: 'auto', alignment: 'right' }
-        ],
-        columnGap: 8,
-        margin: [0, 0, 0, 6]
-      });
-    }
-
-    // ── Section header helper ─────────────────────────────────
-    function secHead(title) {
-      return [
-        { text: title, style: 'secTitle', margin: [0, 8, 0, 3] },
-        { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 0.5, lineColor: '#d0d0d0' }], margin: [0, 0, 0, 5] }
-      ];
-    }
-
-    var year = new Date().getFullYear();
-    var role = ((d.professional_summary && d.professional_summary.current_role) ||
-                (d.metadata && d.metadata.career_stage) || '').toUpperCase();
-
-    // ── Assemble document ─────────────────────────────────────
-    var content = [
-      // Header row: name left, contact right
-      {
-        columns: [
-          { text: p.full_name || 'Your Name', style: 'name', width: '*' },
-          { stack: contactStack.length ? contactStack : [{ text: '' }], width: 'auto', alignment: 'right' }
-        ],
-        columnGap: 14
-      },
-      // Thick rule under header
-      { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 515, y2: 2, lineWidth: 1.5, lineColor: '#1a1a1a' }], margin: [0, 6, 0, 10] }
-    ];
-
-    if (skillRows.length) {
-      content = content.concat(secHead('SKILLS'));
-      content.push({ table: { widths: [82, '*'], body: skillRows }, layout: 'noBorders', margin: [0, 0, 0, 4] });
-    }
-    if (expBlocks.length) {
-      content = content.concat(secHead('WORK EXPERIENCE'));
-      content = content.concat(expBlocks);
-    }
-    if (eduBlocks.length) {
-      content = content.concat(secHead('EDUCATION'));
-      content = content.concat(eduBlocks);
-    }
-
-    // Footer
-    content.push({
-      columns: [
-        { text: (p.full_name || '').toUpperCase() + ' · CV ' + year, style: 'footer', width: '*' },
-        { text: role, style: 'footer', width: 'auto', alignment: 'right' }
-      ],
-      margin: [0, 14, 0, 0]
-    });
-
-    var docDef = {
-      pageSize: 'A4',
-      pageMargins: [40, 40, 40, 40],
-      content: content,
-      styles: {
-        name:        { fontSize: 20, bold: true, color: '#1a1a1a' },
-        contactLoc:  { fontSize: 9, bold: true, color: '#1a1a1a', margin: [0, 1.5] },
-        contact:     { fontSize: 7.5, color: '#666', margin: [0, 1] },
-        contactLink: { fontSize: 7.5, color: '#1a5276', decoration: 'underline', margin: [0, 1] },
-        secTitle:    { fontSize: 8, bold: true, color: '#666', characterSpacing: 1.5 },
-        skLabel:     { fontSize: 8, bold: true, color: '#666' },
-        skValue:     { fontSize: 8, color: '#1a1a1a' },
-        expTitle:    { fontSize: 9.5, bold: true, color: '#1a1a1a' },
-        expDate:     { fontSize: 8, color: '#666' },
-        bullets:     { fontSize: 8.5, color: '#1a1a1a', lineHeight: 1.5 },
-        eduDeg:      { fontSize: 9, bold: true, color: '#1a1a1a' },
-        eduInst:     { fontSize: 8, color: '#666' },
-        eduDate:     { fontSize: 7.5, color: '#666' },
-        eduGrade:    { fontSize: 7.5, bold: true, color: '#1a1a1a' },
-        footer:      { fontSize: 7, color: '#c8c8c8', characterSpacing: 1 }
-      },
-      defaultStyle: {
-        font: 'Roboto',
-        fontSize: 8.5,
-        lineHeight: 1.4,
-        color: '#1a1a1a'
-      }
-    };
-
-    // Build a safe filename
-    var fileName = 'CV_Document.pdf';
-    if (p.full_name) {
-      var safe = p.full_name.replace(/[^a-z0-9]/gi, '_').substring(0, 40);
-      fileName = safe + '_CV.pdf';
-    }
-
-    try {
-      pdfMake.createPdf(docDef).download(fileName, function() {
-        showToast('PDF saved — links are clickable!', 2000);
-      });
-    } catch (err) {
-      console.error(err);
-      showToast('PDF error: ' + (err.message || 'unknown'), 3000);
-    }
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  //  RENDER HTML PREVIEW (unchanged visual engine)
-  // ─────────────────────────────────────────────────────────────
-  function renderCV(d) {
-    currentCVData = d;
-    var p      = d.personal_information || {};
-    var skills = d.technical_skills     || {};
-    var jobs   = d.work_experience      || [];
-    var edu    = d.education            || [];
-    var name   = p.full_name || 'Your Name';
-
-    function skillRow(label, arr) {
-      if (!arr || !arr.length) return '';
-      return '<span class="sk-label">' + esc(label) + '</span><span class="sk-value">' + arr.map(esc).join(', ') + '</span>';
-    }
-    var skillsHTML = [
-      skillRow('Languages',         skills.programming_languages),
-      skillRow('Frameworks',        skills.frameworks_and_libraries),
-      skillRow('Styling',           skills.styling),
-      skillRow('Tooling & Testing', skills.tooling_and_testing),
-      skillRow('Database', skills.database),
-      skillRow('Other', skills.other_technologies),
-    ].filter(Boolean).join('');
-
-    var expHTML = jobs.map(function(job) {
-      var items = job.key_achievements || job.responsibilities || [];
-      var bullets = items.map(function(item) {
-        var text = typeof item === 'string' ? item : ((item.achievement || '') + (item.method ? ' ' + item.method : ''));
-        return '<li>' + esc(text) + '</li>';
-      }).join('');
-      var tech = job.technologies_used || [];
-      var techLine = tech.length
-        ? '<div class="exp-tech"><strong>Technologies:</strong> ' + tech.map(esc).join(', ') + '</div>'
-        : '';
-      return '<div class="exp-entry">' +
-        '<div class="exp-header">' +
-          '<span class="exp-title">' + esc(job.position) + ' — ' + esc(job.company) + '</span>' +
-          '<span class="exp-date">' + esc(job.duration || '') + '</span>' +
-        '</div>' +
-        '<ul class="exp-bullets">' + bullets + '</ul>' +
-        techLine +
-        '</div>';
-    }).join('');
-
-    var eduHTML = edu.map(function(e) {
-      return '<div class="edu-entry">' +
-        '<div><div class="edu-degree">' + esc(e.degree) + '</div>' +
-        '<div class="edu-inst">' + esc(e.institution) + (e.location ? ', ' + esc(e.location) : '') + '</div></div>' +
-        '<div class="edu-right">' +
-          '<div class="edu-date">' + esc(e.duration || '') + '</div>' +
-          (e.grade ? '<div class="edu-grade">GPA: ' + esc(e.grade) + '</div>' : '') +
-        '</div>' +
-      '</div>';
-    }).join('');
-
-    var contactHTML = [
-      p.location ? '<span class="loc">' + esc(p.location) + '</span>' : '',
-      p.phone    ? '<span>' + esc(p.phone) + '</span>' : '',
-      p.email    ? '<a href="mailto:' + esc(p.email) + '">' + esc(p.email) + '</a>' : '',
-      p.github   ? '<a href="https://' + esc(p.github) + '" target="_blank">' + esc(p.github) + '</a>' : '',
-      p.linkedin ? '<a href="https://' + esc(p.linkedin) + '" target="_blank">' + esc(p.linkedin) + '</a>' : '',
-      p.website  ? '<a href="' + esc(p.website) + '" target="_blank">' + esc(p.website) + '</a>' : '',
-    ].filter(Boolean).join('');
-
-    document.getElementById('cv-page').innerHTML =
-      '<header class="cv-header">' +
-        '<div class="cv-name">' + esc(name) + '</div>' +
-        '<div class="cv-contact">' + contactHTML + '</div>' +
-      '</header>' +
-      (skillsHTML ? '<section class="section"><div class="section-title">Skills</div><div class="skills-grid">' + skillsHTML + '</div></section>' : '') +
-      (expHTML    ? '<section class="section"><div class="section-title">Work Experience</div>' + expHTML + '</section>' : '') +
-      (eduHTML    ? '<section class="section"><div class="section-title">Education</div>' + eduHTML + '</section>' : '') +
-      '<div class="cv-footer">' +
-        '<span>' + esc(name).toUpperCase() + ' · CV ' + new Date().getFullYear() + '</span>' +
-        '<span>' + esc(((d.professional_summary || {}).current_role || (d.metadata || {}).career_stage || '')).toUpperCase() + '</span>' +
-      '</div>';
-
-    document.getElementById('cv-output').style.display = 'flex';
-    document.getElementById('upload-screen').style.display = 'none';
-    
-    showToast("✓ CV generated! Click 'Download PDF' to save.", 2000);
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  //  Utilities
-  // ─────────────────────────────────────────────────────────────
-  var esc = function(s) {
-    return String(s == null ? '' : s)
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  };
-
-  function processJSON(raw) {
-    var errEl = document.getElementById('error-msg');
-    try {
-      var data = JSON.parse(raw);
-      if (data && typeof data === 'object') {
-        errEl.classList.remove('visible');
-        renderCV(data);
-      } else {
-        throw new Error('Not an object');
-      }
-    } catch(e) {
-      errEl.textContent = 'Invalid JSON — please check your file and try again.';
-      errEl.classList.add('visible');
-    }
-  }
-
-  function readFile(file) {
-    var r = new FileReader();
-    r.onload = function(e) { processJSON(e.target.result); };
-    r.readAsText(file);
-  }
-
-  function handlePaste() {
-    var raw = document.getElementById('json-paste').value.trim();
-    if (raw) {
-      processJSON(raw);
-    } else {
-      var errEl = document.getElementById('error-msg');
-      errEl.textContent = 'Please paste JSON data first.';
-      errEl.classList.add('visible');
-      setTimeout(function() { errEl.classList.remove('visible'); }, 2000);
-    }
-  }
-
-  function resetApp() {
-    document.getElementById('upload-screen').style.display = '';
-    document.getElementById('cv-output').style.display = 'none';
-    document.getElementById('json-paste').value = '';
-    var fi = document.getElementById('json-file-input');
-    if (fi) fi.value = '';
-    currentCVData = null;
-    document.getElementById('error-msg').classList.remove('visible');
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  //  Download example JSON template
-  // ─────────────────────────────────────────────────────────────
-  function downloadExampleJSON() {
-    var example = {
-      "personal_information": {
-        "full_name": "Your Full Name",
-        "location": "Ho Chi Minh City, Vietnam",
-        "phone": "+84 xxx xxx xxx",
-        "email": "your.email@gmail.com",
-        "github": "github.com/yourusername",
-        "linkedin": "linkedin.com/in/yourusername",
-        "website": "yourportfolio.dev"
-      },
-      "professional_summary": {
-        "current_role": "Software Developer"
-      },
-      "technical_skills": {
-        "programming_languages": ["JavaScript", "TypeScript", "Python"],
-        "frameworks_and_libraries": ["React", "Node.js", "Express"],
-        "styling": ["Tailwind CSS", "CSS3", "SCSS"],
-        "tooling_and_testing": ["Git", "Vite", "Jest", "Docker"],
-        "database": ["PostgreSQL", "MongoDB"],
-        "other_technologies": ["REST APIs", "AWS", "Linux"]
-      },
-      "work_experience": [
-        {
-          "position": "Frontend Developer",
-          "company": "Company Name",
-          "duration": "Jan 2024 — Present",
-          "key_achievements": [
-            "Built and maintained React applications serving thousands of users",
-            "Improved app performance by 35% through code splitting and lazy loading",
-            "Collaborated with cross-functional teams to deliver features on schedule"
-          ],
-          "technologies_used": ["React", "TypeScript", "Tailwind CSS", "REST API"]
-        },
-        {
-          "position": "Junior Developer",
-          "company": "Previous Company",
-          "duration": "Jun 2022 — Dec 2023",
-          "key_achievements": [
-            "Developed responsive web interfaces using React and modern CSS",
-            "Integrated third-party APIs and payment gateways",
-            "Participated in code reviews and agile sprint ceremonies"
-          ],
-          "technologies_used": ["React", "JavaScript", "Node.js", "PostgreSQL"]
-        }
-      ],
-      "education": [
-        {
-          "degree": "Bachelor of Science in Computer Science",
-          "institution": "Your University",
-          "location": "Ho Chi Minh City",
-          "duration": "2019 — 2023",
-          "grade": "3.5 / 4.0"
-        }
-      ],
-      "metadata": {
-        "career_stage": "Mid-Level Developer"
-      }
-    };
-
-    var blob = new Blob([JSON.stringify(example, null, 2)], { type: 'application/json' });
-    var url  = URL.createObjectURL(blob);
-    var a    = document.createElement('a');
-    a.href     = url;
-    a.download = 'example-cv.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    showToast('example-cv.json downloaded — fill in your data!', 2500);
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  //  Drag & Drop / File input wiring
-  // ─────────────────────────────────────────────────────────────
-  var dropZone  = document.getElementById('drop-zone');
-  var fileInput = document.getElementById('json-file-input');
-
-  dropZone.addEventListener('dragover',  function(e) { e.preventDefault(); dropZone.classList.add('drag-over'); });
-  dropZone.addEventListener('dragleave', function()  { dropZone.classList.remove('drag-over'); });
-  dropZone.addEventListener('drop',      function(e) {
-    e.preventDefault(); dropZone.classList.remove('drag-over');
-    if (e.dataTransfer.files[0]) readFile(e.dataTransfer.files[0]);
-  });
-  fileInput.addEventListener('change', function() {
-    if (fileInput.files[0]) readFile(fileInput.files[0]);
-  });
-
-  // PDF export button
-  document.addEventListener('DOMContentLoaded', function() {
-    var btn = document.getElementById('save-pdf-btn');
-    if (btn) {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        downloadCVAsPDF();
-      });
-    }
-  });
-
-  // expose to inline onclick
-  window.handlePaste          = handlePaste;
-  window.resetApp             = resetApp;
-  window.downloadExampleJSON  = downloadExampleJSON;
-</script>
 </body>
 </html>
