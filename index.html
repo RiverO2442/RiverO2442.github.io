@@ -275,29 +275,52 @@
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  HIGHLIGHT HELPERS  (driven by data.highlights in JSON)
+//  HIGHLIGHT HELPERS
+//  • metrics_regex  — from highlights.metrics_regex in JSON (config)
+//  • tech keywords  — auto-derived from technical_skills in JSON (content)
 // ═══════════════════════════════════════════════════════════════
 
 var _metricsRE = null;
 var _techRE    = null;
 
-function buildHighlighters(highlights) {
-  if (!highlights) {
-    // Sensible fallbacks if section is missing
-    _metricsRE = /(~?\$?\d+(?:,\d+)*\.?\d*\s*[×x%+]?(?:\s*years?)?(?:\s*months?)?|\d+\+?\s*years?)/g;
-    _techRE    = null;
-    return;
-  }
+function buildHighlighters(data) {
+  var highlights = (data && data.highlights) || {};
+
+  // ── 1. Metrics: regex from JSON config (or sensible default) ──
   _metricsRE = highlights.metrics_regex
     ? new RegExp(highlights.metrics_regex, 'g')
-    : null;
-  if (highlights.keywords && highlights.keywords.length) {
-    // Escape dots for regex, sort longest first to avoid partial matches
-    var escaped = highlights.keywords
-      .slice()
-      .sort(function(a,b){ return b.length - a.length; })
-      .map(function(k){ return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
-    _techRE = new RegExp('\\b(' + escaped.join('|') + ')\\b', 'g');
+    : /(~?\$?\d+(?:,\d+)*\.?\d*\s*[×x%+]?(?:\s*years?)?(?:\s*months?)?|\d+\+?\s*years?)/g;
+
+  // ── 2. Tech keywords: auto-built from technical_skills content ─
+  //  Every value in every skills array becomes a keyword.
+  //  Items like "JavaScript (ES6+)" also yield the clean form "JavaScript".
+  var keywords = [];
+  var seen = {};
+  function addKw(kw) {
+    kw = (kw || '').trim();
+    if (!kw || seen[kw.toLowerCase()]) return;
+    seen[kw.toLowerCase()] = true;
+    keywords.push(kw);
+  }
+
+  var sk = data && data.technical_skills;
+  if (sk) {
+    Object.keys(sk).forEach(function(cat) {
+      var arr = sk[cat];
+      if (!Array.isArray(arr)) return;
+      arr.forEach(function(item) {
+        addKw(item);
+        // Strip "(…)" version notes — "JavaScript (ES6+)" → "JavaScript"
+        addKw(item.replace(/\s*\([^)]*\)/g, ''));
+      });
+    });
+  }
+
+  if (keywords.length) {
+    var escaped = keywords
+      .sort(function(a, b) { return b.length - a.length; }) // longest first → no partial shadowing
+      .map(function(k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
+    _techRE = new RegExp('\\b(' + escaped.join('|') + ')\\b', 'gi');
   } else {
     _techRE = null;
   }
@@ -320,7 +343,7 @@ function enhance(text) {
 //  RENDER — builds the Harvard-style CV from the JSON data object
 // ═══════════════════════════════════════════════════════════════
 function renderCV(data) {
-  buildHighlighters(data.highlights);
+  buildHighlighters(data);
   var p  = data.personal_information;
   var sk = data.technical_skills;
 

@@ -1,20 +1,6 @@
 {
   "highlights": {
-    "metrics_regex": "(~?\\$?\\d+(?:,\\d+)*\\.?\\d*\\s*[×x%+]?(?:\\s*years?)?(?:\\s*months?)?|\\d+\\+?\\s*years?)",
-    "keywords": [
-      "end-to-end", "end-to-end ownership", "full ownership", "sole owner",
-      "production", "high-reliability",
-      "Cursor", "GitHub Copilot", "AI-assisted",
-      "architecture", "deployment", "independent deployments",
-      "simplicity", "simplifying", "maintainability",
-      "React", "Angular", "FastAPI", "PostgreSQL",
-      "Docker", "Azure", "CI/CD",
-      "TypeScript", "JavaScript", "Python",
-      "Jest", "Vitest", "React Testing Library",
-      "micro-frontend", "Micro-frontend",
-      "React Native", "React Query",
-      "Distinction", "First Class"
-    ]
+    "metrics_regex": "(~?\\$?\\d+(?:,\\d+)*\\.?\\d*\\s*[×x%+]?(?:\\s*years?)?(?:\\s*months?)?|\\d+\\+?\\s*years?)"
   },
   "personal_information": {
     "full_name": "Anh Hao Nguyen",
