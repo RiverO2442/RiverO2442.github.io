@@ -1,6 +1,6 @@
 {
   "highlights": {
-    "metrics_regex": "(~?\\$?[\\d,]+\\.?\\d*\\s*[×x%+]?(?:\\s*years?)?(?:\\s*months?)?|\\d+\\+?\\s*years?)",
+    "metrics_regex": "(~?\\$?\\d+(?:,\\d+)*\\.?\\d*\\s*[×x%+]?(?:\\s*years?)?(?:\\s*months?)?|\\d+\\+?\\s*years?)",
     "keywords": [
       "end-to-end", "end-to-end ownership", "full ownership", "sole owner",
       "production", "high-reliability",

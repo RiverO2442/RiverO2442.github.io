@@ -284,7 +284,7 @@ var _techRE    = null;
 function buildHighlighters(highlights) {
   if (!highlights) {
     // Sensible fallbacks if section is missing
-    _metricsRE = /(~?\$?[\d,]+\.?\d*\s*[×x%+]?(?:\s*years?)?(?:\s*months?)?|\d+\+?\s*years?)/g;
+    _metricsRE = /(~?\$?\d+(?:,\d+)*\.?\d*\s*[×x%+]?(?:\s*years?)?(?:\s*months?)?|\d+\+?\s*years?)/g;
     _techRE    = null;
     return;
   }
