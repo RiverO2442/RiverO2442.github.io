@@ -2,12 +2,18 @@
   "highlights": {
     "metrics_regex": "(~?\\$?[\\d,]+\\.?\\d*\\s*[×x%+]?(?:\\s*years?)?(?:\\s*months?)?|\\d+\\+?\\s*years?)",
     "keywords": [
-      "React Native", "React Query", "React Bootstrap", "React Testing Library",
-      "React", "Redux Toolkit", "Redux", "Vue.js", "Vue", "Angular",
-      "TypeScript", "JavaScript", "Python", "FastAPI", "PostgreSQL",
-      "Jest", "Vitest", "Vite", "Webpack", "Docker", "Azure", "CI/CD",
-      "Ant Design", "Tailwind CSS", "Micro-frontend", "micro-frontend",
-      "React-i18next", "RESTful API", "REST API", "GitHub Copilot", "Cursor"
+      "end-to-end", "end-to-end ownership", "full ownership", "sole owner",
+      "production", "high-reliability",
+      "Cursor", "GitHub Copilot", "AI-assisted",
+      "architecture", "deployment", "independent deployments",
+      "simplicity", "simplifying", "maintainability",
+      "React", "Angular", "FastAPI", "PostgreSQL",
+      "Docker", "Azure", "CI/CD",
+      "TypeScript", "JavaScript", "Python",
+      "Jest", "Vitest", "React Testing Library",
+      "micro-frontend", "Micro-frontend",
+      "React Native", "React Query",
+      "Distinction", "First Class"
     ]
   },
   "personal_information": {
@@ -18,14 +24,14 @@
     "linkedin": "linkedin.com/in/RiverO2442",
     "location": "Lincoln, England"
   },
-  "profile": "MSc Computer Science student at the University of Lincoln with 3+ years of frontend development experience in ReactJS and enterprise platforms. Built and maintained a banking platform used by external partner banks. Skilled in React, Vue, Angular, advanced state management, micro-frontend architecture, testing, and internationalisation.",
+  "profile": "Software engineer with 3+ years of production experience building and owning systems end-to-end — from architecture to deployment. Currently completing an MSc in Computer Science at the University of Lincoln (Distinction). Integrates AI tools (Cursor, GitHub Copilot) deeply into the development workflow to move faster without sacrificing correctness. Comfortable across diverse stacks: React, Angular, FastAPI, PostgreSQL, Docker, Azure CI/CD. Driven by simplicity: questions every layer of complexity and holds work to a rising standard.",
   "technical_skills": {
-    "frontend": ["React.js", "Vue.js", "Angular", "React Native", "Tailwind CSS", "React Bootstrap", "Ant Design"],
+    "frontend": ["React.js", "Angular", "Vue.js", "React Native", "Tailwind CSS", "React Bootstrap", "Ant Design"],
     "languages": ["JavaScript (ES6+)", "TypeScript", "Python"],
     "state_management": ["Redux", "Redux Toolkit", "React Query", "Context API"],
-    "build_tooling": ["Vite", "Webpack", "NPM", "Yarn"],
+    "build_tooling": ["Docker", "CI/CD (Azure Pipelines)", "Vite", "Webpack", "NPM", "Yarn"],
     "testing": ["Jest", "Vitest", "React Testing Library"],
-    "other": ["Micro-frontend architecture", "RESTful APIs", "React-i18next", "Agile / Scrum"]
+    "other": ["RESTful APIs", "Micro-frontend architecture", "React-i18next", "Agile / Scrum"]
   },
   "work_experience": [
     {
@@ -33,24 +39,23 @@
       "company": "VETC",
       "duration": "Mar 2024 – Jan 2025",
       "responsibilities": [
-        "Reduced average feature implementation time by ~25% by integrating AI-assisted development tools (Cursor, GitHub Copilot) into the team workflow for spec parsing, code generation, and debugging.",
-        "Increased test coverage by 30% using Jest and Vitest, reducing production regressions by 15% across core modules.",
-        "Collaborated cross-functionally with backend engineers and BA teams to design scalable API flows, improving data consistency and reducing integration issues.",
-        "Developed cross-platform features using React Native, improving mobile user experience and code reuse.",
-        "Implemented internationalisation using React-i18next, enabling multi-language support and expanding product accessibility.",
-        "Developed and contributed to a micro-frontend architecture, enabling modular development, independent deployments, and faster feature delivery."
+        "Integrated AI-assisted development tools (Cursor, GitHub Copilot) into the full team workflow — spec parsing, code generation, debugging — reducing average feature implementation time by ~25% while maintaining correctness and reliability standards.",
+        "Increased test coverage by 30% using Jest and Vitest, reducing production regressions by 15% across core modules — demonstrating end-to-end ownership of quality.",
+        "Contributed to a micro-frontend architecture that enabled independent deployments, modular development, and faster delivery across teams — simplifying a complex monolithic frontend.",
+        "Collaborated with backend engineers and BA teams to design scalable API flows, reducing integration issues through clear interface contracts.",
+        "Developed cross-platform features using React Native and implemented internationalisation via React-i18next, expanding product accessibility across multiple markets."
       ],
-      "technologies_used": ["React", "React Query", "React Bootstrap", "Jest", "React Testing Library"]
+      "technologies_used": ["React", "React Query", "React Bootstrap", "Jest", "Vitest", "React Testing Library"]
     },
     {
       "position": "Frontend Developer",
       "company": "Unicloud",
       "duration": "Jan 2022 – Dec 2023",
       "responsibilities": [
-        "Developed and maintained a web-based banking platform used by external partner banks.",
-        "Built responsive and reusable React components for dashboards, forms, and data visualisation.",
-        "Integrated frontend applications with RESTful APIs to display real-time financial data.",
-        "Focused on performance, usability, and cross-browser compatibility in a production environment."
+        "Built and maintained a production banking platform used by external partner banks — owning components from design through deployment in a high-reliability environment.",
+        "Developed reusable, scalable React components for dashboards, forms, and real-time financial data visualisation, with a focus on simplicity and maintainability.",
+        "Integrated frontend applications with RESTful APIs, collaborating closely with backend teams to ensure data integrity and performance.",
+        "Consistently prioritised cross-browser compatibility, performance, and usability in a live production codebase."
       ],
       "technologies_used": ["React", "Redux", "Ant Design", "REST APIs"]
     }
@@ -59,14 +64,13 @@
     {
       "name": "L.I.V.E",
       "subtitle": "Learn. Improve. Visualise. Empower",
-      "description": "Interactive Educational Platform on Diabetes Management through Gamification · Full-stack web app · MSc Computer Science project, University of Lincoln",
+      "description": "Full-stack web application for gamified diabetes education — MSc Computer Science project, University of Lincoln. Sole owner from idea to production.",
       "duration": "Jun 2025 – Sep 2025",
       "responsibilities": [
-        "Built a gamified learning platform to help users manage diabetes, featuring interactive modules, user authentication, and audit logging.",
-        "Developed React (Vite) frontend and FastAPI backend with PostgreSQL database.",
-        "Deployed with Docker to Microsoft Azure using CI/CD pipeline (automated builds and deployments).",
-        "Implemented secure login + guest access, tracking user interactions for analytics and engagement.",
-        "Demonstrated full ownership: from design, development, through testing, to a polished product."
+        "Took full end-to-end ownership: designed architecture, built the frontend (React/Vite) and backend (FastAPI/PostgreSQL), and deployed to Microsoft Azure — no handoffs.",
+        "Automated the entire build and deployment pipeline using Docker and Azure CI/CD, enabling reliable, repeatable deployments from day one.",
+        "Implemented secure authentication, guest access, and usage analytics — keeping the system simple and purposeful rather than over-engineered.",
+        "Delivered a polished, tested product on schedule, demonstrating the ability to operate with startup-level agility on an individual project."
       ],
       "technologies_used": ["React", "Vite", "FastAPI", "PostgreSQL", "Docker", "Azure", "CI/CD"]
     }
