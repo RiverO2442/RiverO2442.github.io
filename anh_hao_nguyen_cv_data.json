@@ -1,4 +1,15 @@
 {
+  "highlights": {
+    "metrics_regex": "(~?\\$?[\\d,]+\\.?\\d*\\s*[×x%+]?(?:\\s*years?)?(?:\\s*months?)?|\\d+\\+?\\s*years?)",
+    "keywords": [
+      "React Native", "React Query", "React Bootstrap", "React Testing Library",
+      "React", "Redux Toolkit", "Redux", "Vue.js", "Vue", "Angular",
+      "TypeScript", "JavaScript", "Python", "FastAPI", "PostgreSQL",
+      "Jest", "Vitest", "Vite", "Webpack", "Docker", "Azure", "CI/CD",
+      "Ant Design", "Tailwind CSS", "Micro-frontend", "micro-frontend",
+      "React-i18next", "RESTful API", "REST API", "GitHub Copilot", "Cursor"
+    ]
+  },
   "personal_information": {
     "full_name": "Anh Hao Nguyen",
     "phone": "07704591076",
