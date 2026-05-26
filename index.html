@@ -120,7 +120,11 @@
     .sk-value { color: var(--body); }
 
     /* ── Experience ── */
-    .exp-entry { margin-bottom: 10px; }
+    .exp-entry {
+      margin-bottom: 10px;
+      padding-left: 8px;
+      border-left: 2px solid #e5e5e5;
+    }
     .exp-entry:last-child { margin-bottom: 0; }
     .exp-company-line {
       display: flex;
@@ -145,6 +149,21 @@
     }
     .exp-bullets li::before { content: '•'; position: absolute; left: 3px; color: var(--ink); font-size: 9px; }
 
+    /* ── Highlighted metrics (numbers, %, $) ── */
+    .metric {
+      font-weight: 700;
+      color: #000;
+      background: #fef9c3;          /* soft amber — visible in print */
+      padding: 0 1.5px;
+      border-radius: 1px;
+    }
+
+    /* ── Highlighted tech keywords ── */
+    .kw {
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
     .exp-tech { font-size: 8.5px; color: var(--muted); font-style: italic; }
     .exp-tech strong { font-weight: 600; font-style: normal; color: var(--ink); }
 
@@ -163,7 +182,20 @@
     .edu-inst   { font-size: 9px; font-style: italic; color: var(--muted); margin-top: 1px; }
     .edu-right  { text-align: right; flex-shrink: 0; }
     .edu-date   { font-size: 9px; font-style: italic; color: var(--muted); }
-    .edu-grade  { font-size: 9px; font-weight: 600; color: var(--ink); margin-top: 1px; }
+    .edu-grade  { font-size: 9px; font-weight: 700; color: var(--ink); margin-top: 2px; }
+
+    /* ── Grade badge ── */
+    .grade-badge {
+      display: inline-block;
+      font-size: 8px;
+      font-weight: 700;
+      font-style: normal;
+      letter-spacing: .04em;
+      padding: 1px 5px;
+      border: 1px solid #000;
+      border-radius: 2px;
+      color: #000;
+    }
 
     /* ── Footer ── */
     .cv-footer {
@@ -219,6 +251,37 @@
 
 <script>
 // ═══════════════════════════════════════════════════════════════
+//  HIGHLIGHT HELPERS
+// ═══════════════════════════════════════════════════════════════
+
+// Wrap numbers/percentages/dollar amounts in <mark class="metric">
+function highlightMetrics(text) {
+  // Match: ~25%, 30%, $12,400, 3+, 15%, 2×, etc.
+  return text.replace(
+    /(~?\$?[\d,]+\.?\d*\s*[×x%+]?(?:\s*years?)?(?:\s*months?)?|\d+\+?\s*years?)/g,
+    function(m) { return '<mark class="metric">' + m + '</mark>'; }
+  );
+}
+
+// Wrap known tech keywords in <span class="kw">
+var TECH_KW = [
+  'React Native','React Query','React Bootstrap','React Testing Library',
+  'React','Redux Toolkit','Redux','Vue\\.js','Vue','Angular',
+  'TypeScript','JavaScript','Python','FastAPI','PostgreSQL',
+  'Jest','Vitest','Vite','Webpack','Docker','Azure','CI/CD',
+  'Ant Design','Tailwind CSS','Micro-frontend','micro-frontend',
+  'React-i18next','RESTful API','REST API','GitHub Copilot','Cursor'
+];
+var TECH_RE = new RegExp('\\b(' + TECH_KW.join('|') + ')\\b', 'g');
+function highlightTech(text) {
+  return text.replace(TECH_RE, '<span class="kw">$1</span>');
+}
+
+function enhance(text) {
+  return highlightTech(highlightMetrics(text));
+}
+
+// ═══════════════════════════════════════════════════════════════
 //  RENDER — builds the Harvard-style CV from the JSON data object
 // ═══════════════════════════════════════════════════════════════
 function renderCV(data) {
@@ -242,7 +305,7 @@ function renderCV(data) {
   function renderExp(jobs) {
     return jobs.map(function(job) {
       var bullets = job.responsibilities.map(function(r) {
-        return '<li>' + r + '</li>';
+        return '<li>' + enhance(r) + '</li>';
       }).join('\n');
       var tech = job.technologies_used
         ? '<p class="exp-tech"><strong>Technologies:</strong> ' + job.technologies_used.join(', ') + '</p>'
@@ -264,7 +327,7 @@ function renderCV(data) {
   // ── Projects ─────────────────────────────────────────────────
   var projects = (data.personal_projects || []).map(function(proj) {
     var bullets = proj.responsibilities.map(function(r) {
-      return '<li>' + r + '</li>';
+      return '<li>' + enhance(r) + '</li>';
     }).join('\n');
     var subtitle = proj.subtitle || proj.description
       ? '<p class="proj-subtitle">' + (proj.subtitle ? proj.subtitle + ' &middot; ' : '') + (proj.description || '') + '</p>'
@@ -292,7 +355,7 @@ function renderCV(data) {
       + '</div>'
       + '<div class="edu-right">'
       +   '<div class="edu-date">' + edu.duration + '</div>'
-      +   '<div class="edu-grade">' + edu.grade + '</div>'
+      +   '<div class="edu-grade"><span class="grade-badge">' + edu.grade + '</span></div>'
       + '</div>'
       + '</div>';
   }).join('\n');
@@ -323,7 +386,7 @@ function renderCV(data) {
     /* Profile */
     '<section class="section">',
     '  <div class="section-title">Profile</div>',
-    '  <p class="profile-text">' + data.profile + '</p>',
+    '  <p class="profile-text">' + enhance(data.profile) + '</p>',
     '</section>',
 
     /* Skills */
