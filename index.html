@@ -178,10 +178,17 @@
       border-radius: 1px;
     }
 
-    /* ── Highlighted tech keywords ── */
+    /* ── Highlighted tech keywords (auto from technical_skills) ── */
     .kw {
       font-weight: 600;
       color: #1a1a1a;
+    }
+
+    /* ── Explicit hl{...} markers in JSON content ── */
+    .hl {
+      font-weight: 700;
+      color: #000;
+      border-bottom: 1.5px solid #d97706;   /* amber underline — distinct from .kw bold */
     }
 
     .exp-tech { font-size: 8.5px; color: var(--muted); font-style: italic; }
@@ -327,14 +334,25 @@ function buildHighlighters(data) {
 }
 
 function enhance(text) {
-  var out = text;
-  if (_metricsRE) {
-    _metricsRE.lastIndex = 0;
-    out = out.replace(_metricsRE, function(m) { return '<mark class="metric">' + m + '</mark>'; });
-  }
-  if (_techRE) {
-    _techRE.lastIndex = 0;
-    out = out.replace(_techRE, '<span class="kw">$1</span>');
+  // ── Step 1: convert explicit hl{...} markers in JSON content ──
+  var out = text.replace(/hl\{([^}]+)\}/g, '<span class="hl">$1</span>');
+
+  // ── Step 2: apply metric + keyword regexes to plain-text only ─
+  //  Split on HTML tags so we never double-wrap content already marked
+  if (_metricsRE || _techRE) {
+    out = out.replace(/(<[^>]+>)|([^<]+)/g, function(_, tag, txt) {
+      if (tag) return tag;          // HTML tag — pass through untouched
+      var t = txt;
+      if (_metricsRE) {
+        _metricsRE.lastIndex = 0;
+        t = t.replace(_metricsRE, function(m) { return '<mark class="metric">' + m + '</mark>'; });
+      }
+      if (_techRE) {
+        _techRE.lastIndex = 0;
+        t = t.replace(_techRE, '<span class="kw">$1</span>');
+      }
+      return t;
+    });
   }
   return out;
 }
