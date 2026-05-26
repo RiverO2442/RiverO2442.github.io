@@ -11,14 +11,13 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:    #000000;
-      --body:   #111111;
-      --muted:  #444444;
-      --rule:   #000000;
-      --serif:  'EB Garamond', Georgia, 'Times New Roman', serif;
+      --ink:   #000000;
+      --body:  #111111;
+      --muted: #444444;
+      --rule:  #000000;
+      --serif: 'EB Garamond', Georgia, 'Times New Roman', serif;
     }
 
-    /* ── Screen wrapper ── */
     body {
       background: #d6d0c4;
       font-family: var(--serif);
@@ -30,7 +29,7 @@
       padding: 40px 16px 80px;
     }
 
-    /* ── Floating toolbar ── */
+    /* ── Toolbar ── */
     .toolbar {
       position: fixed;
       top: 20px;
@@ -67,13 +66,8 @@
       box-shadow: 0 4px 40px rgba(0,0,0,.18);
     }
 
-    /* ════════════════════════════════
-       HARVARD HEADER
-       ════════════════════════════════ */
-    .cv-header {
-      text-align: center;
-      margin-bottom: 10px;
-    }
+    /* ── Harvard Header ── */
+    .cv-header { text-align: center; margin-bottom: 10px; }
     .cv-name {
       font-size: 26px;
       font-weight: 700;
@@ -96,32 +90,16 @@
       color: var(--muted);
       line-height: 1.7;
     }
-    .cv-contact a {
-      color: var(--muted);
-      text-decoration: none;
-    }
+    .cv-contact a { color: var(--muted); text-decoration: none; }
     .cv-contact a:hover { text-decoration: underline; }
     .cv-contact .sep { margin: 0 7px; }
 
-    /* ── Double rule under header ── */
-    .header-rule {
-      border: none;
-      border-top: 3px solid var(--rule);
-      margin-top: 10px;
-      margin-bottom: 1px;
-    }
-    .header-rule-thin {
-      border: none;
-      border-top: 1px solid var(--rule);
-      margin-bottom: 12px;
-    }
+    /* ── Double rule ── */
+    .header-rule      { border: none; border-top: 3px solid var(--rule); margin-top: 10px; margin-bottom: 1px; }
+    .header-rule-thin { border: none; border-top: 1px solid var(--rule); margin-bottom: 12px; }
 
-    /* ════════════════════════════════
-       SECTIONS
-       ════════════════════════════════ */
-    .section {
-      margin-bottom: 12px;
-    }
+    /* ── Sections ── */
+    .section { margin-bottom: 12px; }
     .section-title {
       font-size: 11px;
       font-weight: 700;
@@ -134,40 +112,16 @@
     }
 
     /* ── Profile ── */
-    .profile-text {
-      font-size: 9.5px;
-      line-height: 1.7;
-      color: var(--body);
-      text-align: justify;
-    }
+    .profile-text { font-size: 9.5px; line-height: 1.7; color: var(--body); text-align: justify; }
 
     /* ── Skills ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 100px 1fr;
-      row-gap: 3px;
-      font-size: 9px;
-      line-height: 1.6;
-    }
-    .sk-label {
-      font-weight: 600;
-      color: var(--ink);
-      padding-top: 0;
-    }
-    .sk-value {
-      color: var(--body);
-    }
+    .skills-grid { display: grid; grid-template-columns: 100px 1fr; row-gap: 3px; font-size: 9px; line-height: 1.6; }
+    .sk-label { font-weight: 600; color: var(--ink); }
+    .sk-value { color: var(--body); }
 
     /* ── Experience ── */
     .exp-entry { margin-bottom: 10px; }
     .exp-entry:last-child { margin-bottom: 0; }
-
-    .exp-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 8px;
-    }
     .exp-company-line {
       display: flex;
       justify-content: space-between;
@@ -175,28 +129,11 @@
       gap: 8px;
       margin-bottom: 4px;
     }
-    .exp-role {
-      font-size: 10px;
-      font-weight: 700;
-      font-style: italic;
-      color: var(--ink);
-    }
-    .exp-company {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--ink);
-    }
-    .exp-date {
-      font-size: 9px;
-      font-style: italic;
-      color: var(--muted);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .exp-bullets {
-      list-style: none;
-      margin-bottom: 4px;
-    }
+    .exp-company { font-size: 10px; font-weight: 700; color: var(--ink); }
+    .exp-role    { font-size: 10px; font-weight: 700; font-style: italic; color: var(--ink); }
+    .exp-date    { font-size: 9px; font-style: italic; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+
+    .exp-bullets { list-style: none; margin-bottom: 4px; }
     .exp-bullets li {
       font-size: 9px;
       line-height: 1.65;
@@ -206,32 +143,12 @@
       margin-bottom: 1px;
       text-align: justify;
     }
-    .exp-bullets li::before {
-      content: '•';
-      position: absolute;
-      left: 3px;
-      color: var(--ink);
-      font-size: 9px;
-    }
-    .exp-tech {
-      font-size: 8.5px;
-      color: var(--muted);
-      font-style: italic;
-    }
-    .exp-tech strong {
-      font-weight: 600;
-      font-style: normal;
-      color: var(--ink);
-    }
+    .exp-bullets li::before { content: '•'; position: absolute; left: 3px; color: var(--ink); font-size: 9px; }
 
-    /* ── Project subtitle ── */
-    .proj-subtitle {
-      font-size: 8.5px;
-      font-style: italic;
-      color: var(--muted);
-      margin-bottom: 4px;
-      line-height: 1.5;
-    }
+    .exp-tech { font-size: 8.5px; color: var(--muted); font-style: italic; }
+    .exp-tech strong { font-weight: 600; font-style: normal; color: var(--ink); }
+
+    .proj-subtitle { font-size: 8.5px; font-style: italic; color: var(--muted); margin-bottom: 4px; line-height: 1.5; }
 
     /* ── Education ── */
     .edu-entry {
@@ -242,32 +159,11 @@
       gap: 8px;
     }
     .edu-entry:last-child { margin-bottom: 0; }
-    .edu-degree {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--ink);
-    }
-    .edu-inst {
-      font-size: 9px;
-      font-style: italic;
-      color: var(--muted);
-      margin-top: 1px;
-    }
-    .edu-right {
-      text-align: right;
-      flex-shrink: 0;
-    }
-    .edu-date {
-      font-size: 9px;
-      font-style: italic;
-      color: var(--muted);
-    }
-    .edu-grade {
-      font-size: 9px;
-      font-weight: 600;
-      color: var(--ink);
-      margin-top: 1px;
-    }
+    .edu-degree { font-size: 10px; font-weight: 700; color: var(--ink); }
+    .edu-inst   { font-size: 9px; font-style: italic; color: var(--muted); margin-top: 1px; }
+    .edu-right  { text-align: right; flex-shrink: 0; }
+    .edu-date   { font-size: 9px; font-style: italic; color: var(--muted); }
+    .edu-grade  { font-size: 9px; font-weight: 600; color: var(--ink); margin-top: 1px; }
 
     /* ── Footer ── */
     .cv-footer {
@@ -277,13 +173,7 @@
       display: flex;
       justify-content: space-between;
     }
-    .cv-footer span {
-      font-size: 7px;
-      color: #bbb;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      font-style: italic;
-    }
+    .cv-footer span { font-size: 7px; color: #bbb; letter-spacing: .12em; text-transform: uppercase; font-style: italic; }
 
     /* ── Toast ── */
     .toast {
@@ -303,10 +193,7 @@
       white-space: nowrap;
       z-index: 200;
     }
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     @media (max-width: 640px) {
       .page { padding: 20px; }
@@ -320,167 +207,171 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- ── Toolbar ── -->
 <div class="toolbar">
   <button class="btn" id="pdf-btn" onclick="downloadCVAsPDF()">Download PDF</button>
   <a class="btn outline" href="anh_hao_nguyen_cv_data.json" download>Download JSON</a>
 </div>
 
-<!-- ══════════════════════════════════════
-     CV PAGE
-     ══════════════════════════════════════ -->
-<div class="page">
-
-  <!-- ── Header ── -->
-  <div class="cv-header">
-    <div class="cv-name">Anh Hao Nguyen</div>
-    <div class="cv-title">Frontend Developer &nbsp;·&nbsp; MSc Computer Science Candidate</div>
-    <div class="cv-contact">
-      <span>07704591076</span>
-      <span class="sep">|</span>
-      <a href="mailto:nguyen.anhhao.840@gmail.com">nguyen.anhhao.840@gmail.com</a>
-      <span class="sep">|</span>
-      <a href="https://github.com/RiverO2442" target="_blank">github.com/RiverO2442</a>
-      <span class="sep">|</span>
-      <a href="https://linkedin.com/in/RiverO2442" target="_blank">linkedin.com/in/RiverO2442</a>
-      <span class="sep">|</span>
-      <span>Lincoln, England</span>
-    </div>
-  </div>
-
-  <hr class="header-rule" />
-  <hr class="header-rule-thin" />
-
-  <!-- ── Profile ── -->
-  <section class="section">
-    <div class="section-title">Profile</div>
-    <p class="profile-text">
-      MSc Computer Science student at the University of Lincoln with 3+ years of frontend development
-      experience in ReactJS and enterprise platforms. Built and maintained a banking platform used by
-      external partner banks. Skilled in React, Vue, Angular, advanced state management,
-      micro-frontend architecture, testing, and internationalisation.
-    </p>
-  </section>
-
-  <!-- ── Technical Skills ── -->
-  <section class="section">
-    <div class="section-title">Technical Skills</div>
-    <div class="skills-grid">
-      <span class="sk-label">Frontend</span>
-      <span class="sk-value">React.js, Vue.js, Angular, React Native, Tailwind CSS, React Bootstrap, Ant Design</span>
-
-      <span class="sk-label">Languages</span>
-      <span class="sk-value">JavaScript (ES6+), TypeScript, Python</span>
-
-      <span class="sk-label">State Mgmt</span>
-      <span class="sk-value">Redux, Redux Toolkit, React Query, Context API</span>
-
-      <span class="sk-label">Build Tools</span>
-      <span class="sk-value">Vite, Webpack, NPM, Yarn</span>
-
-      <span class="sk-label">Testing</span>
-      <span class="sk-value">Jest, Vitest, React Testing Library</span>
-
-      <span class="sk-label">Other</span>
-      <span class="sk-value">Micro-frontend architecture, RESTful APIs, React-i18next, Agile / Scrum</span>
-    </div>
-  </section>
-
-  <!-- ── Work Experience ── -->
-  <section class="section">
-    <div class="section-title">Work Experience</div>
-
-    <div class="exp-entry">
-      <div class="exp-company-line">
-        <span class="exp-company">VETC &mdash; <span class="exp-role">Frontend Developer</span></span>
-        <span class="exp-date">Mar 2024 – Jan 2025</span>
-      </div>
-      <ul class="exp-bullets">
-        <li>Reduced average feature implementation time by ~25% by integrating AI-assisted development tools (Cursor, GitHub Copilot) into the team workflow for spec parsing, code generation, and debugging.</li>
-        <li>Increased test coverage by 30% using Jest and Vitest, reducing production regressions by 15% across core modules.</li>
-        <li>Collaborated cross-functionally with backend engineers and BA teams to design scalable API flows, improving data consistency and reducing integration issues.</li>
-        <li>Developed cross-platform features using React Native, improving mobile user experience and code reuse.</li>
-        <li>Implemented internationalisation using React-i18next, enabling multi-language support and expanding product accessibility.</li>
-        <li>Developed and contributed to a micro-frontend architecture, enabling modular development, independent deployments, and faster feature delivery.</li>
-      </ul>
-      <p class="exp-tech"><strong>Technologies:</strong> React, React Query, React Bootstrap, Jest, React Testing Library</p>
-    </div>
-
-    <div class="exp-entry">
-      <div class="exp-company-line">
-        <span class="exp-company">Unicloud &mdash; <span class="exp-role">Frontend Developer</span></span>
-        <span class="exp-date">Jan 2022 – Dec 2023</span>
-      </div>
-      <ul class="exp-bullets">
-        <li>Developed and maintained a web-based banking platform used by external partner banks.</li>
-        <li>Built responsive and reusable React components for dashboards, forms, and data visualisation.</li>
-        <li>Integrated frontend applications with RESTful APIs to display real-time financial data.</li>
-        <li>Focused on performance, usability, and cross-browser compatibility in a production environment.</li>
-      </ul>
-      <p class="exp-tech"><strong>Technologies:</strong> React, Redux, Ant Design, REST APIs</p>
-    </div>
-  </section>
-
-  <!-- ── Personal Projects ── -->
-  <section class="section">
-    <div class="section-title">Personal Project</div>
-
-    <div class="exp-entry">
-      <div class="exp-company-line">
-        <span class="exp-company">L.I.V.E &mdash; <span class="exp-role">Learn. Improve. Visualise. Empower</span></span>
-        <span class="exp-date">Jun 2025 – Sep 2025</span>
-      </div>
-      <p class="proj-subtitle">
-        Interactive Educational Platform on Diabetes Management through Gamification &middot; Full-stack web app &middot; MSc Computer Science project, University of Lincoln
-      </p>
-      <ul class="exp-bullets">
-        <li>Built a gamified learning platform to help users manage diabetes, featuring interactive modules, user authentication, and audit logging.</li>
-        <li>Developed React (Vite) frontend and FastAPI backend with PostgreSQL database.</li>
-        <li>Deployed with Docker to Microsoft Azure using CI/CD pipeline (automated builds and deployments).</li>
-        <li>Implemented secure login + guest access, tracking user interactions for analytics and engagement.</li>
-        <li>Demonstrated full ownership: from design, development, through testing, to a polished product.</li>
-      </ul>
-      <p class="exp-tech"><strong>Technologies:</strong> React, Vite, FastAPI, PostgreSQL, Docker, Azure, CI/CD</p>
-    </div>
-  </section>
-
-  <!-- ── Education ── -->
-  <section class="section">
-    <div class="section-title">Education</div>
-
-    <div class="edu-entry">
-      <div>
-        <div class="edu-degree">MSc Computer Science</div>
-        <div class="edu-inst">University of Lincoln — Lincoln, England</div>
-      </div>
-      <div class="edu-right">
-        <div class="edu-date">Jan 2025 – Apr 2026</div>
-        <div class="edu-grade">Distinction (In Progress)</div>
-      </div>
-    </div>
-
-    <div class="edu-entry">
-      <div>
-        <div class="edu-degree">B.E. in Software Engineering</div>
-        <div class="edu-inst">University of Information Technology — Ho Chi Minh City, Vietnam</div>
-      </div>
-      <div class="edu-right">
-        <div class="edu-date">Aug 2018 – Jun 2022</div>
-        <div class="edu-grade">First Class Honours</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Footer ── -->
-  <div class="cv-footer">
-    <span>Anh Hao Nguyen &middot; CV 2025</span>
-    <span>Frontend Developer</span>
-  </div>
-
-</div><!-- /.page -->
+<!-- ── CV page — populated by JS from JSON ── -->
+<div class="page" id="cv-page">
+  <p style="text-align:center;padding:40px;font-style:italic;color:#999;">Loading CV…</p>
+</div>
 
 <script>
-// ── Toast ──────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+//  RENDER — builds the Harvard-style CV from the JSON data object
+// ═══════════════════════════════════════════════════════════════
+function renderCV(data) {
+  var p  = data.personal_information;
+  var sk = data.technical_skills;
+
+  // ── Skills rows ─────────────────────────────────────────────
+  var skillRows = [
+    { label: 'Frontend',    values: sk.frontend },
+    { label: 'Languages',   values: sk.languages },
+    { label: 'State Mgmt',  values: sk.state_management },
+    { label: 'Build Tools', values: sk.build_tooling },
+    { label: 'Testing',     values: sk.testing },
+    { label: 'Other',       values: sk.other },
+  ].map(function(row) {
+    return '<span class="sk-label">' + row.label + '</span>'
+         + '<span class="sk-value">' + row.values.join(', ') + '</span>';
+  }).join('\n');
+
+  // ── Experience entries ───────────────────────────────────────
+  function renderExp(jobs) {
+    return jobs.map(function(job) {
+      var bullets = job.responsibilities.map(function(r) {
+        return '<li>' + r + '</li>';
+      }).join('\n');
+      var tech = job.technologies_used
+        ? '<p class="exp-tech"><strong>Technologies:</strong> ' + job.technologies_used.join(', ') + '</p>'
+        : '';
+      var title = job.company
+        ? job.company + ' &mdash; <span class="exp-role">' + job.position + '</span>'
+        : '<span class="exp-role">' + job.position + '</span>';
+      return '<div class="exp-entry">'
+        + '<div class="exp-company-line">'
+        +   '<span class="exp-company">' + title + '</span>'
+        +   '<span class="exp-date">' + job.duration + '</span>'
+        + '</div>'
+        + '<ul class="exp-bullets">' + bullets + '</ul>'
+        + tech
+        + '</div>';
+    }).join('\n');
+  }
+
+  // ── Projects ─────────────────────────────────────────────────
+  var projects = (data.personal_projects || []).map(function(proj) {
+    var bullets = proj.responsibilities.map(function(r) {
+      return '<li>' + r + '</li>';
+    }).join('\n');
+    var subtitle = proj.subtitle || proj.description
+      ? '<p class="proj-subtitle">' + (proj.subtitle ? proj.subtitle + ' &middot; ' : '') + (proj.description || '') + '</p>'
+      : '';
+    var tech = proj.technologies_used
+      ? '<p class="exp-tech"><strong>Technologies:</strong> ' + proj.technologies_used.join(', ') + '</p>'
+      : '';
+    return '<div class="exp-entry">'
+      + '<div class="exp-company-line">'
+      +   '<span class="exp-company">' + proj.name + (proj.subtitle ? ' &mdash; <span class="exp-role">' + proj.subtitle + '</span>' : '') + '</span>'
+      +   '<span class="exp-date">' + proj.duration + '</span>'
+      + '</div>'
+      + subtitle
+      + '<ul class="exp-bullets">' + bullets + '</ul>'
+      + tech
+      + '</div>';
+  }).join('\n');
+
+  // ── Education ────────────────────────────────────────────────
+  var education = (data.education || []).map(function(edu) {
+    return '<div class="edu-entry">'
+      + '<div>'
+      +   '<div class="edu-degree">' + edu.degree + '</div>'
+      +   '<div class="edu-inst">' + edu.institution + ' &mdash; ' + edu.location + '</div>'
+      + '</div>'
+      + '<div class="edu-right">'
+      +   '<div class="edu-date">' + edu.duration + '</div>'
+      +   '<div class="edu-grade">' + edu.grade + '</div>'
+      + '</div>'
+      + '</div>';
+  }).join('\n');
+
+  // ── Assemble full HTML ────────────────────────────────────────
+  document.getElementById('cv-page').innerHTML = [
+
+    /* Header */
+    '<div class="cv-header">',
+    '  <div class="cv-name">' + p.full_name + '</div>',
+    '  <div class="cv-title">Frontend Developer &nbsp;&middot;&nbsp; MSc Computer Science Candidate</div>',
+    '  <div class="cv-contact">',
+    '    <span>' + p.phone + '</span>',
+    '    <span class="sep">|</span>',
+    '    <a href="mailto:' + p.email + '">' + p.email + '</a>',
+    '    <span class="sep">|</span>',
+    '    <a href="https://' + p.github + '" target="_blank">' + p.github + '</a>',
+    '    <span class="sep">|</span>',
+    '    <a href="https://' + p.linkedin + '" target="_blank">' + p.linkedin + '</a>',
+    '    <span class="sep">|</span>',
+    '    <span>' + p.location + '</span>',
+    '  </div>',
+    '</div>',
+
+    '<hr class="header-rule" />',
+    '<hr class="header-rule-thin" />',
+
+    /* Profile */
+    '<section class="section">',
+    '  <div class="section-title">Profile</div>',
+    '  <p class="profile-text">' + data.profile + '</p>',
+    '</section>',
+
+    /* Skills */
+    '<section class="section">',
+    '  <div class="section-title">Technical Skills</div>',
+    '  <div class="skills-grid">' + skillRows + '</div>',
+    '</section>',
+
+    /* Experience */
+    '<section class="section">',
+    '  <div class="section-title">Work Experience</div>',
+    renderExp(data.work_experience),
+    '</section>',
+
+    /* Projects */
+    data.personal_projects && data.personal_projects.length
+      ? '<section class="section"><div class="section-title">Personal Project</div>' + projects + '</section>'
+      : '',
+
+    /* Education */
+    '<section class="section">',
+    '  <div class="section-title">Education</div>',
+    education,
+    '</section>',
+
+    /* Footer */
+    '<div class="cv-footer">',
+    '  <span>' + p.full_name + ' &middot; CV 2025</span>',
+    '  <span>Frontend Developer</span>',
+    '</div>',
+
+  ].join('\n');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  BOOT — fetch JSON and render
+// ═══════════════════════════════════════════════════════════════
+fetch('anh_hao_nguyen_cv_data.json?v=' + Date.now())
+  .then(function(r) { return r.json(); })
+  .then(function(data) { renderCV(data); })
+  .catch(function(err) {
+    document.getElementById('cv-page').innerHTML =
+      '<p style="color:red;padding:20px;">Failed to load CV data: ' + err.message + '</p>';
+  });
+
+// ═══════════════════════════════════════════════════════════════
+//  Toast
+// ═══════════════════════════════════════════════════════════════
 function showToast(msg, ms) {
   var t = document.getElementById('toast');
   t.textContent = msg;
@@ -489,7 +380,9 @@ function showToast(msg, ms) {
   t._timer = setTimeout(function() { t.classList.remove('show'); }, ms || 2000);
 }
 
-// ── Download PDF (html2canvas + pdf-lib with clickable links) ──────────────
+// ═══════════════════════════════════════════════════════════════
+//  PDF download (html2canvas + pdf-lib, clickable links)
+// ═══════════════════════════════════════════════════════════════
 async function downloadCVAsPDF() {
   var btn = document.getElementById('pdf-btn');
   btn.disabled = true;
@@ -497,83 +390,47 @@ async function downloadCVAsPDF() {
   showToast('Rendering page…', 8000);
 
   try {
-    var cvPage = document.querySelector('.page');
+    var cvPage  = document.getElementById('cv-page');
     var pageRect = cvPage.getBoundingClientRect();
 
-    // Collect link positions before render
     var anchors  = Array.from(cvPage.querySelectorAll('a[href]'));
     var linkData = anchors.map(function(a) {
       var r = a.getBoundingClientRect();
-      return {
-        href:   a.getAttribute('href'),
-        left:   r.left   - pageRect.left,
-        top:    r.top    - pageRect.top,
-        width:  r.width,
-        height: r.height
-      };
+      return { href: a.getAttribute('href'), left: r.left - pageRect.left, top: r.top - pageRect.top, width: r.width, height: r.height };
     });
 
-    // Render to canvas at 2× for crispness
     var canvas = await html2canvas(cvPage, {
-      scale:           2,
-      useCORS:         false,
-      logging:         false,
+      scale: 2, useCORS: false, logging: false,
       backgroundColor: '#ffffff',
-      width:  pageRect.width,
-      height: pageRect.height
+      width: pageRect.width, height: pageRect.height
     });
 
-    // Build PDF
-    var A4_W = 595.28;
-    var A4_H = 841.89;
+    var A4_W = 595.28, A4_H = 841.89;
     var pdfDoc = await PDFLib.PDFDocument.create();
     var page   = pdfDoc.addPage([A4_W, A4_H]);
 
-    var imgDataUrl = canvas.toDataURL('image/png');
-    var base64     = imgDataUrl.split(',')[1];
-    var binStr     = atob(base64);
-    var imgBytes   = new Uint8Array(binStr.length);
-    for (var i = 0; i < binStr.length; i++) imgBytes[i] = binStr.charCodeAt(i);
+    var imgBytes = (function(dataUrl) {
+      var b64 = dataUrl.split(',')[1], bin = atob(b64), bytes = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return bytes;
+    })(canvas.toDataURL('image/png'));
 
-    var embeddedImg = await pdfDoc.embedPng(imgBytes);
-    page.drawImage(embeddedImg, { x: 0, y: 0, width: A4_W, height: A4_H });
+    var img = await pdfDoc.embedPng(imgBytes);
+    page.drawImage(img, { x: 0, y: 0, width: A4_W, height: A4_H });
 
-    // Add clickable link annotations
-    var sx = A4_W / pageRect.width;
-    var sy = A4_H / pageRect.height;
-
+    var sx = A4_W / pageRect.width, sy = A4_H / pageRect.height;
     linkData.forEach(function(ld) {
-      var pdfX = ld.left * sx;
-      var pdfY = (pageRect.height - ld.top - ld.height) * sy;
-      var pdfW = ld.width  * sx;
-      var pdfH = ld.height * sy;
-
-      var uriAction = pdfDoc.context.obj({
-        Type: 'Action', S: 'URI',
-        URI:  PDFLib.PDFString.of(ld.href)
-      });
-      var uriRef = pdfDoc.context.register(uriAction);
-
-      var annot = pdfDoc.context.obj({
-        Type: 'Annot', Subtype: 'Link',
-        Rect: [pdfX, pdfY, pdfX + pdfW, pdfY + pdfH],
-        Border: [0, 0, 0],
-        A: uriRef
-      });
-      page.node.addAnnot(pdfDoc.context.register(annot));
+      var x = ld.left * sx, y = (pageRect.height - ld.top - ld.height) * sy, w = ld.width * sx, h = ld.height * sy;
+      var uriRef   = pdfDoc.context.register(pdfDoc.context.obj({ Type: 'Action', S: 'URI', URI: PDFLib.PDFString.of(ld.href) }));
+      var annotRef = pdfDoc.context.register(pdfDoc.context.obj({ Type: 'Annot', Subtype: 'Link', Rect: [x, y, x+w, y+h], Border: [0,0,0], A: uriRef }));
+      page.node.addAnnot(annotRef);
     });
 
-    var pdfBytes = await pdfDoc.save();
-    var blob     = new Blob([pdfBytes], { type: 'application/pdf' });
-    var url      = URL.createObjectURL(blob);
-    var link     = document.createElement('a');
-    link.href = url;
-    link.download = 'Anh_Hao_Nguyen_CV.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    var blob = new Blob([await pdfDoc.save()], { type: 'application/pdf' });
+    var url  = URL.createObjectURL(blob);
+    var link = Object.assign(document.createElement('a'), { href: url, download: 'Anh_Hao_Nguyen_CV.pdf' });
+    document.body.appendChild(link); link.click(); document.body.removeChild(link);
     setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
-
     showToast('PDF downloaded — links are clickable!', 3000);
 
   } catch (err) {
