@@ -3,29 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anh Hao Nguyen — Frontend Developer</title>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
-  <!-- PDF generation: visual render + real clickable link annotations -->
+  <title>Anh Hao Nguyen — CV</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <style>
-    /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:       #1a1a1a;
-      --muted:     #555;
-      --rule:      #d4d4d4;
-      --accent:    #1a1a1a;
-      --font-sans: 'IBM Plex Sans', sans-serif;
-      --font-mono: 'IBM Plex Mono', monospace;
+      --ink:    #000000;
+      --body:   #111111;
+      --muted:  #444444;
+      --rule:   #000000;
+      --serif:  'EB Garamond', Georgia, 'Times New Roman', serif;
     }
 
     /* ── Screen wrapper ── */
     body {
-      background: #e8e6e1;
-      font-family: var(--font-sans);
-      color: var(--ink);
+      background: #d6d0c4;
+      font-family: var(--serif);
+      color: var(--body);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -33,7 +30,7 @@
       padding: 40px 16px 80px;
     }
 
-    /* ── Floating toolbar (screen only) ── */
+    /* ── Floating toolbar ── */
     .toolbar {
       position: fixed;
       top: 20px;
@@ -43,118 +40,155 @@
       z-index: 100;
     }
     .btn {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: 8px 18px;
-      border: 1.5px solid var(--ink);
-      background: var(--ink);
+      font-family: var(--serif);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      padding: 7px 18px;
+      border: 1.5px solid #000;
+      background: #000;
       color: #fff;
       cursor: pointer;
       transition: background .15s;
+      text-decoration: none;
+      display: inline-block;
     }
     .btn:hover { background: #333; }
-    .btn.outline { background: transparent; color: var(--ink); }
-    .btn.outline:hover { background: var(--ink); color: #fff; }
+    .btn.outline { background: transparent; color: #000; }
+    .btn.outline:hover { background: #000; color: #fff; }
+    .btn:disabled { opacity: .5; cursor: not-allowed; }
 
-    /* ── CV page card ── */
+    /* ── CV page ── */
     .page {
       background: #fff;
       width: 210mm;
       max-width: 100%;
-      padding: 16mm 18mm 16mm 18mm;
-      box-shadow: 0 4px 40px rgba(0,0,0,.14);
+      padding: 18mm 20mm 18mm 20mm;
+      box-shadow: 0 4px 40px rgba(0,0,0,.18);
     }
 
-    /* ── Header ── */
+    /* ════════════════════════════════
+       HARVARD HEADER
+       ════════════════════════════════ */
+    .cv-header {
+      text-align: center;
+      margin-bottom: 10px;
+    }
     .cv-name {
-      font-family: var(--font-mono);
-      font-size: 24px;
-      font-weight: 600;
-      letter-spacing: -.02em;
-      line-height: 1.1;
-      margin-bottom: 6px;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      line-height: 1.15;
+      color: var(--ink);
+      text-transform: uppercase;
     }
-
-    .cv-contact {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px 0;
-      font-family: var(--font-mono);
-      font-size: 8px;
+    .cv-title {
+      font-size: 11px;
+      font-weight: 400;
+      font-style: italic;
       color: var(--muted);
-      margin-bottom: 12px;
+      margin-top: 3px;
+      letter-spacing: .04em;
+    }
+    .cv-contact {
+      margin-top: 7px;
+      font-size: 9px;
+      color: var(--muted);
+      line-height: 1.7;
     }
     .cv-contact a {
       color: var(--muted);
       text-decoration: none;
     }
     .cv-contact a:hover { text-decoration: underline; }
-    .sep {
-      margin: 0 8px;
-      color: var(--rule);
+    .cv-contact .sep { margin: 0 7px; }
+
+    /* ── Double rule under header ── */
+    .header-rule {
+      border: none;
+      border-top: 3px solid var(--rule);
+      margin-top: 10px;
+      margin-bottom: 1px;
+    }
+    .header-rule-thin {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin-bottom: 12px;
     }
 
-    /* ── Section ── */
+    /* ════════════════════════════════
+       SECTIONS
+       ════════════════════════════════ */
     .section {
       margin-bottom: 12px;
     }
     .section-title {
-      font-family: var(--font-mono);
-      font-size: 8.5px;
-      font-weight: 600;
-      letter-spacing: .16em;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      color: var(--muted);
-      border-bottom: 1px solid var(--rule);
-      padding-bottom: 4px;
+      color: var(--ink);
+      border-bottom: 1.5px solid var(--ink);
+      padding-bottom: 2px;
       margin-bottom: 8px;
     }
 
     /* ── Profile ── */
     .profile-text {
-      font-size: 8.5px;
-      line-height: 1.65;
-      color: var(--ink);
+      font-size: 9.5px;
+      line-height: 1.7;
+      color: var(--body);
+      text-align: justify;
     }
 
-    /* ── Skills grid ── */
+    /* ── Skills ── */
     .skills-grid {
       display: grid;
-      grid-template-columns: 110px 1fr;
-      row-gap: 4px;
-      font-size: 8.5px;
-      line-height: 1.5;
+      grid-template-columns: 100px 1fr;
+      row-gap: 3px;
+      font-size: 9px;
+      line-height: 1.6;
     }
     .sk-label {
-      font-family: var(--font-mono);
-      font-size: 7.5px;
-      font-weight: 500;
-      color: var(--muted);
-      padding-top: 1px;
+      font-weight: 600;
+      color: var(--ink);
+      padding-top: 0;
     }
-    .sk-value { color: var(--ink); }
+    .sk-value {
+      color: var(--body);
+    }
 
     /* ── Experience ── */
     .exp-entry { margin-bottom: 10px; }
     .exp-entry:last-child { margin-bottom: 0; }
+
     .exp-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 4px;
       gap: 8px;
     }
-    .exp-title {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      font-weight: 600;
+    .exp-company-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .exp-role {
+      font-size: 10px;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--ink);
+    }
+    .exp-company {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink);
     }
     .exp-date {
-      font-family: var(--font-mono);
-      font-size: 7.5px;
+      font-size: 9px;
+      font-style: italic;
       color: var(--muted);
       white-space: nowrap;
       flex-shrink: 0;
@@ -164,85 +198,93 @@
       margin-bottom: 4px;
     }
     .exp-bullets li {
-      font-size: 8px;
-      line-height: 1.6;
-      color: var(--ink);
-      padding-left: 12px;
+      font-size: 9px;
+      line-height: 1.65;
+      color: var(--body);
+      padding-left: 14px;
       position: relative;
-      margin-bottom: 2px;
+      margin-bottom: 1px;
+      text-align: justify;
     }
     .exp-bullets li::before {
-      content: '—';
+      content: '•';
       position: absolute;
-      left: 0;
-      color: var(--muted);
-      font-size: 7.5px;
+      left: 3px;
+      color: var(--ink);
+      font-size: 9px;
     }
     .exp-tech {
-      font-family: var(--font-mono);
-      font-size: 7px;
+      font-size: 8.5px;
       color: var(--muted);
+      font-style: italic;
     }
-    .exp-tech strong { color: var(--ink); font-weight: 500; }
+    .exp-tech strong {
+      font-weight: 600;
+      font-style: normal;
+      color: var(--ink);
+    }
+
+    /* ── Project subtitle ── */
+    .proj-subtitle {
+      font-size: 8.5px;
+      font-style: italic;
+      color: var(--muted);
+      margin-bottom: 4px;
+      line-height: 1.5;
+    }
 
     /* ── Education ── */
     .edu-entry {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
       gap: 8px;
     }
     .edu-entry:last-child { margin-bottom: 0; }
     .edu-degree {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      font-weight: 600;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink);
     }
     .edu-inst {
-      font-size: 8px;
+      font-size: 9px;
+      font-style: italic;
       color: var(--muted);
       margin-top: 1px;
     }
-    .edu-right { text-align: right; flex-shrink: 0; }
+    .edu-right {
+      text-align: right;
+      flex-shrink: 0;
+    }
     .edu-date {
-      font-family: var(--font-mono);
-      font-size: 7.5px;
+      font-size: 9px;
+      font-style: italic;
       color: var(--muted);
     }
     .edu-grade {
-      font-family: var(--font-mono);
-      font-size: 7.5px;
-      font-weight: 500;
+      font-size: 9px;
+      font-weight: 600;
       color: var(--ink);
+      margin-top: 1px;
     }
 
     /* ── Footer ── */
     .cv-footer {
-      border-top: 1px solid var(--rule);
+      border-top: 1px solid #bbb;
       margin-top: 14px;
       padding-top: 5px;
       display: flex;
       justify-content: space-between;
     }
     .cv-footer span {
-      font-family: var(--font-mono);
-      font-size: 6.5px;
-      color: var(--rule);
-      letter-spacing: .1em;
+      font-size: 7px;
+      color: #bbb;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-style: italic;
     }
 
-    /* ── Header rule ── */
-    .header-rule {
-      border: none;
-      border-top: 2px solid var(--ink);
-      margin-bottom: 12px;
-    }
-
-    /* ════════════════════════════════════
-       PRINT STYLES — hides everything
-       except the .page, preserves links
-       ════════════════════════════════════ */
     /* ── Toast ── */
     .toast {
       position: fixed;
@@ -251,10 +293,10 @@
       transform: translateX(-50%) translateY(8px);
       background: rgba(0,0,0,.85);
       color: #fff;
-      font-family: var(--font-mono);
-      font-size: 11px;
+      font-family: var(--serif);
+      font-size: 12px;
       padding: 10px 22px;
-      border-radius: 40px;
+      border-radius: 4px;
       opacity: 0;
       pointer-events: none;
       transition: opacity .2s, transform .2s;
@@ -269,44 +311,47 @@
     @media (max-width: 640px) {
       .page { padding: 20px; }
       .toolbar { top: 10px; right: 10px; }
-      .exp-header { flex-direction: column; gap: 2px; }
+      .exp-company-line { flex-direction: column; gap: 1px; }
       .edu-entry { flex-direction: column; gap: 2px; }
     }
-
-    .btn:disabled { opacity: .55; cursor: not-allowed; }
   </style>
 </head>
 <body>
 
 <div class="toast" id="toast"></div>
 
-<!-- ── Floating toolbar ── -->
+<!-- ── Toolbar ── -->
 <div class="toolbar">
   <button class="btn" id="pdf-btn" onclick="downloadCVAsPDF()">Download PDF</button>
   <a class="btn outline" href="anh_hao_nguyen_cv_data.json" download>Download JSON</a>
 </div>
 
-<!-- ── CV page ── -->
+<!-- ══════════════════════════════════════
+     CV PAGE
+     ══════════════════════════════════════ -->
 <div class="page">
 
-  <!-- Header -->
-  <div class="cv-name">Anh Hao Nguyen</div>
-
-  <div class="cv-contact">
-    <span>07704591076</span>
-    <span class="sep">|</span>
-    <a href="mailto:nguyen.anhhao.840@gmail.com">nguyen.anhhao.840@gmail.com</a>
-    <span class="sep">|</span>
-    <a href="https://github.com/RiverO2442" target="_blank">github.com/RiverO2442</a>
-    <span class="sep">|</span>
-    <a href="https://linkedin.com/in/RiverO2442" target="_blank">linkedin.com/in/RiverO2442</a>
-    <span class="sep">|</span>
-    <span>Lincoln, England</span>
+  <!-- ── Header ── -->
+  <div class="cv-header">
+    <div class="cv-name">Anh Hao Nguyen</div>
+    <div class="cv-title">Frontend Developer &nbsp;·&nbsp; MSc Computer Science Candidate</div>
+    <div class="cv-contact">
+      <span>07704591076</span>
+      <span class="sep">|</span>
+      <a href="mailto:nguyen.anhhao.840@gmail.com">nguyen.anhhao.840@gmail.com</a>
+      <span class="sep">|</span>
+      <a href="https://github.com/RiverO2442" target="_blank">github.com/RiverO2442</a>
+      <span class="sep">|</span>
+      <a href="https://linkedin.com/in/RiverO2442" target="_blank">linkedin.com/in/RiverO2442</a>
+      <span class="sep">|</span>
+      <span>Lincoln, England</span>
+    </div>
   </div>
 
   <hr class="header-rule" />
+  <hr class="header-rule-thin" />
 
-  <!-- Profile -->
+  <!-- ── Profile ── -->
   <section class="section">
     <div class="section-title">Profile</div>
     <p class="profile-text">
@@ -317,9 +362,9 @@
     </p>
   </section>
 
-  <!-- Skills -->
+  <!-- ── Technical Skills ── -->
   <section class="section">
-    <div class="section-title">Skills</div>
+    <div class="section-title">Technical Skills</div>
     <div class="skills-grid">
       <span class="sk-label">Frontend</span>
       <span class="sk-value">React.js, Vue.js, Angular, React Native, Tailwind CSS, React Bootstrap, Ant Design</span>
@@ -330,7 +375,7 @@
       <span class="sk-label">State Mgmt</span>
       <span class="sk-value">Redux, Redux Toolkit, React Query, Context API</span>
 
-      <span class="sk-label">Build Tooling</span>
+      <span class="sk-label">Build Tools</span>
       <span class="sk-value">Vite, Webpack, NPM, Yarn</span>
 
       <span class="sk-label">Testing</span>
@@ -341,13 +386,13 @@
     </div>
   </section>
 
-  <!-- Experience -->
+  <!-- ── Work Experience ── -->
   <section class="section">
     <div class="section-title">Work Experience</div>
 
     <div class="exp-entry">
-      <div class="exp-header">
-        <span class="exp-title">Frontend Developer — VETC</span>
+      <div class="exp-company-line">
+        <span class="exp-company">VETC &mdash; <span class="exp-role">Frontend Developer</span></span>
         <span class="exp-date">Mar 2024 – Jan 2025</span>
       </div>
       <ul class="exp-bullets">
@@ -358,12 +403,12 @@
         <li>Implemented internationalisation using React-i18next, enabling multi-language support and expanding product accessibility.</li>
         <li>Developed and contributed to a micro-frontend architecture, enabling modular development, independent deployments, and faster feature delivery.</li>
       </ul>
-      <div class="exp-tech"><strong>Technologies:</strong> React, React Query, React Bootstrap, Jest, React Testing Library</div>
+      <p class="exp-tech"><strong>Technologies:</strong> React, React Query, React Bootstrap, Jest, React Testing Library</p>
     </div>
 
     <div class="exp-entry">
-      <div class="exp-header">
-        <span class="exp-title">Frontend Developer — Unicloud</span>
+      <div class="exp-company-line">
+        <span class="exp-company">Unicloud &mdash; <span class="exp-role">Frontend Developer</span></span>
         <span class="exp-date">Jan 2022 – Dec 2023</span>
       </div>
       <ul class="exp-bullets">
@@ -372,21 +417,20 @@
         <li>Integrated frontend applications with RESTful APIs to display real-time financial data.</li>
         <li>Focused on performance, usability, and cross-browser compatibility in a production environment.</li>
       </ul>
-      <div class="exp-tech"><strong>Technologies:</strong> React, Redux, Ant Design, REST APIs</div>
+      <p class="exp-tech"><strong>Technologies:</strong> React, Redux, Ant Design, REST APIs</p>
     </div>
-
   </section>
 
-  <!-- Personal Projects -->
+  <!-- ── Personal Projects ── -->
   <section class="section">
     <div class="section-title">Personal Project</div>
 
     <div class="exp-entry">
-      <div class="exp-header">
-        <span class="exp-title">L.I.V.E &mdash; <em style="font-weight:400;font-style:italic;">Learn. Improve. Visualise. Empower</em></span>
+      <div class="exp-company-line">
+        <span class="exp-company">L.I.V.E &mdash; <span class="exp-role">Learn. Improve. Visualise. Empower</span></span>
         <span class="exp-date">Jun 2025 – Sep 2025</span>
       </div>
-      <p style="font-size:7.5px;color:var(--muted);margin-bottom:4px;line-height:1.5;">
+      <p class="proj-subtitle">
         Interactive Educational Platform on Diabetes Management through Gamification &middot; Full-stack web app &middot; MSc Computer Science project, University of Lincoln
       </p>
       <ul class="exp-bullets">
@@ -396,12 +440,11 @@
         <li>Implemented secure login + guest access, tracking user interactions for analytics and engagement.</li>
         <li>Demonstrated full ownership: from design, development, through testing, to a polished product.</li>
       </ul>
-      <div class="exp-tech"><strong>Tech:</strong> React, Vite, FastAPI, PostgreSQL, Docker, Azure, CI/CD</div>
+      <p class="exp-tech"><strong>Technologies:</strong> React, Vite, FastAPI, PostgreSQL, Docker, Azure, CI/CD</p>
     </div>
-
   </section>
 
-  <!-- Education -->
+  <!-- ── Education ── -->
   <section class="section">
     <div class="section-title">Education</div>
 
@@ -423,24 +466,21 @@
       </div>
       <div class="edu-right">
         <div class="edu-date">Aug 2018 – Jun 2022</div>
-        <div class="edu-grade">First Class</div>
+        <div class="edu-grade">First Class Honours</div>
       </div>
     </div>
-
   </section>
 
-  <!-- Footer -->
+  <!-- ── Footer ── -->
   <div class="cv-footer">
-    <span>ANH HAO NGUYEN · CV 2025</span>
-    <span>FRONTEND DEVELOPER</span>
+    <span>Anh Hao Nguyen &middot; CV 2025</span>
+    <span>Frontend Developer</span>
   </div>
 
-</div>
+</div><!-- /.page -->
 
 <script>
-// ─────────────────────────────────────────────────────────────────
-// Toast helper
-// ─────────────────────────────────────────────────────────────────
+// ── Toast ──────────────────────────────────────────────────────────────────
 function showToast(msg, ms) {
   var t = document.getElementById('toast');
   t.textContent = msg;
@@ -449,9 +489,7 @@ function showToast(msg, ms) {
   t._timer = setTimeout(function() { t.classList.remove('show'); }, ms || 2000);
 }
 
-// ─────────────────────────────────────────────────────────────────
-// Download PDF — html2canvas (visual) + pdf-lib (clickable links)
-// ─────────────────────────────────────────────────────────────────
+// ── Download PDF (html2canvas + pdf-lib with clickable links) ──────────────
 async function downloadCVAsPDF() {
   var btn = document.getElementById('pdf-btn');
   btn.disabled = true;
@@ -460,9 +498,9 @@ async function downloadCVAsPDF() {
 
   try {
     var cvPage = document.querySelector('.page');
-
-    // ── 1. Collect all link positions BEFORE canvas render ──────
     var pageRect = cvPage.getBoundingClientRect();
+
+    // Collect link positions before render
     var anchors  = Array.from(cvPage.querySelectorAll('a[href]'));
     var linkData = anchors.map(function(a) {
       var r = a.getBoundingClientRect();
@@ -475,25 +513,22 @@ async function downloadCVAsPDF() {
       };
     });
 
-    // ── 2. Render CV to canvas (2× for sharpness) ───────────────
+    // Render to canvas at 2× for crispness
     var canvas = await html2canvas(cvPage, {
       scale:           2,
       useCORS:         false,
       logging:         false,
       backgroundColor: '#ffffff',
-      // Force exact page dimensions so coordinates are reliable
       width:  pageRect.width,
       height: pageRect.height
     });
 
-    // ── 3. Create PDF with pdf-lib ───────────────────────────────
-    var A4_W = 595.28;   // A4 width  in PDF points
-    var A4_H = 841.89;   // A4 height in PDF points
-
+    // Build PDF
+    var A4_W = 595.28;
+    var A4_H = 841.89;
     var pdfDoc = await PDFLib.PDFDocument.create();
     var page   = pdfDoc.addPage([A4_W, A4_H]);
 
-    // ── 4. Embed canvas image as page background ─────────────────
     var imgDataUrl = canvas.toDataURL('image/png');
     var base64     = imgDataUrl.split(',')[1];
     var binStr     = atob(base64);
@@ -503,44 +538,36 @@ async function downloadCVAsPDF() {
     var embeddedImg = await pdfDoc.embedPng(imgBytes);
     page.drawImage(embeddedImg, { x: 0, y: 0, width: A4_W, height: A4_H });
 
-    // ── 5. Add clickable URI annotations for every link ──────────
-    // Scale factors: browser px → PDF points
+    // Add clickable link annotations
     var sx = A4_W / pageRect.width;
     var sy = A4_H / pageRect.height;
 
     linkData.forEach(function(ld) {
-      var pdfX  =  ld.left                  * sx;
-      var pdfY  = (pageRect.height - ld.top - ld.height) * sy;  // PDF origin = bottom-left
-      var pdfW  =  ld.width                 * sx;
-      var pdfH  =  ld.height                * sy;
+      var pdfX = ld.left * sx;
+      var pdfY = (pageRect.height - ld.top - ld.height) * sy;
+      var pdfW = ld.width  * sx;
+      var pdfH = ld.height * sy;
 
-      // Build URI Action dict
       var uriAction = pdfDoc.context.obj({
-        Type: 'Action',
-        S:    'URI',
+        Type: 'Action', S: 'URI',
         URI:  PDFLib.PDFString.of(ld.href)
       });
       var uriRef = pdfDoc.context.register(uriAction);
 
-      // Build Link Annotation dict referencing the action
       var annot = pdfDoc.context.obj({
-        Type:    'Annot',
-        Subtype: 'Link',
-        Rect:    [pdfX, pdfY, pdfX + pdfW, pdfY + pdfH],
-        Border:  [0, 0, 0],
-        A:       uriRef
+        Type: 'Annot', Subtype: 'Link',
+        Rect: [pdfX, pdfY, pdfX + pdfW, pdfY + pdfH],
+        Border: [0, 0, 0],
+        A: uriRef
       });
-      var annotRef = pdfDoc.context.register(annot);
-
-      page.node.addAnnot(annotRef);
+      page.node.addAnnot(pdfDoc.context.register(annot));
     });
 
-    // ── 6. Save and trigger download ─────────────────────────────
     var pdfBytes = await pdfDoc.save();
     var blob     = new Blob([pdfBytes], { type: 'application/pdf' });
     var url      = URL.createObjectURL(blob);
     var link     = document.createElement('a');
-    link.href     = url;
+    link.href = url;
     link.download = 'Anh_Hao_Nguyen_CV.pdf';
     document.body.appendChild(link);
     link.click();
