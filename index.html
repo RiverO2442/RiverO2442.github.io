@@ -458,7 +458,7 @@ function renderCV(data) {
     /* Header */
     '<div class="cv-header">',
     '  <div class="cv-name">' + p.full_name + '</div>',
-    '  <div class="cv-title">Frontend Developer &nbsp;&middot;&nbsp; MSc Computer Science Candidate</div>',
+    data.cv_subtitle ? '  <div class="cv-title">' + data.cv_subtitle + '</div>' : '  <div class="cv-title">Frontend Developer &nbsp;&middot;&nbsp; MSc Computer Science Candidate</div>',
     '  <div class="cv-contact">',
     (function() {
       var parts = [];
@@ -506,8 +506,8 @@ function renderCV(data) {
 
     /* Footer */
     '<div class="cv-footer">',
-    '  <span>' + p.full_name + ' &middot; CV 2025</span>',
-    '  <span>Frontend Developer</span>',
+    '  <span>' + p.full_name + ' &middot; ' + (data.cv_year || 'CV 2025') + '</span>',
+    '  <span>' + (data.cv_role || 'Frontend Developer') + '</span>',
     '</div>',
 
   ].join('\n');
