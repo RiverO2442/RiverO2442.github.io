@@ -368,14 +368,16 @@ function renderCV(data) {
   var sk = data.technical_skills;
 
   // ── Skills rows ─────────────────────────────────────────────
+  var lbl = data.skill_labels || {};
   var skillRows = [
-    { label: 'Frontend',    values: sk.frontend },
-    { label: 'Languages',   values: sk.languages },
-    { label: 'State Mgmt',  values: sk.state_management },
-    { label: 'Build Tools', values: sk.build_tooling },
-    { label: 'Testing',     values: sk.testing },
-    { label: 'Other',       values: sk.other },
-  ].map(function(row) {
+    { label: lbl.frontend         || 'Frontend',    values: sk.frontend         || [] },
+    { label: lbl.languages        || 'Languages',   values: sk.languages        || [] },
+    { label: lbl.state_management || 'State Mgmt',  values: sk.state_management || [] },
+    { label: lbl.build_tooling    || 'Build Tools', values: sk.build_tooling    || [] },
+    { label: lbl.testing          || 'Testing',     values: sk.testing          || [] },
+    { label: lbl.other            || 'Other',       values: sk.other            || [] },
+  ].filter(function(row) { return row.label && row.values && row.values.length > 0; })
+  .map(function(row) {
     return '<span class="sk-label">' + row.label + '</span>'
          + '<span class="sk-value">' + row.values.join(', ') + '</span>';
   }).join('\n');
@@ -386,7 +388,7 @@ function renderCV(data) {
       var bullets = job.responsibilities.map(function(r) {
         return '<li>' + enhance(r) + '</li>';
       }).join('\n');
-      var tech = job.technologies_used
+      var tech = job.technologies_used && job.technologies_used.length
         ? '<p class="exp-tech"><strong>Technologies:</strong> ' + job.technologies_used.join(', ') + '</p>'
         : '';
       var title = job.company
@@ -470,7 +472,7 @@ function renderCV(data) {
 
     /* Skills */
     '<section class="section">',
-    '  <div class="section-title">Technical Skills</div>',
+    '  <div class="section-title">' + (data.skills_section_title || 'Technical Skills') + '</div>',
     '  <div class="skills-grid">' + skillRows + '</div>',
     '</section>',
 
