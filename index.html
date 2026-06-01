@@ -460,15 +460,15 @@ function renderCV(data) {
     '  <div class="cv-name">' + p.full_name + '</div>',
     '  <div class="cv-title">Frontend Developer &nbsp;&middot;&nbsp; MSc Computer Science Candidate</div>',
     '  <div class="cv-contact">',
-    '    <span>' + p.phone + '</span>',
-    '    <span class="sep">|</span>',
-    '    <a href="mailto:' + p.email + '">' + p.email + '</a>',
-    '    <span class="sep">|</span>',
-    '    <a href="https://' + p.github + '" target="_blank">' + p.github + '</a>',
-    '    <span class="sep">|</span>',
-    '    <a href="https://' + p.linkedin + '" target="_blank">' + p.linkedin + '</a>',
-    '    <span class="sep">|</span>',
-    '    <span>' + p.location + '</span>',
+    (function() {
+      var parts = [];
+      if (p.phone)    parts.push('<span>' + p.phone + '</span>');
+      if (p.email)    parts.push('<a href="mailto:' + p.email + '">' + p.email + '</a>');
+      if (p.github)   parts.push('<a href="https://' + p.github + '" target="_blank">' + p.github + '</a>');
+      if (p.linkedin) parts.push('<a href="https://' + p.linkedin + '" target="_blank">' + p.linkedin + '</a>');
+      if (p.location) parts.push('<span>' + p.location + '</span>');
+      return '    ' + parts.join('<span class="sep">|</span>');
+    })(),
     '  </div>',
     '</div>',
 
