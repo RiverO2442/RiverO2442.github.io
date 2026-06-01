@@ -368,19 +368,30 @@ function renderCV(data) {
   var sk = data.technical_skills;
 
   // ── Skills rows ─────────────────────────────────────────────
-  var lbl = data.skill_labels || {};
-  var skillRows = [
-    { label: lbl.frontend         || 'Frontend',    values: sk.frontend         || [] },
-    { label: lbl.languages        || 'Languages',   values: sk.languages        || [] },
-    { label: lbl.state_management || 'State Mgmt',  values: sk.state_management || [] },
-    { label: lbl.build_tooling    || 'Build Tools', values: sk.build_tooling    || [] },
-    { label: lbl.testing          || 'Testing',     values: sk.testing          || [] },
-    { label: lbl.other            || 'Other',       values: sk.other            || [] },
-  ].filter(function(row) { return row.label && row.values && row.values.length > 0; })
-  .map(function(row) {
-    return '<span class="sk-label">' + row.label + '</span>'
-         + '<span class="sk-value">' + row.values.join(', ') + '</span>';
-  }).join('\n');
+  // If JSON provides a `skills` array [{label, values}] use it directly;
+  // otherwise fall back to the fixed technical_skills object mapping.
+  var skillRows;
+  if (Array.isArray(data.skills)) {
+    skillRows = data.skills
+      .filter(function(row) { return row.label && row.values && row.values.length > 0; })
+      .map(function(row) {
+        return '<span class="sk-label">' + row.label + '</span>'
+             + '<span class="sk-value">' + row.values.join(', ') + '</span>';
+      }).join('\n');
+  } else {
+    skillRows = [
+      { label: 'Frontend',    values: sk.frontend         || [] },
+      { label: 'Languages',   values: sk.languages        || [] },
+      { label: 'State Mgmt',  values: sk.state_management || [] },
+      { label: 'Build Tools', values: sk.build_tooling    || [] },
+      { label: 'Testing',     values: sk.testing          || [] },
+      { label: 'Other',       values: sk.other            || [] },
+    ].filter(function(row) { return row.values && row.values.length > 0; })
+    .map(function(row) {
+      return '<span class="sk-label">' + row.label + '</span>'
+           + '<span class="sk-value">' + row.values.join(', ') + '</span>';
+    }).join('\n');
+  }
 
   // ── Experience entries ───────────────────────────────────────
   function renderExp(jobs) {
