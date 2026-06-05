@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Anh Hao Nguyen — CV</title>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -369,7 +371,7 @@
   </label>
   <a class="btn outline" href="anh_hao_nguyen_cv_data.json" download>Download JSON</a>
   <a class="btn outline" href="cv-print.html" target="_blank">Open in new tab</a>
-  <button class="btn" onclick="saveAsPDF()">Save as PDF</button>
+  <button class="btn" id="pdf-btn" onclick="downloadCVAsPDF()">Download PDF</button>
 </div>
 
 <!-- ── CV page — populated by JS from JSON ── -->
@@ -715,62 +717,65 @@ function toggleSettings() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  SAVE AS PDF — clean popup, real text, fonts pre-loaded
+//  PDF download (html2canvas + pdf-lib) — direct download, no dialog
 // ═══════════════════════════════════════════════════════════════
-function saveAsPDF() {
-  // Snapshot current CSS variable values (respects live font settings)
-  var cs   = getComputedStyle(document.documentElement);
-  var vars = [
-    '--sz-name','--sz-title','--sz-contact','--sz-section',
-    '--sz-profile','--sz-skills','--sz-job','--sz-date',
-    '--sz-bullet','--sz-tech','--sz-edu','--sz-badge','--lh-body'
-  ].map(function(v) {
-    return v + ':' + cs.getPropertyValue(v).trim();
-  }).join(';');
+async function downloadCVAsPDF() {
+  var btn = document.getElementById('pdf-btn');
+  btn.disabled = true;
+  btn.textContent = 'Generating…';
+  showToast('Rendering page…', 8000);
 
-  var cvHTML  = document.getElementById('cv-page').innerHTML;
-  var rawCSS  = document.querySelector('style').textContent
-                  // strip the screen-only rules we don't need in print popup
-                  .replace(/\.toolbar[\s\S]*?}/g, '')
-                  .replace(/\.settings-panel[\s\S]*?}/g, '')
-                  .replace(/\.toast[\s\S]*?}/g, '')
-                  .replace(/\.btn[\s\S]*?}/g, '')
-                  .replace(/body\s*\{[\s\S]*?\}/g, '');
+  try {
+    var cvPage   = document.getElementById('cv-page');
+    var pageRect = cvPage.getBoundingClientRect();
 
-  var html = [
-    '<!DOCTYPE html><html><head>',
-    '<meta charset="UTF-8">',
-    '<link href="https://fonts.googleapis.com/css2?family=EB+Garamond',
-    ':ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">',
-    '<style>',
-    '*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}',
-    ':root{', vars, '}',
-    rawCSS,
-    'body{background:#d6d0c4;font-family:var(--serif);padding:24px 0 60px;}',
-    '.page{width:210mm;padding:14mm 18mm;margin:0 auto;background:#fff;}',
-    '.print-bar{position:fixed;bottom:0;left:0;right:0;background:#000;color:#fff;',
-    'display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 20px;',
-    'font-family:Georgia,serif;font-size:13px;z-index:999;}',
-    '.print-bar button{background:#fff;color:#000;border:none;padding:7px 20px;',
-    'font-family:Georgia,serif;font-size:13px;font-weight:700;cursor:pointer;}',
-    '.print-bar button:hover{background:#eee;}',
-    '@media print{.print-bar{display:none!important;} body{background:#fff;padding:0;}',
-    '@page{size:A4;margin:0;} .page{width:100%;padding:12mm 16mm;}}',
-    '</style></head><body>',
-    '<div class="page">', cvHTML, '</div>',
-    '<div class="print-bar">',
-    '  <span>In the dialog → set <strong>Destination</strong> to <strong>Save as PDF</strong></span>',
-    '  <button onclick="window.print()">🖨 Print / Save as PDF</button>',
-    '</div>',
-    '<script>',
-    'document.fonts.ready.then(function(){ window.focus(); window.print(); });',
-    '<\/script>',
-    '</body></html>'
-  ].join('');
+    var anchors  = Array.from(cvPage.querySelectorAll('a[href]'));
+    var linkData = anchors.map(function(a) {
+      var r = a.getBoundingClientRect();
+      return { href: a.getAttribute('href'), left: r.left - pageRect.left, top: r.top - pageRect.top, width: r.width, height: r.height };
+    });
 
-  var blob = new Blob([html], { type: 'text/html' });
-  var url  = URL.createObjectURL(blob);
-  window.open(url, '_blank');
+    var canvas = await html2canvas(cvPage, {
+      scale: 2, useCORS: false, logging: false,
+      backgroundColor: '#ffffff',
+      width: pageRect.width, height: pageRect.height
+    });
+
+    var A4_W = 595.28, A4_H = 841.89;
+    var pdfDoc = await PDFLib.PDFDocument.create();
+    var page   = pdfDoc.addPage([A4_W, A4_H]);
+
+    var imgBytes = (function(dataUrl) {
+      var b64 = dataUrl.split(',')[1], bin = atob(b64), bytes = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return bytes;
+    })(canvas.toDataURL('image/png'));
+
+    var img = await pdfDoc.embedPng(imgBytes);
+    page.drawImage(img, { x: 0, y: 0, width: A4_W, height: A4_H });
+
+    var sx = A4_W / pageRect.width, sy = A4_H / pageRect.height;
+    linkData.forEach(function(ld) {
+      var x = ld.left * sx, y = (pageRect.height - ld.top - ld.height) * sy, w = ld.width * sx, h = ld.height * sy;
+      var uriRef   = pdfDoc.context.register(pdfDoc.context.obj({ Type: 'Action', S: 'URI', URI: PDFLib.PDFString.of(ld.href) }));
+      var annotRef = pdfDoc.context.register(pdfDoc.context.obj({ Type: 'Annot', Subtype: 'Link', Rect: [x, y, x+w, y+h], Border: [0,0,0], A: uriRef }));
+      page.node.addAnnot(annotRef);
+    });
+
+    var blob = new Blob([await pdfDoc.save()], { type: 'application/pdf' });
+    var url  = URL.createObjectURL(blob);
+    var link = Object.assign(document.createElement('a'), { href: url, download: 'Anh_Hao_Nguyen_CV.pdf' });
+    document.body.appendChild(link); link.click(); document.body.removeChild(link);
+    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+    showToast('PDF downloaded — links are clickable!', 3000);
+
+  } catch (err) {
+    console.error(err);
+    showToast('Error: ' + (err.message || 'PDF generation failed'), 4000);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Download PDF';
+  }
 }
 </script>
 </body>
