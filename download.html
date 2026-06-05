@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CV — Anh Hao Nguyen</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:   #000000;
+      --body:  #111111;
+      --muted: #444444;
+      --rule:  #000000;
+      --serif: 'EB Garamond', Georgia, 'Times New Roman', serif;
+
+      --sz-name:    26px;
+      --sz-title:   11px;
+      --sz-contact: 10.5px;
+      --sz-section: 12.5px;
+      --sz-profile: 11px;
+      --sz-skills:  10.5px;
+      --sz-job:     11.5px;
+      --sz-date:    10.5px;
+      --sz-bullet:  10.5px;
+      --sz-tech:    10px;
+      --sz-edu:     10.5px;
+      --sz-badge:   9.5px;
+      --lh-body:    1.65;
+    }
+
+    body {
+      background: #fff;
+      font-family: var(--serif);
+      color: var(--body);
+    }
+
+    .page {
+      width: 210mm;
+      margin: 0 auto;
+      padding: 14mm 18mm;
+    }
+
+    /* ── Print button (hidden on print) ── */
+    .print-btn {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      font-family: var(--serif);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 16px;
+      background: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      letter-spacing: .05em;
+      z-index: 99;
+    }
+    .print-btn:hover { background: #333; }
+
+    /* ── Harvard Header ── */
+    .cv-header { text-align: center; margin-bottom: 10px; }
+    .cv-name { font-size: var(--sz-name); font-weight: 700; letter-spacing: .06em; line-height: 1.15; color: var(--ink); text-transform: uppercase; }
+    .cv-title { font-size: var(--sz-title); font-weight: 400; font-style: italic; color: var(--muted); margin-top: 3px; letter-spacing: .04em; }
+    .cv-contact { margin-top: 7px; font-size: var(--sz-contact); color: var(--muted); line-height: var(--lh-body); }
+    .cv-contact a { color: var(--muted); text-decoration: none; }
+    .cv-contact .sep { margin: 0 7px; }
+
+    .header-rule      { border: none; border-top: 3px solid var(--rule); margin-top: 10px; margin-bottom: 1px; }
+    .header-rule-thin { border: none; border-top: 1px solid var(--rule); margin-bottom: 12px; }
+
+    .section { margin-bottom: 12px; }
+    .section-title { font-size: var(--sz-section); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); border-bottom: 1.5px solid var(--ink); padding-bottom: 2px; margin-bottom: 8px; }
+
+    .profile-text { font-size: var(--sz-profile); line-height: var(--lh-body); color: var(--body); text-align: justify; }
+
+    .skills-grid { display: grid; grid-template-columns: 100px 1fr; row-gap: 3px; font-size: var(--sz-skills); line-height: var(--lh-body); }
+    .sk-label { font-weight: 600; color: var(--ink); }
+    .sk-value { color: var(--body); }
+
+    .exp-entry { margin-bottom: 10px; padding-left: 8px; border-left: 2px solid #e5e5e5; }
+    .exp-entry:last-child { margin-bottom: 0; }
+    .exp-company-line { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+    .exp-company { font-size: var(--sz-job); font-weight: 700; color: var(--ink); }
+    .exp-role    { font-size: var(--sz-job); font-weight: 700; font-style: italic; color: var(--ink); }
+    .exp-date    { font-size: var(--sz-date); font-style: italic; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+
+    .exp-bullets { list-style: none; margin-bottom: 4px; }
+    .exp-bullets li { font-size: var(--sz-bullet); line-height: var(--lh-body); color: var(--body); padding-left: 14px; position: relative; margin-bottom: 1px; text-align: justify; }
+    .exp-bullets li::before { content: '•'; position: absolute; left: 3px; color: var(--ink); font-size: var(--sz-bullet); }
+
+    .metric { font-weight: 700; color: #000; background: #fef9c3; padding: 0 1.5px; border-radius: 1px; }
+    .kw     { font-weight: 600; color: #1a1a1a; }
+    .hl     { font-weight: 700; color: #000; background: #fef9c3; padding: 0 1.5px; border-radius: 1px; }
+
+    .exp-tech { font-size: var(--sz-tech); color: var(--muted); font-style: italic; }
+    .exp-tech strong { font-weight: 600; font-style: normal; color: var(--ink); }
+
+    .proj-subtitle { font-size: var(--sz-tech); font-style: italic; color: var(--muted); margin-bottom: 4px; line-height: var(--lh-body); }
+
+    .edu-entry { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; gap: 8px; }
+    .edu-entry:last-child { margin-bottom: 0; }
+    .edu-degree { font-size: var(--sz-job); font-weight: 700; color: var(--ink); }
+    .edu-inst   { font-size: var(--sz-edu); font-style: italic; color: var(--muted); margin-top: 1px; }
+    .edu-right  { text-align: right; flex-shrink: 0; }
+    .edu-date   { font-size: var(--sz-date); font-style: italic; color: var(--muted); }
+    .edu-grade  { font-size: var(--sz-edu); font-weight: 700; color: var(--ink); margin-top: 2px; }
+
+    .grade-badge { display: inline-block; font-size: var(--sz-badge); font-weight: 700; letter-spacing: .04em; padding: 1px 5px; border: 1px solid #000; border-radius: 2px; color: #000; }
+
+    .cv-footer { border-top: 1px solid #bbb; margin-top: 14px; padding-top: 5px; display: flex; justify-content: space-between; }
+    .cv-footer span { font-size: 7px; color: #bbb; letter-spacing: .12em; text-transform: uppercase; font-style: italic; }
+
+    @media print {
+      .print-btn { display: none !important; }
+      @page { size: A4; margin: 0; }
+      .page { width: 100%; padding: 12mm 16mm; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+<div class="page" id="cv-page"></div>
+
+<script>
+var _metricsRE = null;
+var _techRE    = null;
+
+function buildHighlighters(data) {
+  var highlights = (data && data.highlights) || {};
+  _metricsRE = highlights.metrics_regex
+    ? new RegExp(highlights.metrics_regex, 'g')
+    : /(~?\$?\d+(?:,\d+)*\.?\d*\s*[×x%+]?(?:\s*years?)?(?:\s*months?)?|\d+\+?\s*years?)/g;
+
+  var keywords = [], seen = {};
+  function addKw(kw) {
+    kw = (kw || '').trim();
+    if (!kw || seen[kw.toLowerCase()]) return;
+    seen[kw.toLowerCase()] = true;
+    keywords.push(kw);
+  }
+  var sk = data && data.technical_skills;
+  if (sk) {
+    Object.keys(sk).forEach(function(cat) {
+      var arr = sk[cat];
+      if (!Array.isArray(arr)) return;
+      arr.forEach(function(item) {
+        addKw(item);
+        addKw(item.replace(/\s*\([^)]*\)/g, ''));
+      });
+    });
+  }
+  if (keywords.length) {
+    var escaped = keywords
+      .sort(function(a, b) { return b.length - a.length; })
+      .map(function(k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
+    _techRE = new RegExp('\\b(' + escaped.join('|') + ')\\b', 'gi');
+  }
+}
+
+function enhance(text) {
+  var out = text.replace(/hl\{([^}]+)\}/g, '<span class="hl">$1</span>');
+  if (_metricsRE || _techRE) {
+    out = out.replace(/(<[^>]+>)|([^<]+)/g, function(_, tag, txt) {
+      if (tag) return tag;
+      var t = txt;
+      if (_metricsRE) { _metricsRE.lastIndex = 0; t = t.replace(_metricsRE, '<mark class="metric">$&</mark>'); }
+      if (_techRE)    { _techRE.lastIndex = 0;    t = t.replace(_techRE, '<span class="kw">$1</span>'); }
+      return t;
+    });
+  }
+  return out;
+}
+
+function renderCV(data) {
+  buildHighlighters(data);
+  var p  = data.personal_information;
+  var sk = data.technical_skills;
+
+  var skillRows = [
+    { label: 'Frontend',    values: sk.frontend         || [] },
+    { label: 'Languages',   values: sk.languages        || [] },
+    { label: 'State Mgmt',  values: sk.state_management || [] },
+    { label: 'Build Tools', values: sk.build_tooling    || [] },
+    { label: 'Testing',     values: sk.testing          || [] },
+    { label: 'Other',       values: sk.other            || [] },
+  ].filter(function(r) { return r.values.length > 0; })
+   .map(function(r) {
+     return '<span class="sk-label">' + r.label + '</span>'
+          + '<span class="sk-value">' + r.values.join(', ') + '</span>';
+   }).join('\n');
+
+  function renderExp(jobs) {
+    return jobs.map(function(job) {
+      var bullets = job.responsibilities.map(function(r) { return '<li>' + enhance(r) + '</li>'; }).join('\n');
+      var tech = job.technologies_used && job.technologies_used.length
+        ? '<p class="exp-tech"><strong>Technologies:</strong> ' + job.technologies_used.join(', ') + '</p>' : '';
+      var title = job.company
+        ? job.company + ' &mdash; <span class="exp-role">' + job.position + '</span>'
+        : '<span class="exp-role">' + job.position + '</span>';
+      return '<div class="exp-entry">'
+        + '<div class="exp-company-line"><span class="exp-company">' + title + '</span><span class="exp-date">' + job.duration + '</span></div>'
+        + '<ul class="exp-bullets">' + bullets + '</ul>' + tech + '</div>';
+    }).join('\n');
+  }
+
+  var projects = (data.personal_projects || []).map(function(proj) {
+    var bullets = proj.responsibilities.map(function(r) { return '<li>' + enhance(r) + '</li>'; }).join('\n');
+    var subtitle = proj.subtitle || proj.description
+      ? '<p class="proj-subtitle">' + (proj.subtitle ? proj.subtitle + ' &middot; ' : '') + (proj.description || '') + '</p>' : '';
+    var tech = proj.technologies_used
+      ? '<p class="exp-tech"><strong>Technologies:</strong> ' + proj.technologies_used.join(', ') + '</p>' : '';
+    return '<div class="exp-entry">'
+      + '<div class="exp-company-line"><span class="exp-company">' + proj.name
+      + (proj.subtitle ? ' &mdash; <span class="exp-role">' + proj.subtitle + '</span>' : '') + '</span>'
+      + '<span class="exp-date">' + proj.duration + '</span></div>'
+      + subtitle + '<ul class="exp-bullets">' + bullets + '</ul>' + tech + '</div>';
+  }).join('\n');
+
+  var education = (data.education || []).map(function(edu) {
+    return '<div class="edu-entry">'
+      + '<div><div class="edu-degree">' + edu.degree + '</div>'
+      + '<div class="edu-inst">' + edu.institution + ' &mdash; ' + edu.location + '</div></div>'
+      + '<div class="edu-right"><div class="edu-date">' + edu.duration + '</div>'
+      + '<div class="edu-grade"><span class="grade-badge">' + edu.grade + '</span></div></div>'
+      + '</div>';
+  }).join('\n');
+
+  var parts = [];
+  if (p.phone)    parts.push('<span>' + p.phone + '</span>');
+  if (p.email)    parts.push('<a href="mailto:' + p.email + '">' + p.email + '</a>');
+  if (p.github)   parts.push('<a href="https://' + p.github + '" target="_blank">' + p.github + '</a>');
+  if (p.linkedin) parts.push('<a href="https://' + p.linkedin + '" target="_blank">' + p.linkedin + '</a>');
+  if (p.location) parts.push('<span>' + p.location + '</span>');
+
+  document.getElementById('cv-page').innerHTML = [
+    '<div class="cv-header">',
+    '  <div class="cv-name">' + p.full_name + '</div>',
+    data.cv_subtitle ? '  <div class="cv-title">' + data.cv_subtitle + '</div>' : '',
+    '  <div class="cv-contact">' + parts.join('<span class="sep">|</span>') + '</div>',
+    '</div>',
+    '<hr class="header-rule"/><hr class="header-rule-thin"/>',
+    '<section class="section"><div class="section-title">Profile</div><p class="profile-text">' + enhance(data.profile) + '</p></section>',
+    '<section class="section"><div class="section-title">Technical Skills</div><div class="skills-grid">' + skillRows + '</div></section>',
+    '<section class="section"><div class="section-title">Work Experience</div>' + renderExp(data.work_experience) + '</section>',
+    data.personal_projects && data.personal_projects.length
+      ? '<section class="section"><div class="section-title">Personal Project</div>' + projects + '</section>' : '',
+    '<section class="section"><div class="section-title">Education</div>' + education + '</section>',
+    '<div class="cv-footer"><span>' + p.full_name + ' &middot; ' + (data.cv_year || 'CV 2026') + '</span><span>' + (data.cv_role || '') + '</span></div>',
+  ].join('\n');
+}
+
+fetch('anh_hao_nguyen_cv_data.json?v=' + Date.now())
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    renderCV(data);
+    document.fonts.ready.then(function() { window.print(); });
+  });
+</script>
+</body>
+</html>
