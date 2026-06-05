@@ -1,0 +1,35 @@
+{
+  "font": {
+    "family": "Calibri",
+    "files": {
+      "regular":     "calibri.ttf",
+      "bold":        "calibrib.ttf",
+      "italic":      "calibrii.ttf",
+      "bold_italic": "calibriz.ttf"
+    }
+  },
+  "sizes": {
+    "name":          20,
+    "contact":       10.5,
+    "section_title": 10.5,
+    "profile":       11,
+    "bullet":        11,
+    "job_title":     12,
+    "job_date":      10.5,
+    "tech_line":     10,
+    "skill_label":   10.5,
+    "skill_value":   10.5,
+    "edu_location":  10,
+    "edu_grade":     10,
+    "footer":        7
+  },
+  "layout": {
+    "line_height":        6.2,
+    "margin_left":        20,
+    "margin_right":       20,
+    "margin_top":         18,
+    "margin_bottom":      18,
+    "skill_label_width":  28,
+    "bullet_indent":      5
+  }
+}
