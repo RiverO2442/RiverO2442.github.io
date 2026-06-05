@@ -736,7 +736,7 @@ async function downloadCVAsPDF() {
     });
 
     var canvas = await html2canvas(cvPage, {
-      scale: 2, useCORS: false, logging: false,
+      scale: 3, useCORS: false, logging: false,
       backgroundColor: '#ffffff',
       width: pageRect.width, height: pageRect.height
     });
