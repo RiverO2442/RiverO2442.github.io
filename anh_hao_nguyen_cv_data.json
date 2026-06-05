@@ -7,17 +7,49 @@
     "phone": "07704591076",
     "email": "nguyen.anhhao.840@gmail.com",
     "github": "github.com/RiverO2442",
-    "linkedin": "linkedin.com/in/RiverO2442",
-    "location": "Lincoln, England"
+    "linkedin": "linkedin.com/in/anhhaonguyen",
+    "location": "London, England"
   },
-  "profile": "Software engineer with 2+ years of production experience building and owning systems hl{end-to-end} — from architecture to deployment. Currently completing an MSc in Computer Science at the University of Lincoln (Distinction). Integrates AI tools (Cursor, GitHub Copilot) deeply into the development workflow to move faster without sacrificing correctness. Comfortable across diverse stacks: React, Angular, FastAPI, PostgreSQL, Docker, Azure CI/CD. Driven by hl{simplicity}: questions every layer of complexity and holds work to a rising standard.",
+  "cv_subtitle": "Frontend Developer &nbsp;&middot;&nbsp; MSc Computer Science Candidate",
+  "cv_year": "CV 2026",
+  "cv_role": "Frontend Developer",
+  "profile": "Frontend developer with 2+ years building production applications — a real-time parking management platform and a live banking dashboard used by external partner banks. Currently completing an MSc in Computer Science at the University of Lincoln (Distinction). Interested in understanding how things work under the hood: hl{JavaScript engine behaviour, browser rendering, and HTTP} — and applying that to write reliable, performant UI. Builds with React and modern tooling; comfortable owning work from design through deployment.",
   "technical_skills": {
-    "frontend": ["React.js", "Angular", "Vue.js", "React Native", "Tailwind CSS", "React Bootstrap", "Ant Design"],
+    "frontend": [
+      "React.js",
+      "React Native",
+      "React Router",
+      "Tailwind CSS",
+      "shadcn/ui",
+      "React Bootstrap",
+      "Ant Design"
+    ],
     "languages": ["JavaScript (ES6+)", "TypeScript", "Python"],
-    "state_management": ["Redux", "Redux Toolkit", "React Query", "Context API"],
-    "build_tooling": ["Docker", "CI/CD (Azure Pipelines)", "Vite", "Webpack", "NPM", "Yarn"],
+    "state_management": [
+      "Redux",
+      "Redux Toolkit",
+      "React Query",
+      "Context API"
+    ],
+    "build_tooling": [
+      "Docker",
+      "CI/CD (Azure Pipelines)",
+      "Vite",
+      "Webpack",
+      "NPM",
+      "Yarn"
+    ],
     "testing": ["Jest", "Vitest", "React Testing Library"],
-    "other": ["RESTful APIs", "Micro-frontend architecture", "React-i18next", "Agile / Scrum"]
+    "other": [
+      "RESTful APIs",
+      "Micro-frontend architecture",
+      "Atomic Design",
+      "React-i18next",
+      "JavaScript engine (V8) internals",
+      "Browser rendering pipeline",
+      "HTTP / network fundamentals",
+      "Agile / Scrum"
+    ]
   },
   "work_experience": [
     {
@@ -25,23 +57,34 @@
       "company": "VETC",
       "duration": "Mar 2024 – Jan 2025",
       "responsibilities": [
-        "Integrated AI-assisted development tools (Cursor, GitHub Copilot) into the full team workflow — spec parsing, code generation, debugging — reducing average feature implementation time by ~25% while maintaining hl{correctness and reliability standards}.",
-        "Increased test coverage by 30% using Jest and Vitest, reducing production regressions by 15% across core modules — demonstrating hl{end-to-end ownership of quality}.",
-        "Contributed to a micro-frontend architecture that enabled hl{independent deployments}, modular development, and faster delivery across teams — simplifying a complex monolithic frontend.",
-        "Collaborated with backend engineers and BA teams to design scalable API flows, reducing integration issues through hl{clear interface contracts}.",
-        "Developed cross-platform features using React Native and implemented internationalisation via React-i18next, expanding product accessibility across multiple markets."
+        "Built the operator dashboard for a B2B parking management platform — enabling apartment and commercial clients to monitor space availability, manage automated ticket machines, and review transaction history across sites. Structured the UI using React Router for navigation and hl{Atomic Design} principles for component organisation.",
+        "Integrated the frontend with hardware APIs for automated entry and exit machines, handling real-time polling and async state to keep the UI synchronised with physical machine events.",
+        "Added test coverage with Jest and Vitest to previously untested core modules, establishing a regression baseline and catching integration issues before deployment.",
+        "Contributed to a micro-frontend architecture enabling independent deployments across separate product areas.",
+        "Built cross-platform mobile views using React Native for on-site operators, and implemented multi-language support via React-i18next."
       ],
-      "technologies_used": ["React", "React Query", "React Bootstrap", "Jest", "Vitest", "React Testing Library"]
+      "technologies_used": [
+        "React",
+        "React Router",
+        "React Native",
+        "React Query",
+        "Tailwind CSS",
+        "React Bootstrap",
+        "Jest",
+        "Vitest",
+        "React Testing Library",
+        "React-i18next"
+      ]
     },
     {
       "position": "Frontend Developer",
       "company": "Unicloud",
       "duration": "Jan 2022 – Dec 2023",
       "responsibilities": [
-        "Built and maintained a hl{production banking platform} used by external partner banks — owning components from design through deployment in a high-reliability environment.",
-        "Developed reusable, scalable React components for dashboards, forms, and real-time financial data visualisation, with a focus on hl{simplicity and maintainability}.",
-        "Integrated frontend applications with RESTful APIs, collaborating closely with backend teams to ensure hl{data integrity and performance}.",
-        "Consistently prioritised cross-browser compatibility, performance, and usability in a live production codebase."
+        "Built and maintained components for a hl{production banking platform} used by external partner banks — working across transaction dashboards, data entry forms, and real-time financial data views.",
+        "Developed reusable React components following hl{Atomic Design} principles — structuring UI from atoms through to page-level compositions — to maintain consistency and long-term maintainability across the banking platform.",
+        "Integrated frontend with RESTful APIs, collaborating with backend teams to define interface contracts and maintain data consistency.",
+        "Maintained cross-browser compatibility and performance in a high-reliability, customer-facing codebase."
       ],
       "technologies_used": ["React", "Redux", "Ant Design", "REST APIs"]
     }
@@ -53,12 +96,23 @@
       "description": "Full-stack web application for gamified diabetes education — MSc Computer Science project, University of Lincoln. Sole owner from idea to production.",
       "duration": "Jun 2025 – Sep 2025",
       "responsibilities": [
-        "Took hl{full end-to-end ownership}: designed architecture, built the frontend (React/Vite) and backend (FastAPI/PostgreSQL), and deployed to Microsoft Azure — no handoffs.",
-        "Automated the entire build and deployment pipeline using Docker and Azure CI/CD, enabling hl{reliable, repeatable deployments} from day one.",
-        "Implemented secure authentication, guest access, and usage analytics — keeping the system hl{simple and purposeful} rather than over-engineered.",
-        "Delivered a polished, tested product on schedule, demonstrating the ability to operate with hl{startup-level agility} on an individual project."
+        "Took full ownership from idea to production: designed the architecture with hl{Atomic Design} component structure, built the frontend (React/Vite/Tailwind/shadcn) and backend (FastAPI/PostgreSQL), and deployed to Microsoft Azure.",
+        "Automated the build and deployment pipeline using Docker and Azure CI/CD, enabling reliable and repeatable deployments from day one.",
+        "Implemented secure authentication, guest access, and usage analytics.",
+        "Delivered a tested, working product on schedule as a solo project across the full stack."
       ],
-      "technologies_used": ["React", "Vite", "FastAPI", "PostgreSQL", "Docker", "Azure", "CI/CD"]
+      "technologies_used": [
+        "React",
+        "Vite",
+        "React Router",
+        "Tailwind CSS",
+        "shadcn/ui",
+        "FastAPI",
+        "PostgreSQL",
+        "Docker",
+        "Azure",
+        "CI/CD"
+      ]
     }
   ],
   "education": [
@@ -67,7 +121,7 @@
       "institution": "University of Lincoln",
       "location": "Lincoln, England",
       "duration": "Jan 2025 – Apr 2026",
-      "grade": "Distinction (In Progress)"
+      "grade": "Distinction"
     },
     {
       "degree": "B.E. in Software Engineering",
