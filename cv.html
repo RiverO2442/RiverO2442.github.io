@@ -368,7 +368,7 @@
     <input type="file" id="json-upload" accept=".json" onchange="handleJSONUpload(event)" />
   </label>
   <a class="btn outline" href="anh_hao_nguyen_cv_data.json" download>Download JSON</a>
-  <button class="btn" onclick="window.print()">Save as PDF</button>
+  <button class="btn" onclick="saveAsPDF()">Save as PDF</button>
 </div>
 
 <!-- ── CV page — populated by JS from JSON ── -->
@@ -713,6 +713,61 @@ function toggleSettings() {
   document.getElementById('settings-panel').classList.toggle('hidden');
 }
 
+// ═══════════════════════════════════════════════════════════════
+//  SAVE AS PDF — clean popup, real text, fonts pre-loaded
+// ═══════════════════════════════════════════════════════════════
+function saveAsPDF() {
+  // Snapshot current CSS variable values (respects live font settings)
+  var cs   = getComputedStyle(document.documentElement);
+  var vars = [
+    '--sz-name','--sz-title','--sz-contact','--sz-section',
+    '--sz-profile','--sz-skills','--sz-job','--sz-date',
+    '--sz-bullet','--sz-tech','--sz-edu','--sz-badge','--lh-body'
+  ].map(function(v) {
+    return v + ':' + cs.getPropertyValue(v).trim();
+  }).join(';');
+
+  var cvHTML  = document.getElementById('cv-page').innerHTML;
+  var rawCSS  = document.querySelector('style').textContent
+                  // strip the screen-only rules we don't need in print popup
+                  .replace(/\.toolbar[\s\S]*?}/g, '')
+                  .replace(/\.settings-panel[\s\S]*?}/g, '')
+                  .replace(/\.toast[\s\S]*?}/g, '')
+                  .replace(/\.btn[\s\S]*?}/g, '')
+                  .replace(/body\s*\{[\s\S]*?\}/g, '');
+
+  var html = [
+    '<!DOCTYPE html><html><head>',
+    '<meta charset="UTF-8">',
+    '<link href="https://fonts.googleapis.com/css2?family=EB+Garamond',
+    ':ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">',
+    '<style>',
+    '*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}',
+    ':root{', vars, '}',
+    rawCSS,
+    'body{background:#fff;font-family:var(--serif);}',
+    '.page{width:210mm;padding:14mm 18mm;margin:0 auto;box-shadow:none;}',
+    '@media print{@page{size:A4;margin:0;} .page{width:100%;padding:12mm 16mm;}}',
+    '</style></head><body>',
+    '<div class="page">', cvHTML, '</div>',
+    '<script>',
+    'document.fonts.ready.then(function(){',
+    '  window.focus();',
+    '  window.print();',
+    '  window.addEventListener("afterprint",function(){window.close();});',
+    '});<\/script>',
+    '</body></html>'
+  ].join('');
+
+  var popup = window.open('', '_blank', 'width=900,height=1100,menubar=no,toolbar=no');
+  if (!popup) {
+    showToast('Allow popups for this site, then try again', 4000);
+    return;
+  }
+  popup.document.open();
+  popup.document.write(html);
+  popup.document.close();
+}
 </script>
 </body>
 </html>
