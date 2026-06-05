@@ -16,6 +16,21 @@
       --muted: #444444;
       --rule:  #000000;
       --serif: 'EB Garamond', Georgia, 'Times New Roman', serif;
+
+      /* ── Font sizes (edit via settings panel or here) ── */
+      --sz-name:    26px;
+      --sz-title:   11px;
+      --sz-contact: 10.5px;
+      --sz-section: 12.5px;
+      --sz-profile: 11px;
+      --sz-skills:  10.5px;
+      --sz-job:     11.5px;
+      --sz-date:    10.5px;
+      --sz-bullet:  10.5px;
+      --sz-tech:    10px;
+      --sz-edu:     10.5px;
+      --sz-badge:   9.5px;
+      --lh-body:    1.65;
     }
 
     body {
@@ -89,7 +104,7 @@
     /* ── Harvard Header ── */
     .cv-header { text-align: center; margin-bottom: 10px; }
     .cv-name {
-      font-size: 26px;
+      font-size: var(--sz-name);
       font-weight: 700;
       letter-spacing: .06em;
       line-height: 1.15;
@@ -97,7 +112,7 @@
       text-transform: uppercase;
     }
     .cv-title {
-      font-size: 11px;
+      font-size: var(--sz-title);
       font-weight: 400;
       font-style: italic;
       color: var(--muted);
@@ -106,9 +121,9 @@
     }
     .cv-contact {
       margin-top: 7px;
-      font-size: 10.5px;
+      font-size: var(--sz-contact);
       color: var(--muted);
-      line-height: 1.7;
+      line-height: var(--lh-body);
     }
     .cv-contact a { color: var(--muted); text-decoration: none; }
     .cv-contact a:hover { text-decoration: underline; }
@@ -121,7 +136,7 @@
     /* ── Sections ── */
     .section { margin-bottom: 12px; }
     .section-title {
-      font-size: 12.5px;
+      font-size: var(--sz-section);
       font-weight: 700;
       letter-spacing: .12em;
       text-transform: uppercase;
@@ -132,10 +147,10 @@
     }
 
     /* ── Profile ── */
-    .profile-text { font-size: 11px; line-height: 1.7; color: var(--body); text-align: justify; }
+    .profile-text { font-size: var(--sz-profile); line-height: var(--lh-body); color: var(--body); text-align: justify; }
 
     /* ── Skills ── */
-    .skills-grid { display: grid; grid-template-columns: 100px 1fr; row-gap: 3px; font-size: 10.5px; line-height: 1.6; }
+    .skills-grid { display: grid; grid-template-columns: 100px 1fr; row-gap: 3px; font-size: var(--sz-skills); line-height: var(--lh-body); }
     .sk-label { font-weight: 600; color: var(--ink); }
     .sk-value { color: var(--body); }
 
@@ -153,21 +168,21 @@
       gap: 8px;
       margin-bottom: 4px;
     }
-    .exp-company { font-size: 11.5px; font-weight: 700; color: var(--ink); }
-    .exp-role    { font-size: 11.5px; font-weight: 700; font-style: italic; color: var(--ink); }
-    .exp-date    { font-size: 10.5px; font-style: italic; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+    .exp-company { font-size: var(--sz-job); font-weight: 700; color: var(--ink); }
+    .exp-role    { font-size: var(--sz-job); font-weight: 700; font-style: italic; color: var(--ink); }
+    .exp-date    { font-size: var(--sz-date); font-style: italic; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
 
     .exp-bullets { list-style: none; margin-bottom: 4px; }
     .exp-bullets li {
-      font-size: 10.5px;
-      line-height: 1.65;
+      font-size: var(--sz-bullet);
+      line-height: var(--lh-body);
       color: var(--body);
       padding-left: 14px;
       position: relative;
       margin-bottom: 1px;
       text-align: justify;
     }
-    .exp-bullets li::before { content: '•'; position: absolute; left: 3px; color: var(--ink); font-size: 10.5px; }
+    .exp-bullets li::before { content: '•'; position: absolute; left: 3px; color: var(--ink); font-size: var(--sz-bullet); }
 
     /* ── Highlighted metrics (numbers, %, $) ── */
     .metric {
@@ -193,10 +208,10 @@
       border-radius: 1px;
     }
 
-    .exp-tech { font-size: 10px; color: var(--muted); font-style: italic; }
+    .exp-tech { font-size: var(--sz-tech); color: var(--muted); font-style: italic; }
     .exp-tech strong { font-weight: 600; font-style: normal; color: var(--ink); }
 
-    .proj-subtitle { font-size: 10px; font-style: italic; color: var(--muted); margin-bottom: 4px; line-height: 1.5; }
+    .proj-subtitle { font-size: var(--sz-tech); font-style: italic; color: var(--muted); margin-bottom: 4px; line-height: var(--lh-body); }
 
     /* ── Education ── */
     .edu-entry {
@@ -207,16 +222,16 @@
       gap: 8px;
     }
     .edu-entry:last-child { margin-bottom: 0; }
-    .edu-degree { font-size: 11.5px; font-weight: 700; color: var(--ink); }
-    .edu-inst   { font-size: 10.5px; font-style: italic; color: var(--muted); margin-top: 1px; }
+    .edu-degree { font-size: var(--sz-job); font-weight: 700; color: var(--ink); }
+    .edu-inst   { font-size: var(--sz-edu); font-style: italic; color: var(--muted); margin-top: 1px; }
     .edu-right  { text-align: right; flex-shrink: 0; }
-    .edu-date   { font-size: 10.5px; font-style: italic; color: var(--muted); }
-    .edu-grade  { font-size: 10.5px; font-weight: 700; color: var(--ink); margin-top: 2px; }
+    .edu-date   { font-size: var(--sz-date); font-style: italic; color: var(--muted); }
+    .edu-grade  { font-size: var(--sz-edu); font-weight: 700; color: var(--ink); margin-top: 2px; }
 
     /* ── Grade badge ── */
     .grade-badge {
       display: inline-block;
-      font-size: 9.5px;
+      font-size: var(--sz-badge);
       font-weight: 700;
       font-style: normal;
       letter-spacing: .04em;
@@ -256,6 +271,55 @@
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+    /* ── Settings panel ── */
+    .settings-panel {
+      position: fixed;
+      top: 60px;
+      left: 20px;
+      background: #fff;
+      border: 1.5px solid #000;
+      padding: 16px 18px;
+      width: 220px;
+      z-index: 100;
+      font-family: var(--serif);
+      font-size: 11px;
+      box-shadow: 2px 2px 0 #000;
+    }
+    .settings-panel.hidden { display: none; }
+    .settings-panel h3 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #000;
+      padding-bottom: 6px;
+    }
+    .settings-row { margin-bottom: 10px; }
+    .settings-row label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3px;
+      color: #444;
+    }
+    .settings-row label span { font-weight: 700; color: #000; min-width: 36px; text-align: right; }
+    .settings-row input[type=range] { width: 100%; accent-color: #000; cursor: pointer; }
+    .settings-reset {
+      width: 100%;
+      margin-top: 4px;
+      font-family: var(--serif);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      padding: 5px;
+      border: 1px solid #000;
+      background: transparent;
+      cursor: pointer;
+    }
+    .settings-reset:hover { background: #000; color: #fff; }
+    @media print { .settings-panel, .toolbar { display: none !important; } }
+
     @media (max-width: 640px) {
       .page { padding: 20px; }
       .toolbar { top: 10px; right: 10px; }
@@ -268,8 +332,34 @@
 
 <div class="toast" id="toast"></div>
 
+<div class="settings-panel hidden" id="settings-panel">
+  <h3>Font Settings</h3>
+  <div class="settings-row">
+    <label>Body text <span id="val-body"></span></label>
+    <input type="range" id="sl-body" min="8" max="18" step="0.5" oninput="applySettings()">
+  </div>
+  <div class="settings-row">
+    <label>Headings <span id="val-job"></span></label>
+    <input type="range" id="sl-job" min="9" max="22" step="0.5" oninput="applySettings()">
+  </div>
+  <div class="settings-row">
+    <label>Section titles <span id="val-section"></span></label>
+    <input type="range" id="sl-section" min="9" max="20" step="0.5" oninput="applySettings()">
+  </div>
+  <div class="settings-row">
+    <label>Name <span id="val-name"></span></label>
+    <input type="range" id="sl-name" min="16" max="40" step="0.5" oninput="applySettings()">
+  </div>
+  <div class="settings-row">
+    <label>Line height <span id="val-lh"></span></label>
+    <input type="range" id="sl-lh" min="1.3" max="2.2" step="0.05" oninput="applySettings()">
+  </div>
+  <button class="settings-reset" onclick="resetSettings()">Reset to defaults</button>
+</div>
+
 <div class="toolbar">
   <a class="btn outline" href="index.html">← Portfolio</a>
+  <button class="btn outline" onclick="toggleSettings()">⚙ Font</button>
   <label class="btn-upload" title="Upload a JSON file to preview a tailored CV">
     ↑ Upload JSON
     <input type="file" id="json-upload" accept=".json" onchange="handleJSONUpload(event)" />
@@ -519,7 +609,7 @@ function renderCV(data) {
 // ═══════════════════════════════════════════════════════════════
 fetch('anh_hao_nguyen_cv_data.json?v=' + Date.now())
   .then(function(r) { return r.json(); })
-  .then(function(data) { renderCV(data); })
+  .then(function(data) { renderCV(data); initSettings(); })
   .catch(function(err) {
     document.getElementById('cv-page').innerHTML =
       '<p style="color:red;padding:20px;">Failed to load CV data: ' + err.message + '</p>';
@@ -559,6 +649,65 @@ function showToast(msg, ms) {
   t.classList.add('show');
   clearTimeout(t._timer);
   t._timer = setTimeout(function() { t.classList.remove('show'); }, ms || 2000);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FONT SETTINGS PANEL
+// ═══════════════════════════════════════════════════════════════
+var DEFAULTS = { body: 10.5, job: 11.5, section: 12.5, name: 26, lh: 1.65 };
+
+function initSettings() {
+  var s = JSON.parse(localStorage.getItem('cvFontSettings') || 'null') || DEFAULTS;
+  document.getElementById('sl-body').value    = s.body;
+  document.getElementById('sl-job').value     = s.job;
+  document.getElementById('sl-section').value = s.section;
+  document.getElementById('sl-name').value    = s.name;
+  document.getElementById('sl-lh').value      = s.lh;
+  applySettings();
+}
+
+function applySettings() {
+  var body    = parseFloat(document.getElementById('sl-body').value);
+  var job     = parseFloat(document.getElementById('sl-job').value);
+  var section = parseFloat(document.getElementById('sl-section').value);
+  var name    = parseFloat(document.getElementById('sl-name').value);
+  var lh      = parseFloat(document.getElementById('sl-lh').value);
+
+  var r = document.documentElement.style;
+  r.setProperty('--sz-body',    body    + 'px');
+  r.setProperty('--sz-profile', body    + 'px');
+  r.setProperty('--sz-bullet',  body    + 'px');
+  r.setProperty('--sz-skills',  body    + 'px');
+  r.setProperty('--sz-contact', body    + 'px');
+  r.setProperty('--sz-edu',     body    + 'px');
+  r.setProperty('--sz-date',    body    + 'px');
+  r.setProperty('--sz-tech',    (body - 0.5) + 'px');
+  r.setProperty('--sz-job',     job     + 'px');
+  r.setProperty('--sz-section', section + 'px');
+  r.setProperty('--sz-name',    name    + 'px');
+  r.setProperty('--lh-body',    lh);
+
+  document.getElementById('val-body').textContent    = body    + 'px';
+  document.getElementById('val-job').textContent     = job     + 'px';
+  document.getElementById('val-section').textContent = section + 'px';
+  document.getElementById('val-name').textContent    = name    + 'px';
+  document.getElementById('val-lh').textContent      = lh;
+
+  localStorage.setItem('cvFontSettings', JSON.stringify({ body, job, section, name, lh }));
+}
+
+function resetSettings() {
+  localStorage.removeItem('cvFontSettings');
+  document.getElementById('sl-body').value    = DEFAULTS.body;
+  document.getElementById('sl-job').value     = DEFAULTS.job;
+  document.getElementById('sl-section').value = DEFAULTS.section;
+  document.getElementById('sl-name').value    = DEFAULTS.name;
+  document.getElementById('sl-lh').value      = DEFAULTS.lh;
+  applySettings();
+}
+
+function toggleSettings() {
+  document.getElementById('settings-panel').classList.toggle('hidden');
 }
 
 // ═══════════════════════════════════════════════════════════════
