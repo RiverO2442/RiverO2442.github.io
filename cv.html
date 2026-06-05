@@ -767,14 +767,9 @@ function saveAsPDF() {
     '</body></html>'
   ].join('');
 
-  var popup = window.open('', '_blank', 'width=900,height=1100,menubar=no,toolbar=no');
-  if (!popup) {
-    showToast('Allow popups for this site, then try again', 4000);
-    return;
-  }
-  popup.document.open();
-  popup.document.write(html);
-  popup.document.close();
+  var blob = new Blob([html], { type: 'text/html' });
+  var url  = URL.createObjectURL(blob);
+  window.open(url, '_blank');
 }
 </script>
 </body>
