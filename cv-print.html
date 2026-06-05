@@ -15,27 +15,25 @@
       --rule:  #000000;
       --serif: 'EB Garamond', Georgia, 'Times New Roman', serif;
 
-      /* ── Font sizes (edit via settings panel or here) ── */
-      --sz-name:    26px;
-      --sz-title:   11px;
-      --sz-contact: 10.5px;
-      --sz-section: 12.5px;
-      --sz-profile: 11px;
-      --sz-skills:  10.5px;
-      --sz-job:     11.5px;
-      --sz-date:    10.5px;
-      --sz-bullet:  10.5px;
-      --sz-tech:    10px;
-      --sz-edu:     10.5px;
-      --sz-badge:   9.5px;
-      --lh-body:    1.65;
+      --sz-name:    15pt;
+      --sz-title:   8pt;
+      --sz-contact: 8pt;
+      --sz-section: 8.5pt;
+      --sz-profile: 9pt;
+      --sz-skills:  8.5pt;
+      --sz-job:     9.5pt;
+      --sz-date:    8pt;
+      --sz-bullet:  9pt;
+      --sz-tech:    8pt;
+      --sz-edu:     8.5pt;
+      --sz-badge:   7pt;
+      --lh-body:    1.5;
     }
 
     body {
-      background: #d6d0c4;
+      background: #fff;
       font-family: var(--serif);
       color: var(--body);
-      padding: 32px 0 60px;
     }
 
     /* ── CV page ── */
@@ -44,7 +42,6 @@
       margin: 0 auto;
       padding: 18mm 20mm;
       background: #fff;
-      box-shadow: 0 2px 16px rgba(0,0,0,.15);
     }
 
     /* ── Harvard Header ── */
@@ -195,29 +192,11 @@
       display: flex;
       justify-content: space-between;
     }
-    .cv-footer span { font-size: 7px; color: #bbb; letter-spacing: .12em; text-transform: uppercase; font-style: italic; }
+    .cv-footer span { font-size: 6pt; color: #bbb; letter-spacing: .12em; text-transform: uppercase; font-style: italic; }
 
     @media print {
       @page { size: A4; margin: 0; }
-      body { background: #fff; padding: 0; }
-      .page { width: 100%; padding: 12mm 16mm; box-shadow: none; }
-
-      /* ── Physical pt sizes — override px screen values ── */
-      :root {
-        --sz-name:    18pt;
-        --sz-title:   9pt;
-        --sz-contact: 8.5pt;
-        --sz-section: 9.5pt;
-        --sz-profile: 10pt;
-        --sz-skills:  9.5pt;
-        --sz-job:     10.5pt;
-        --sz-date:    9pt;
-        --sz-bullet:  10pt;
-        --sz-tech:    9pt;
-        --sz-edu:     9.5pt;
-        --sz-badge:   8pt;
-        --lh-body:    1.5;
-      }
+      .page { width: 100%; padding: 12mm 16mm; }
     }
   </style>
 </head>
