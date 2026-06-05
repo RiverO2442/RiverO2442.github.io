@@ -13,7 +13,7 @@
   "cv_subtitle": "Frontend Developer &nbsp;&middot;&nbsp; MSc Computer Science Candidate",
   "cv_year": "CV 2026",
   "cv_role": "Frontend Developer",
-  "profile": "Frontend developer with 2+ years building production applications — a real-time parking management platform and a live banking dashboard used by external partner banks. Currently completing an MSc in Computer Science at the University of Lincoln (Distinction). Interested in understanding how things work under the hood: hl{JavaScript engine behaviour, browser rendering, and HTTP} — and applying that to write reliable, performant UI. Builds with React and modern tooling; comfortable owning work from design through deployment.",
+  "profile": "Frontend developer with 2+ years building production applications — a real-time parking management platform and a live banking dashboard used by external partner banks. Currently completing an MSc in Computer Science at the University of Lincoln (Distinction). Interested in understanding how things work under the hood: JavaScript engine behaviour, browser rendering, and HTTP — and applying that to write reliable, performant UI. Builds with React and modern tooling; comfortable owning work from design through deployment.",
   "technical_skills": {
     "frontend": [
       "React.js",
