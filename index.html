@@ -3,624 +3,453 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anh Hao Nguyen — CV</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <title>Anh Hao Nguyen — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:   #000000;
-      --body:  #111111;
-      --muted: #444444;
-      --rule:  #000000;
-      --serif: 'EB Garamond', Georgia, 'Times New Roman', serif;
+      --bg:         #0c0c0c;
+      --surface:    #141414;
+      --border:     #252525;
+      --text:       #e0e0e0;
+      --muted:      #777;
+      --accent:     #c9a84c;
+      --accent-dim: rgba(201, 168, 76, 0.12);
+      --sans:       'Inter', system-ui, sans-serif;
+      --radius:     8px;
     }
 
+    html { scroll-behavior: smooth; }
     body {
-      background: #d6d0c4;
-      font-family: var(--serif);
-      color: var(--body);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Container ── */
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(12, 12, 12, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1060px; margin: 0 auto; padding: 0 24px;
+      height: 58px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 14px; font-weight: 700; letter-spacing: .1em;
+      color: var(--accent);
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cv {
+      font-size: 12px; font-weight: 600; letter-spacing: .05em;
+      padding: 7px 18px;
+      border: 1px solid var(--accent); color: var(--accent);
+      border-radius: 4px; transition: all .15s;
+    }
+    .nav-cv:hover { background: var(--accent); color: #000; }
+
+    /* ── Hero ── */
+    .hero {
       min-height: 100vh;
-      padding: 40px 16px 80px;
+      display: flex; align-items: center;
+      padding: 80px 0 60px;
+      position: relative; overflow: hidden;
     }
-
-    /* ── Toolbar ── */
-    .toolbar {
-      position: fixed;
-      top: 20px;
-      right: 24px;
-      display: flex;
-      gap: 10px;
-      z-index: 100;
-      align-items: center;
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 65% 55% at 65% 45%, rgba(201,168,76,.07) 0%, transparent 68%);
+      pointer-events: none;
     }
-    .btn {
-      font-family: var(--serif);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .06em;
-      padding: 7px 18px;
-      border: 1.5px solid #000;
-      background: #000;
-      color: #fff;
-      cursor: pointer;
-      transition: background .15s;
-      text-decoration: none;
-      display: inline-block;
+    .hero-content { position: relative; }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 22px;
     }
-    .btn:hover { background: #333; }
-    .btn.outline { background: transparent; color: #000; }
-    .btn.outline:hover { background: #000; color: #fff; }
-    .btn:disabled { opacity: .5; cursor: not-allowed; }
-
-    /* ── Upload label as button ── */
-    .btn-upload {
-      font-family: var(--serif);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .06em;
-      padding: 7px 18px;
-      border: 1.5px solid #555;
-      background: #fff;
-      color: #333;
-      cursor: pointer;
+    .hero-name {
+      font-size: clamp(52px, 9vw, 88px);
+      font-weight: 700; line-height: 1.04; letter-spacing: -.025em;
+      color: #fff; margin-bottom: 18px;
+    }
+    .hero-role {
+      font-size: clamp(15px, 2.2vw, 18px);
+      color: var(--muted); margin-bottom: 22px; letter-spacing: .01em;
+    }
+    .hero-desc {
+      font-size: 15px; color: var(--muted); max-width: 480px;
+      line-height: 1.8; margin-bottom: 40px;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      font-size: 13px; font-weight: 600; letter-spacing: .04em;
+      padding: 12px 28px;
+      background: var(--accent); color: #000; border-radius: 4px;
+      transition: opacity .15s;
+    }
+    .btn-primary:hover { opacity: .82; }
+    .btn-ghost {
+      font-size: 13px; font-weight: 600; letter-spacing: .04em;
+      padding: 12px 28px;
+      border: 1px solid var(--border); color: var(--muted); border-radius: 4px;
       transition: all .15s;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
     }
-    .btn-upload:hover { background: #f5f5f5; border-color: #000; color: #000; }
-    #json-upload { display: none; }
+    .btn-ghost:hover { border-color: var(--text); color: var(--text); }
 
-    /* ── CV page ── */
-    .page {
-      background: #fff;
-      width: 210mm;
-      max-width: 100%;
-      padding: 18mm 20mm 18mm 20mm;
-      box-shadow: 0 4px 40px rgba(0,0,0,.18);
+    /* ── Section shared ── */
+    section { padding: 96px 0; }
+    .section-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 10px;
     }
-
-    /* ── Harvard Header ── */
-    .cv-header { text-align: center; margin-bottom: 10px; }
-    .cv-name {
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: .06em;
-      line-height: 1.15;
-      color: var(--ink);
-      text-transform: uppercase;
-    }
-    .cv-title {
-      font-size: 11px;
-      font-weight: 400;
-      font-style: italic;
-      color: var(--muted);
-      margin-top: 3px;
-      letter-spacing: .04em;
-    }
-    .cv-contact {
-      margin-top: 7px;
-      font-size: 9px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-    .cv-contact a { color: var(--muted); text-decoration: none; }
-    .cv-contact a:hover { text-decoration: underline; }
-    .cv-contact .sep { margin: 0 7px; }
-
-    /* ── Double rule ── */
-    .header-rule      { border: none; border-top: 3px solid var(--rule); margin-top: 10px; margin-bottom: 1px; }
-    .header-rule-thin { border: none; border-top: 1px solid var(--rule); margin-bottom: 12px; }
-
-    /* ── Sections ── */
-    .section { margin-bottom: 12px; }
     .section-title {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--ink);
-      border-bottom: 1.5px solid var(--ink);
-      padding-bottom: 2px;
-      margin-bottom: 8px;
+      font-size: clamp(26px, 4vw, 36px); font-weight: 700;
+      color: #fff; margin-bottom: 48px; line-height: 1.15;
     }
-
-    /* ── Profile ── */
-    .profile-text { font-size: 9.5px; line-height: 1.7; color: var(--body); text-align: justify; }
+    .divider { height: 1px; background: var(--border); }
 
     /* ── Skills ── */
-    .skills-grid { display: grid; grid-template-columns: 100px 1fr; row-gap: 3px; font-size: 9px; line-height: 1.6; }
-    .sk-label { font-weight: 600; color: var(--ink); }
-    .sk-value { color: var(--body); }
+    .skills-list { display: flex; flex-direction: column; gap: 18px; }
+    .skill-row { display: flex; align-items: flex-start; gap: 20px; }
+    .skill-cat {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted); min-width: 88px; flex-shrink: 0; padding-top: 5px;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-size: 12px; font-weight: 500;
+      padding: 4px 13px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; color: var(--text);
+      transition: all .15s;
+    }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Projects ── */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 28px 24px;
+      display: flex; flex-direction: column;
+      transition: border-color .2s, transform .2s;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .project-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 16px;
+    }
+    .project-icon { font-size: 26px; }
+    .project-gh {
+      font-size: 12px; font-weight: 600; color: var(--muted);
+      padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px;
+      transition: all .15s;
+    }
+    .project-gh:hover { color: var(--accent); border-color: var(--accent); }
+    .project-name { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .project-tagline { font-size: 12px; color: var(--accent); letter-spacing: .04em; margin-bottom: 14px; }
+    .project-desc { font-size: 13px; color: var(--muted); line-height: 1.75; flex: 1; margin-bottom: 22px; }
+    .project-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+    .chip {
+      font-size: 11px; font-weight: 600; letter-spacing: .03em;
+      padding: 3px 9px;
+      background: var(--accent-dim); border: 1px solid rgba(201,168,76,.22);
+      border-radius: 3px; color: var(--accent);
+    }
 
     /* ── Experience ── */
-    .exp-entry {
-      margin-bottom: 10px;
-      padding-left: 8px;
-      border-left: 2px solid #e5e5e5;
+    .exp-list { border-top: 1px solid var(--border); }
+    .exp-item {
+      display: grid; grid-template-columns: 155px 1fr;
+      gap: 0 36px; padding: 36px 0;
+      border-bottom: 1px solid var(--border);
     }
-    .exp-entry:last-child { margin-bottom: 0; }
-    .exp-company-line {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-    .exp-company { font-size: 10px; font-weight: 700; color: var(--ink); }
-    .exp-role    { font-size: 10px; font-weight: 700; font-style: italic; color: var(--ink); }
-    .exp-date    { font-size: 9px; font-style: italic; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
-
-    .exp-bullets { list-style: none; margin-bottom: 4px; }
+    .exp-date { font-size: 12px; color: var(--muted); padding-top: 3px; line-height: 1.5; }
+    .exp-role { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .exp-company { font-size: 13px; color: var(--accent); margin-bottom: 14px; }
+    .exp-bullets { list-style: none; }
     .exp-bullets li {
-      font-size: 9px;
-      line-height: 1.65;
-      color: var(--body);
-      padding-left: 14px;
-      position: relative;
-      margin-bottom: 1px;
-      text-align: justify;
+      font-size: 13px; color: var(--muted); line-height: 1.75;
+      padding-left: 16px; position: relative; margin-bottom: 5px;
     }
-    .exp-bullets li::before { content: '•'; position: absolute; left: 3px; color: var(--ink); font-size: 9px; }
+    .exp-bullets li::before { content: '–'; position: absolute; left: 0; color: var(--accent); }
+    .exp-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
 
-    /* ── Highlighted metrics (numbers, %, $) ── */
-    .metric {
-      font-weight: 700;
-      color: #000;
-      background: #fef9c3;          /* soft amber — visible in print */
-      padding: 0 1.5px;
-      border-radius: 1px;
+    /* ── Contact ── */
+    .contact-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 56px 48px; text-align: center;
     }
-
-    /* ── Highlighted tech keywords (auto from technical_skills) ── */
-    .kw {
-      font-weight: 600;
-      color: #1a1a1a;
+    .contact-title { font-size: 34px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .contact-sub {
+      font-size: 15px; color: var(--muted); margin-bottom: 36px;
+      max-width: 400px; margin-left: auto; margin-right: auto; line-height: 1.7;
     }
-
-    /* ── Explicit hl{...} markers in JSON content ── */
-    .hl {
-      font-weight: 700;
-      color: #000;
-      background: #fef9c3;
-      padding: 0 1.5px;
-      border-radius: 1px;
+    .contact-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .contact-link {
+      font-size: 13px; font-weight: 600; letter-spacing: .04em;
+      padding: 11px 22px; border: 1px solid var(--border); border-radius: 4px;
+      color: var(--muted); transition: all .15s;
     }
-
-    .exp-tech { font-size: 8.5px; color: var(--muted); font-style: italic; }
-    .exp-tech strong { font-weight: 600; font-style: normal; color: var(--ink); }
-
-    .proj-subtitle { font-size: 8.5px; font-style: italic; color: var(--muted); margin-bottom: 4px; line-height: 1.5; }
-
-    /* ── Education ── */
-    .edu-entry {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 7px;
-      gap: 8px;
-    }
-    .edu-entry:last-child { margin-bottom: 0; }
-    .edu-degree { font-size: 10px; font-weight: 700; color: var(--ink); }
-    .edu-inst   { font-size: 9px; font-style: italic; color: var(--muted); margin-top: 1px; }
-    .edu-right  { text-align: right; flex-shrink: 0; }
-    .edu-date   { font-size: 9px; font-style: italic; color: var(--muted); }
-    .edu-grade  { font-size: 9px; font-weight: 700; color: var(--ink); margin-top: 2px; }
-
-    /* ── Grade badge ── */
-    .grade-badge {
-      display: inline-block;
-      font-size: 8px;
-      font-weight: 700;
-      font-style: normal;
-      letter-spacing: .04em;
-      padding: 1px 5px;
-      border: 1px solid #000;
-      border-radius: 2px;
-      color: #000;
-    }
+    .contact-link:hover { border-color: var(--text); color: var(--text); }
+    .contact-link.primary { background: var(--accent); border-color: var(--accent); color: #000; }
+    .contact-link.primary:hover { opacity: .85; }
 
     /* ── Footer ── */
-    .cv-footer {
-      border-top: 1px solid #bbb;
-      margin-top: 14px;
-      padding-top: 5px;
-      display: flex;
-      justify-content: space-between;
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0; text-align: center;
     }
-    .cv-footer span { font-size: 7px; color: #bbb; letter-spacing: .12em; text-transform: uppercase; font-style: italic; }
+    footer span { font-size: 12px; color: var(--muted); }
 
-    /* ── Toast ── */
-    .toast {
-      position: fixed;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%) translateY(8px);
-      background: rgba(0,0,0,.85);
-      color: #fff;
-      font-family: var(--serif);
-      font-size: 12px;
-      padding: 10px 22px;
-      border-radius: 4px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .2s, transform .2s;
-      white-space: nowrap;
-      z-index: 200;
-    }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    /* ── Fade-in ── */
+    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
 
-    @media (max-width: 640px) {
-      .page { padding: 20px; }
-      .toolbar { top: 10px; right: 10px; }
-      .exp-company-line { flex-direction: column; gap: 1px; }
-      .edu-entry { flex-direction: column; gap: 2px; }
+    /* ── Mobile ── */
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      section { padding: 64px 0; }
+      .exp-item { grid-template-columns: 1fr; gap: 4px; }
+      .contact-box { padding: 36px 20px; }
+      .hero-btns { flex-direction: column; }
+      .btn-primary, .btn-ghost { text-align: center; }
     }
   </style>
 </head>
 <body>
 
-<div class="toast" id="toast"></div>
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">AHN</span>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-cv" href="cv.html">View CV</a>
+  </div>
+</nav>
 
-<div class="toolbar">
-  <label class="btn-upload" title="Upload a JSON file to preview a tailored CV">
-    ↑ Upload JSON
-    <input type="file" id="json-upload" accept=".json" onchange="handleJSONUpload(event)" />
-  </label>
-  <a class="btn outline" href="anh_hao_nguyen_cv_data.json" download>Download JSON</a>
-  <button class="btn" id="pdf-btn" onclick="downloadCVAsPDF()">Download PDF</button>
-</div>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="wrap hero-content fade-in">
+    <p class="hero-eyebrow">Portfolio</p>
+    <h1 class="hero-name">Anh Hao<br>Nguyen</h1>
+    <p class="hero-role">Software Developer &nbsp;·&nbsp; MSc Computer Science Candidate</p>
+    <p class="hero-desc">
+      2+ years shipping consumer and enterprise web products — from architecture to deployment.
+      Currently completing an MSc at the University of Lincoln (Distinction).
+      I care about clean code, good tests, and building things that actually work.
+    </p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="cv.html">View CV</a>
+      <a class="btn-ghost" href="https://github.com/RiverO2442" target="_blank">GitHub ↗</a>
+      <a class="btn-ghost" href="https://linkedin.com/in/anhhaonguyen" target="_blank">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
 
-<!-- ── CV page — populated by JS from JSON ── -->
-<div class="page" id="cv-page">
-  <p style="text-align:center;padding:40px;font-style:italic;color:#999;">Loading CV…</p>
-</div>
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <p class="section-eyebrow fade-in">Stack</p>
+    <h2 class="section-title fade-in">What I work with</h2>
+    <div class="skills-list fade-in">
+      <div class="skill-row">
+        <span class="skill-cat">Frontend</span>
+        <div class="skill-tags">
+          <span class="tag">React</span>
+          <span class="tag">Angular</span>
+          <span class="tag">Vue.js</span>
+          <span class="tag">React Native</span>
+          <span class="tag">Tailwind CSS</span>
+          <span class="tag">Ant Design</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Languages</span>
+        <div class="skill-tags">
+          <span class="tag">JavaScript (ES6+)</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">State</span>
+        <div class="skill-tags">
+          <span class="tag">Redux Toolkit</span>
+          <span class="tag">React Query</span>
+          <span class="tag">Context API</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Tooling</span>
+        <div class="skill-tags">
+          <span class="tag">Docker</span>
+          <span class="tag">Azure CI/CD</span>
+          <span class="tag">Vite</span>
+          <span class="tag">Webpack</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Testing</span>
+        <div class="skill-tags">
+          <span class="tag">Jest</span>
+          <span class="tag">Vitest</span>
+          <span class="tag">React Testing Library</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Backend</span>
+        <div class="skill-tags">
+          <span class="tag">FastAPI</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">RESTful APIs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <p class="section-eyebrow fade-in">Work</p>
+    <h2 class="section-title fade-in">Projects</h2>
+    <div class="projects-grid">
+
+      <div class="project-card fade-in">
+        <div class="project-header">
+          <span class="project-icon">🔬</span>
+          <a class="project-gh" href="https://github.com/RiverO2442" target="_blank">GitHub ↗</a>
+        </div>
+        <div class="project-name">L.I.V.E</div>
+        <div class="project-tagline">Learn · Improve · Visualise · Empower</div>
+        <p class="project-desc">
+          Full-stack web application for gamified diabetes education — MSc Computer Science project at the University of Lincoln.
+          Sole owner from idea to production: designed the architecture, built frontend and backend, automated CI/CD, and deployed to Azure.
+        </p>
+        <div class="project-chips">
+          <span class="chip">React</span>
+          <span class="chip">Vite</span>
+          <span class="chip">FastAPI</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">Docker</span>
+          <span class="chip">Azure</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <p class="section-eyebrow fade-in">Background</p>
+    <h2 class="section-title fade-in">Experience</h2>
+    <div class="exp-list">
+
+      <div class="exp-item fade-in">
+        <div class="exp-date">Mar 2024 – Jan 2025</div>
+        <div>
+          <div class="exp-role">Frontend Developer</div>
+          <div class="exp-company">VETC</div>
+          <ul class="exp-bullets">
+            <li>Increased test coverage by 30% using Jest &amp; Vitest, cutting production regressions by 15%.</li>
+            <li>Integrated AI dev tools (Cursor, GitHub Copilot) into the full team workflow, reducing feature implementation time by ~25%.</li>
+            <li>Contributed to a micro-frontend architecture enabling independent deployments across teams.</li>
+            <li>Built cross-platform features with React Native and shipped internationalisation via React-i18next.</li>
+          </ul>
+          <div class="exp-chips">
+            <span class="chip">React</span>
+            <span class="chip">React Query</span>
+            <span class="chip">Jest</span>
+            <span class="chip">Vitest</span>
+            <span class="chip">React Native</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item fade-in">
+        <div class="exp-date">Jan 2022 – Dec 2023</div>
+        <div>
+          <div class="exp-role">Frontend Developer</div>
+          <div class="exp-company">Unicloud</div>
+          <ul class="exp-bullets">
+            <li>Built and maintained a production banking platform used by external partner banks in a high-reliability environment.</li>
+            <li>Developed reusable React components for dashboards, forms, and real-time financial data visualisation.</li>
+            <li>Collaborated closely with backend teams to integrate RESTful APIs and ensure data integrity at scale.</li>
+          </ul>
+          <div class="exp-chips">
+            <span class="chip">React</span>
+            <span class="chip">Redux</span>
+            <span class="chip">Ant Design</span>
+            <span class="chip">REST APIs</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap fade-in">
+    <div class="contact-box">
+      <h2 class="contact-title">Let's talk</h2>
+      <p class="contact-sub">Open to new opportunities. Feel free to reach out by email or connect on LinkedIn.</p>
+      <div class="contact-links">
+        <a class="contact-link primary" href="mailto:nguyen.anhhao.840@gmail.com">
+          ✉&nbsp; nguyen.anhhao.840@gmail.com
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/anhhaonguyen" target="_blank">LinkedIn ↗</a>
+        <a class="contact-link" href="https://github.com/RiverO2442" target="_blank">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Anh Hao Nguyen &nbsp;·&nbsp; 2026</span>
+</footer>
 
 <script>
-// ═══════════════════════════════════════════════════════════════
-//  HIGHLIGHT HELPERS
-//  • metrics_regex  — from highlights.metrics_regex in JSON (config)
-//  • tech keywords  — auto-derived from technical_skills in JSON (content)
-// ═══════════════════════════════════════════════════════════════
-
-var _metricsRE = null;
-var _techRE    = null;
-
-function buildHighlighters(data) {
-  var highlights = (data && data.highlights) || {};
-
-  // ── 1. Metrics: regex from JSON config (or sensible default) ──
-  _metricsRE = highlights.metrics_regex
-    ? new RegExp(highlights.metrics_regex, 'g')
-    : /(~?\$?\d+(?:,\d+)*\.?\d*\s*[×x%+]?(?:\s*years?)?(?:\s*months?)?|\d+\+?\s*years?)/g;
-
-  // ── 2. Tech keywords: auto-built from technical_skills content ─
-  //  Every value in every skills array becomes a keyword.
-  //  Items like "JavaScript (ES6+)" also yield the clean form "JavaScript".
-  var keywords = [];
-  var seen = {};
-  function addKw(kw) {
-    kw = (kw || '').trim();
-    if (!kw || seen[kw.toLowerCase()]) return;
-    seen[kw.toLowerCase()] = true;
-    keywords.push(kw);
-  }
-
-  var sk = data && data.technical_skills;
-  if (sk) {
-    Object.keys(sk).forEach(function(cat) {
-      var arr = sk[cat];
-      if (!Array.isArray(arr)) return;
-      arr.forEach(function(item) {
-        addKw(item);
-        // Strip "(…)" version notes — "JavaScript (ES6+)" → "JavaScript"
-        addKw(item.replace(/\s*\([^)]*\)/g, ''));
-      });
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
     });
-  }
-
-  if (keywords.length) {
-    var escaped = keywords
-      .sort(function(a, b) { return b.length - a.length; }) // longest first → no partial shadowing
-      .map(function(k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
-    _techRE = new RegExp('\\b(' + escaped.join('|') + ')\\b', 'gi');
-  } else {
-    _techRE = null;
-  }
-}
-
-function enhance(text) {
-  // ── Step 1: convert explicit hl{...} markers in JSON content ──
-  var out = text.replace(/hl\{([^}]+)\}/g, '<span class="hl">$1</span>');
-
-  // ── Step 2: apply metric + keyword regexes to plain-text only ─
-  //  Split on HTML tags so we never double-wrap content already marked
-  if (_metricsRE || _techRE) {
-    out = out.replace(/(<[^>]+>)|([^<]+)/g, function(_, tag, txt) {
-      if (tag) return tag;          // HTML tag — pass through untouched
-      var t = txt;
-      if (_metricsRE) {
-        _metricsRE.lastIndex = 0;
-        t = t.replace(_metricsRE, function(m) { return '<mark class="metric">' + m + '</mark>'; });
-      }
-      if (_techRE) {
-        _techRE.lastIndex = 0;
-        t = t.replace(_techRE, '<span class="kw">$1</span>');
-      }
-      return t;
-    });
-  }
-  return out;
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  RENDER — builds the Harvard-style CV from the JSON data object
-// ═══════════════════════════════════════════════════════════════
-function renderCV(data) {
-  buildHighlighters(data);
-  var p  = data.personal_information;
-  var sk = data.technical_skills;
-
-  // ── Skills rows ─────────────────────────────────────────────
-  // If JSON provides a `skills` array [{label, values}] use it directly;
-  // otherwise fall back to the fixed technical_skills object mapping.
-  var skillRows;
-  if (Array.isArray(data.skills)) {
-    skillRows = data.skills
-      .filter(function(row) { return row.label && row.values && row.values.length > 0; })
-      .map(function(row) {
-        return '<span class="sk-label">' + row.label + '</span>'
-             + '<span class="sk-value">' + row.values.join(', ') + '</span>';
-      }).join('\n');
-  } else {
-    skillRows = [
-      { label: 'Frontend',    values: sk.frontend         || [] },
-      { label: 'Languages',   values: sk.languages        || [] },
-      { label: 'State Mgmt',  values: sk.state_management || [] },
-      { label: 'Build Tools', values: sk.build_tooling    || [] },
-      { label: 'Testing',     values: sk.testing          || [] },
-      { label: 'Other',       values: sk.other            || [] },
-    ].filter(function(row) { return row.values && row.values.length > 0; })
-    .map(function(row) {
-      return '<span class="sk-label">' + row.label + '</span>'
-           + '<span class="sk-value">' + row.values.join(', ') + '</span>';
-    }).join('\n');
-  }
-
-  // ── Experience entries ───────────────────────────────────────
-  function renderExp(jobs) {
-    return jobs.map(function(job) {
-      var bullets = job.responsibilities.map(function(r) {
-        return '<li>' + enhance(r) + '</li>';
-      }).join('\n');
-      var tech = job.technologies_used && job.technologies_used.length
-        ? '<p class="exp-tech"><strong>Technologies:</strong> ' + job.technologies_used.join(', ') + '</p>'
-        : '';
-      var title = job.company
-        ? job.company + ' &mdash; <span class="exp-role">' + job.position + '</span>'
-        : '<span class="exp-role">' + job.position + '</span>';
-      return '<div class="exp-entry">'
-        + '<div class="exp-company-line">'
-        +   '<span class="exp-company">' + title + '</span>'
-        +   '<span class="exp-date">' + job.duration + '</span>'
-        + '</div>'
-        + '<ul class="exp-bullets">' + bullets + '</ul>'
-        + tech
-        + '</div>';
-    }).join('\n');
-  }
-
-  // ── Projects ─────────────────────────────────────────────────
-  var projects = (data.personal_projects || []).map(function(proj) {
-    var bullets = proj.responsibilities.map(function(r) {
-      return '<li>' + enhance(r) + '</li>';
-    }).join('\n');
-    var subtitle = proj.subtitle || proj.description
-      ? '<p class="proj-subtitle">' + (proj.subtitle ? proj.subtitle + ' &middot; ' : '') + (proj.description || '') + '</p>'
-      : '';
-    var tech = proj.technologies_used
-      ? '<p class="exp-tech"><strong>Technologies:</strong> ' + proj.technologies_used.join(', ') + '</p>'
-      : '';
-    return '<div class="exp-entry">'
-      + '<div class="exp-company-line">'
-      +   '<span class="exp-company">' + proj.name + (proj.subtitle ? ' &mdash; <span class="exp-role">' + proj.subtitle + '</span>' : '') + '</span>'
-      +   '<span class="exp-date">' + proj.duration + '</span>'
-      + '</div>'
-      + subtitle
-      + '<ul class="exp-bullets">' + bullets + '</ul>'
-      + tech
-      + '</div>';
-  }).join('\n');
-
-  // ── Education ────────────────────────────────────────────────
-  var education = (data.education || []).map(function(edu) {
-    return '<div class="edu-entry">'
-      + '<div>'
-      +   '<div class="edu-degree">' + edu.degree + '</div>'
-      +   '<div class="edu-inst">' + edu.institution + ' &mdash; ' + edu.location + '</div>'
-      + '</div>'
-      + '<div class="edu-right">'
-      +   '<div class="edu-date">' + edu.duration + '</div>'
-      +   '<div class="edu-grade"><span class="grade-badge">' + edu.grade + '</span></div>'
-      + '</div>'
-      + '</div>';
-  }).join('\n');
-
-  // ── Assemble full HTML ────────────────────────────────────────
-  document.getElementById('cv-page').innerHTML = [
-
-    /* Header */
-    '<div class="cv-header">',
-    '  <div class="cv-name">' + p.full_name + '</div>',
-    data.cv_subtitle ? '  <div class="cv-title">' + data.cv_subtitle + '</div>' : '',
-    '  <div class="cv-contact">',
-    (function() {
-      var parts = [];
-      if (p.phone)    parts.push('<span>' + p.phone + '</span>');
-      if (p.email)    parts.push('<a href="mailto:' + p.email + '">' + p.email + '</a>');
-      if (p.github)   parts.push('<a href="https://' + p.github + '" target="_blank">' + p.github + '</a>');
-      if (p.linkedin) parts.push('<a href="https://' + p.linkedin + '" target="_blank">' + p.linkedin + '</a>');
-      if (p.location) parts.push('<span>' + p.location + '</span>');
-      return '    ' + parts.join('<span class="sep">|</span>');
-    })(),
-    '  </div>',
-    '</div>',
-
-    '<hr class="header-rule" />',
-    '<hr class="header-rule-thin" />',
-
-    /* Profile */
-    '<section class="section">',
-    '  <div class="section-title">Profile</div>',
-    '  <p class="profile-text">' + enhance(data.profile) + '</p>',
-    '</section>',
-
-    /* Skills */
-    '<section class="section">',
-    '  <div class="section-title">' + (data.skills_section_title || 'Technical Skills') + '</div>',
-    '  <div class="skills-grid">' + skillRows + '</div>',
-    '</section>',
-
-    /* Experience */
-    '<section class="section">',
-    '  <div class="section-title">Work Experience</div>',
-    renderExp(data.work_experience),
-    '</section>',
-
-    /* Projects */
-    data.personal_projects && data.personal_projects.length
-      ? '<section class="section"><div class="section-title">Personal Project</div>' + projects + '</section>'
-      : '',
-
-    /* Education */
-    '<section class="section">',
-    '  <div class="section-title">Education</div>',
-    education,
-    '</section>',
-
-    /* Footer */
-    '<div class="cv-footer">',
-    '  <span>' + p.full_name + ' &middot; ' + (data.cv_year || 'CV 2025') + '</span>',
-    '  <span>' + (data.cv_role || 'Frontend Developer') + '</span>',
-    '</div>',
-
-  ].join('\n');
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  BOOT — fetch JSON and render
-// ═══════════════════════════════════════════════════════════════
-fetch('anh_hao_nguyen_cv_data.json?v=' + Date.now())
-  .then(function(r) { return r.json(); })
-  .then(function(data) { renderCV(data); })
-  .catch(function(err) {
-    document.getElementById('cv-page').innerHTML =
-      '<p style="color:red;padding:20px;">Failed to load CV data: ' + err.message + '</p>';
-  });
-
-// ═══════════════════════════════════════════════════════════════
-//  UPLOAD — drag a tailored JSON onto the page to preview it
-// ═══════════════════════════════════════════════════════════════
-function handleJSONUpload(event) {
-  var file = event.target.files[0];
-  if (!file) return;
-  if (!file.name.endsWith('.json')) {
-    showToast('Please upload a .json file', 3000);
-    return;
-  }
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      var data = JSON.parse(e.target.result);
-      renderCV(data);
-      showToast('✓ CV updated from ' + file.name, 3000);
-    } catch (err) {
-      showToast('Invalid JSON: ' + err.message, 4000);
-    }
-  };
-  reader.readAsText(file);
-  // Reset so same file can be re-uploaded
-  event.target.value = '';
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  Toast
-// ═══════════════════════════════════════════════════════════════
-function showToast(msg, ms) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(function() { t.classList.remove('show'); }, ms || 2000);
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  PDF download (html2canvas + pdf-lib, clickable links)
-// ═══════════════════════════════════════════════════════════════
-async function downloadCVAsPDF() {
-  var btn = document.getElementById('pdf-btn');
-  btn.disabled = true;
-  btn.textContent = 'Generating…';
-  showToast('Rendering page…', 8000);
-
-  try {
-    var cvPage  = document.getElementById('cv-page');
-    var pageRect = cvPage.getBoundingClientRect();
-
-    var anchors  = Array.from(cvPage.querySelectorAll('a[href]'));
-    var linkData = anchors.map(function(a) {
-      var r = a.getBoundingClientRect();
-      return { href: a.getAttribute('href'), left: r.left - pageRect.left, top: r.top - pageRect.top, width: r.width, height: r.height };
-    });
-
-    var canvas = await html2canvas(cvPage, {
-      scale: 2, useCORS: false, logging: false,
-      backgroundColor: '#ffffff',
-      width: pageRect.width, height: pageRect.height
-    });
-
-    var A4_W = 595.28, A4_H = 841.89;
-    var pdfDoc = await PDFLib.PDFDocument.create();
-    var page   = pdfDoc.addPage([A4_W, A4_H]);
-
-    var imgBytes = (function(dataUrl) {
-      var b64 = dataUrl.split(',')[1], bin = atob(b64), bytes = new Uint8Array(bin.length);
-      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-      return bytes;
-    })(canvas.toDataURL('image/png'));
-
-    var img = await pdfDoc.embedPng(imgBytes);
-    page.drawImage(img, { x: 0, y: 0, width: A4_W, height: A4_H });
-
-    var sx = A4_W / pageRect.width, sy = A4_H / pageRect.height;
-    linkData.forEach(function(ld) {
-      var x = ld.left * sx, y = (pageRect.height - ld.top - ld.height) * sy, w = ld.width * sx, h = ld.height * sy;
-      var uriRef   = pdfDoc.context.register(pdfDoc.context.obj({ Type: 'Action', S: 'URI', URI: PDFLib.PDFString.of(ld.href) }));
-      var annotRef = pdfDoc.context.register(pdfDoc.context.obj({ Type: 'Annot', Subtype: 'Link', Rect: [x, y, x+w, y+h], Border: [0,0,0], A: uriRef }));
-      page.node.addAnnot(annotRef);
-    });
-
-    var blob = new Blob([await pdfDoc.save()], { type: 'application/pdf' });
-    var url  = URL.createObjectURL(blob);
-    var link = Object.assign(document.createElement('a'), { href: url, download: 'Anh_Hao_Nguyen_CV.pdf' });
-    document.body.appendChild(link); link.click(); document.body.removeChild(link);
-    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
-    showToast('PDF downloaded — links are clickable!', 3000);
-
-  } catch (err) {
-    console.error(err);
-    showToast('Error: ' + (err.message || 'PDF generation failed'), 4000);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Download PDF';
-  }
-}
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
 </script>
+
 </body>
 </html>
