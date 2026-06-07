@@ -22,9 +22,10 @@ MATERIAL  = r"D:\Work\material"
 CONFIG    = os.path.join(MATERIAL, "cv_config.json")
 
 # ── Colours ───────────────────────────────────────────────────────────────────
-INK   = (26,  26,  26)
-MUTED = (85,  85,  85)
-RULE  = (212, 212, 212)
+INK       = (26,  26,  26)
+MUTED     = (85,  85,  85)
+RULE      = (212, 212, 212)
+HIGHLIGHT = (255, 245, 100)
 
 
 def _load_config():
@@ -34,6 +35,12 @@ def _load_config():
 
 def _clean(text):
     return re.sub(r'hl\{([^}]+)\}', r'\1', str(text))
+
+
+def _parse_segments(text):
+    """Split text into [(content, is_highlighted), ...] on hl{} markers."""
+    parts = re.split(r'hl\{([^}]+)\}', str(text))
+    return [(parts[i], i % 2 == 1) for i in range(len(parts))]
 
 
 class CV(FPDF):
@@ -69,6 +76,21 @@ class CV(FPDF):
     def _gap(self, h=4):
         self.ln(h)
 
+    def _write_rich(self, text, size, color=INK):
+        """Write text inline; hl{} spans get a yellow highlight rect behind them."""
+        segments = _parse_segments(text)
+        self._set("", size, color)
+        for seg, highlighted in segments:
+            if not seg:
+                continue
+            if highlighted:
+                x, y = self.get_x(), self.get_y()
+                seg_w = self.get_string_width(seg)
+                self.set_fill_color(*HIGHLIGHT)
+                self.rect(x, y + 0.3, seg_w, self._lh() - 0.3, style='F')
+                self._set("", size, color)
+            self.write(self._lh(), seg)
+
     def _section_title(self, title):
         self._gap(3)
         self._set("B", self.sz["section_title"], MUTED)
@@ -77,16 +99,19 @@ class CV(FPDF):
         self._gap(3)
 
     def _para(self, text, size=None):
-        self._set("", size or self.sz["profile"])
-        self.multi_cell(self._W(), self._lh(), _clean(text), new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        sz = size or self.sz["profile"]
+        self._write_rich(text, sz)
+        self.ln()
+        self.set_x(self.l_margin)
 
     def _bullet(self, text):
         self._set("", self.sz["bullet"])
         indent = self.lay["bullet_indent"]
         self.set_x(self.l_margin + indent)
-        self.multi_cell(self._W() - indent, self._lh(),
-                        "—  " + _clean(text),
-                        new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        self.write(self._lh(), "—  ")
+        self._write_rich(text, self.sz["bullet"])
+        self.ln()
+        self.set_x(self.l_margin)
 
     def _row(self, left, right, lsize=None, rsize=None):
         lsize = lsize or self.sz["job_title"]
