@@ -62,7 +62,7 @@
         "Built the operator dashboard for a B2B parking management platform — enabling apartment and commercial clients to monitor space availability, manage automated ticket machines, and review transaction history across sites. Structured the UI using React Router for navigation and hl{Atomic Design} principles for component organisation.",
         "Integrated the frontend with hardware APIs for automated entry and exit machines, handling real-time polling and async state to keep the UI synchronised with physical machine events.",
         "Added test coverage with Jest and Vitest to previously untested core modules, establishing a regression baseline and catching integration issues before deployment.",
-        "Contributed to a micro-frontend architecture enabling independent deployments across separate product areas.",
+        "Structured the parking dashboard as an independent micro-frontend module, decoupling its deployment from other product areas and enabling releases without cross-team coordination.",
         "Built cross-platform mobile views using React Native for on-site operators, and implemented multi-language support via React-i18next."
       ],
       "technologies_used": [
@@ -82,9 +82,9 @@
           "name": "VETC Smart Parking",
           "description": "B2B parking management platform serving multiple partner sites",
           "responsibilities": [
-            "Built the web dashboard enabling multiple B2B partners (apartment complexes, commercial sites) to monitor parking space availability, manage automated entry/exit machines, and review transaction history across sites.",
-            "Developed a companion React Native mobile app for on-site operators, providing real-time access to gate status and transaction management from the parking floor.",
-            "Implemented multi-language support via React-i18next to serve operator teams across different partner locations."
+            "Web dashboard for B2B partners (apartment complexes, commercial sites) to monitor parking space availability, manage automated entry/exit machines, and review transaction history across sites.",
+            "Companion mobile app for on-site operators with real-time gate status and transaction management from the parking floor.",
+            "Multi-language support serving operator teams across different partner locations."
           ],
           "technologies_used": ["React.js", "React Native", "TypeScript", "JavaScript", "Vite", "Tailwind CSS", "React Bootstrap", "React Query", "RESTful APIs", "React-i18next"]
         }
@@ -95,10 +95,10 @@
       "company": "Unicloud",
       "duration": "Jan 2022 – Dec 2023",
       "responsibilities": [
-        "Built and maintained components for a hl{production banking platform} used by external partner banks — working across transaction dashboards, data entry forms, and real-time financial data views.",
+        "Built and owned the transaction dashboards, data entry forms, and real-time financial views on a hl{production banking platform} used by external partner banks.",
         "Developed reusable React components following hl{Atomic Design} principles — structuring UI from atoms through to page-level compositions — to maintain consistency and long-term maintainability across the banking platform.",
-        "Integrated frontend with RESTful APIs, collaborating with backend teams to define interface contracts and maintain data consistency.",
-        "Maintained cross-browser compatibility and performance in a high-reliability, customer-facing codebase."
+        "Integrated the frontend with RESTful APIs end-to-end — defining interface contracts with backend teams and owning the full data flow from request to rendered view.",
+        "Diagnosed and resolved cross-browser compatibility issues and performance regressions to keep the platform reliable across all supported browsers."
       ],
       "technologies_used": ["React", "Redux", "Ant Design", "REST APIs"],
       "projects": [
@@ -106,10 +106,9 @@
           "name": "KienLong Bank CMS",
           "description": "Internal transaction management platform for KienLong Bank operators",
           "responsibilities": [
-            "Built and maintained the operator-facing frontend for KienLong Bank's transaction CMS — enabling bank staff to view, monitor, and manage client transactions across the platform.",
-            "Monitored live system behaviour, diagnosed frontend errors, and applied fixes to maintain uninterrupted workflows for bank operators.",
-            "Reported and escalated operational incidents to relevant departments, coordinating cross-team resolution of frontend issues.",
-            "Built a companion employee management portal for KienLong Bank, supporting internal staff administration alongside the core CMS."
+            "Operator-facing platform for KienLong Bank staff to view, monitor, and manage client transactions in real time.",
+            "Live system monitoring with frontend error detection and an incident response workflow to maintain uninterrupted bank operations.",
+            "Companion employee management portal supporting internal staff administration alongside the core transaction CMS."
           ],
           "technologies_used": ["React.js", "TypeScript", "JavaScript", "Vite", "Tailwind CSS", "Ant Design", "RESTful APIs", "React-i18next"]
         }
