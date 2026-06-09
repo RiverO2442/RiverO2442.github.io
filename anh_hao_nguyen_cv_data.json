@@ -63,7 +63,8 @@
         "Integrated the frontend with hardware APIs for automated entry and exit machines, handling real-time polling and async state to keep the UI synchronised with physical machine events.",
         "Added test coverage with Jest and Vitest to previously untested core modules, establishing a regression baseline and catching integration issues before deployment.",
         "Structured the parking dashboard as an independent micro-frontend module, decoupling its deployment from other product areas and enabling releases without cross-team coordination.",
-        "Built cross-platform mobile views using React Native for on-site operators, and implemented multi-language support via React-i18next."
+        "Built cross-platform mobile views using React Native for on-site operators, and implemented multi-language support via React-i18next.",
+        "Integrated AI coding assistance (Claude) into the development workflow, cutting time on boilerplate and repetitive tasks and increasing personal delivery speed by hl{80%}."
       ],
       "technologies_used": [
         "React",
