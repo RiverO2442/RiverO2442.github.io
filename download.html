@@ -90,8 +90,6 @@
     .exp-bullets li { font-size: var(--sz-bullet); line-height: var(--lh-body); color: var(--body); padding-left: 14px; position: relative; margin-bottom: 1px; text-align: justify; }
     .exp-bullets li::before { content: '•'; position: absolute; left: 3px; color: var(--ink); font-size: var(--sz-bullet); }
 
-    .metric { background: #fef9c3; padding: 0 1.5px; border-radius: 1px; }
-    .kw     { color: #1a1a1a; }
     .hl     { background: #fef9c3; padding: 0 1.5px; border-radius: 1px; }
 
     .exp-tech { font-size: var(--sz-tech); color: var(--muted); font-style: italic; }
@@ -127,57 +125,11 @@
 <div class="page" id="cv-page"></div>
 
 <script>
-var _metricsRE = null;
-var _techRE    = null;
-
-function buildHighlighters(data) {
-  var highlights = (data && data.highlights) || {};
-  _metricsRE = highlights.metrics_regex
-    ? new RegExp(highlights.metrics_regex, 'g')
-    : /(~?\$?\d+(?:,\d+)*\.?\d*\s*[×x%+]?(?:\s*years?)?(?:\s*months?)?|\d+\+?\s*years?)/g;
-
-  var keywords = [], seen = {};
-  function addKw(kw) {
-    kw = (kw || '').trim();
-    if (!kw || seen[kw.toLowerCase()]) return;
-    seen[kw.toLowerCase()] = true;
-    keywords.push(kw);
-  }
-  var sk = data && data.technical_skills;
-  if (sk) {
-    Object.keys(sk).forEach(function(cat) {
-      var arr = sk[cat];
-      if (!Array.isArray(arr)) return;
-      arr.forEach(function(item) {
-        addKw(item);
-        addKw(item.replace(/\s*\([^)]*\)/g, ''));
-      });
-    });
-  }
-  if (keywords.length) {
-    var escaped = keywords
-      .sort(function(a, b) { return b.length - a.length; })
-      .map(function(k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
-    _techRE = new RegExp('\\b(' + escaped.join('|') + ')\\b', 'gi');
-  }
-}
-
 function enhance(text) {
-  var out = text.replace(/hl\{([^}]+)\}/g, '<span class="hl">$1</span>');
-  if (_metricsRE || _techRE) {
-    out = out.replace(/(<[^>]+>)|([^<]+)/g, function(_, tag, txt) {
-      if (tag) return tag;
-      var t = txt;
-      if (_metricsRE) { _metricsRE.lastIndex = 0; t = t.replace(_metricsRE, '<mark class="metric">$&</mark>'); }
-      if (_techRE)    { _techRE.lastIndex = 0;    t = t.replace(_techRE, '<span class="kw">$1</span>'); }
-      return t;
-    });
-  }
-  return out;
+  return text.replace(/hl\{([^}]+)\}/g, '<span class="hl">$1</span>');
 }
 
 function renderCV(data) {
-  buildHighlighters(data);
   var p  = data.personal_information;
   var sk = data.technical_skills;
 

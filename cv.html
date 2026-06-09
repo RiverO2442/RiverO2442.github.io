@@ -182,18 +182,6 @@
     }
     .exp-bullets li::before { content: '•'; position: absolute; left: 3px; color: var(--ink); font-size: var(--sz-bullet); }
 
-    /* ── Highlighted metrics (numbers, %, $) ── */
-    .metric {
-      background: #fef9c3;
-      padding: 0 1.5px;
-      border-radius: 1px;
-    }
-
-    /* ── Highlighted tech keywords (auto from technical_skills) ── */
-    .kw {
-      color: #1a1a1a;
-    }
-
     /* ── Explicit hl{...} markers in JSON content ── */
     .hl {
       background: #fef9c3;
@@ -380,81 +368,14 @@
 //  • tech keywords  — auto-derived from technical_skills in JSON (content)
 // ═══════════════════════════════════════════════════════════════
 
-var _metricsRE = null;
-var _techRE    = null;
-
-function buildHighlighters(data) {
-  var highlights = (data && data.highlights) || {};
-
-  // ── 1. Metrics: regex from JSON config (or sensible default) ──
-  _metricsRE = highlights.metrics_regex
-    ? new RegExp(highlights.metrics_regex, 'g')
-    : /(~?\$?\d+(?:,\d+)*\.?\d*\s*[×x%+]?(?:\s*years?)?(?:\s*months?)?|\d+\+?\s*years?)/g;
-
-  // ── 2. Tech keywords: auto-built from technical_skills content ─
-  //  Every value in every skills array becomes a keyword.
-  //  Items like "JavaScript (ES6+)" also yield the clean form "JavaScript".
-  var keywords = [];
-  var seen = {};
-  function addKw(kw) {
-    kw = (kw || '').trim();
-    if (!kw || seen[kw.toLowerCase()]) return;
-    seen[kw.toLowerCase()] = true;
-    keywords.push(kw);
-  }
-
-  var sk = data && data.technical_skills;
-  if (sk) {
-    Object.keys(sk).forEach(function(cat) {
-      var arr = sk[cat];
-      if (!Array.isArray(arr)) return;
-      arr.forEach(function(item) {
-        addKw(item);
-        // Strip "(…)" version notes — "JavaScript (ES6+)" → "JavaScript"
-        addKw(item.replace(/\s*\([^)]*\)/g, ''));
-      });
-    });
-  }
-
-  if (keywords.length) {
-    var escaped = keywords
-      .sort(function(a, b) { return b.length - a.length; }) // longest first → no partial shadowing
-      .map(function(k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
-    _techRE = new RegExp('\\b(' + escaped.join('|') + ')\\b', 'gi');
-  } else {
-    _techRE = null;
-  }
-}
-
 function enhance(text) {
-  // ── Step 1: convert explicit hl{...} markers in JSON content ──
-  var out = text.replace(/hl\{([^}]+)\}/g, '<span class="hl">$1</span>');
-
-  // ── Step 2: apply metric + keyword regexes to plain-text only ─
-  //  Split on HTML tags so we never double-wrap content already marked
-  if (_metricsRE || _techRE) {
-    out = out.replace(/(<[^>]+>)|([^<]+)/g, function(_, tag, txt) {
-      if (tag) return tag;          // HTML tag — pass through untouched
-      var t = txt;
-      if (_metricsRE) {
-        _metricsRE.lastIndex = 0;
-        t = t.replace(_metricsRE, function(m) { return '<mark class="metric">' + m + '</mark>'; });
-      }
-      if (_techRE) {
-        _techRE.lastIndex = 0;
-        t = t.replace(_techRE, '<span class="kw">$1</span>');
-      }
-      return t;
-    });
-  }
-  return out;
+  return text.replace(/hl\{([^}]+)\}/g, '<span class="hl">$1</span>');
 }
 
 // ═══════════════════════════════════════════════════════════════
 //  RENDER — builds the Harvard-style CV from the JSON data object
 // ═══════════════════════════════════════════════════════════════
 function renderCV(data) {
-  buildHighlighters(data);
   var p  = data.personal_information;
   var sk = data.technical_skills;
 
