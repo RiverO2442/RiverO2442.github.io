@@ -209,6 +209,8 @@
     .exp-tech { font-size: var(--sz-tech); color: var(--muted); font-style: italic; }
     .exp-tech strong { font-weight: 600; font-style: normal; color: var(--ink); }
 
+    .proj-company-tag { font-weight: 400; font-style: italic; color: var(--muted); font-size: var(--sz-date); }
+
     .proj-subtitle { font-size: var(--sz-tech); font-style: italic; color: var(--muted); margin-bottom: 4px; line-height: var(--lh-body); }
 
     /* ── Education ── */
@@ -510,6 +512,32 @@ function renderCV(data) {
     }).join('\n');
   }
 
+  function renderCompanyProjects(jobs) {
+    var entries = [];
+    jobs.forEach(function(job) {
+      (job.projects || []).forEach(function(proj) {
+        var pbullets = (proj.responsibilities || []).map(function(r) {
+          return '<li>' + enhance(r) + '</li>';
+        }).join('\n');
+        var ptech = proj.technologies_used && proj.technologies_used.length
+          ? '<p class="exp-tech"><strong>Technologies:</strong> ' + proj.technologies_used.join(', ') + '</p>' : '';
+        var pdesc = proj.description
+          ? '<p class="proj-subtitle">' + proj.description + '</p>' : '';
+        entries.push('<div class="exp-entry">'
+          + '<div class="exp-company-line">'
+          +   '<span class="exp-company">' + proj.name
+          +     ' <span class="proj-company-tag">@ ' + job.company + '</span>'
+          +   '</span>'
+          +   '<span class="exp-date">' + job.duration + '</span>'
+          + '</div>'
+          + pdesc
+          + '<ul class="exp-bullets">' + pbullets + '</ul>'
+          + ptech + '</div>');
+      });
+    });
+    return entries.join('\n');
+  }
+
   // ── Projects ─────────────────────────────────────────────────
   var projects = (data.personal_projects || []).map(function(proj) {
     var bullets = proj.responsibilities.map(function(r) {
@@ -587,7 +615,15 @@ function renderCV(data) {
     renderExp(data.work_experience),
     '</section>',
 
-    /* Projects */
+    /* Company Projects */
+    (function() {
+      var hasProjects = (data.work_experience || []).some(function(j) { return j.projects && j.projects.length; });
+      return hasProjects
+        ? '<section class="section"><div class="section-title">Projects</div>' + renderCompanyProjects(data.work_experience) + '</section>'
+        : '';
+    })(),
+
+    /* Personal Projects */
     data.personal_projects && data.personal_projects.length
       ? '<section class="section"><div class="section-title">Personal Project</div>' + projects + '</section>'
       : '',

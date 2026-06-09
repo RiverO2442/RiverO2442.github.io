@@ -22,7 +22,8 @@
       "Tailwind CSS",
       "shadcn/ui",
       "React Bootstrap",
-      "Ant Design"
+      "Ant Design",
+      "Responsive design"
     ],
     "languages": ["JavaScript (ES6+)", "TypeScript", "Python"],
     "state_management": [
@@ -44,6 +45,7 @@
       "RESTful APIs",
       "Micro-frontend architecture",
       "Atomic Design",
+      "Component-based architecture",
       "React-i18next",
       "JavaScript engine (V8) internals",
       "Browser rendering pipeline",
@@ -74,6 +76,18 @@
         "Vitest",
         "React Testing Library",
         "React-i18next"
+      ],
+      "projects": [
+        {
+          "name": "VETC Smart Parking",
+          "description": "B2B parking management platform serving multiple partner sites",
+          "responsibilities": [
+            "Built the web dashboard enabling multiple B2B partners (apartment complexes, commercial sites) to monitor parking space availability, manage automated entry/exit machines, and review transaction history across sites.",
+            "Developed a companion React Native mobile app for on-site operators, providing real-time access to gate status and transaction management from the parking floor.",
+            "Implemented multi-language support via React-i18next to serve operator teams across different partner locations."
+          ],
+          "technologies_used": ["React.js", "React Native", "TypeScript", "JavaScript", "Vite", "Tailwind CSS", "React Bootstrap", "React Query", "RESTful APIs", "React-i18next"]
+        }
       ]
     },
     {
@@ -86,7 +100,20 @@
         "Integrated frontend with RESTful APIs, collaborating with backend teams to define interface contracts and maintain data consistency.",
         "Maintained cross-browser compatibility and performance in a high-reliability, customer-facing codebase."
       ],
-      "technologies_used": ["React", "Redux", "Ant Design", "REST APIs"]
+      "technologies_used": ["React", "Redux", "Ant Design", "REST APIs"],
+      "projects": [
+        {
+          "name": "KienLong Bank CMS",
+          "description": "Internal transaction management platform for KienLong Bank operators",
+          "responsibilities": [
+            "Built and maintained the operator-facing frontend for KienLong Bank's transaction CMS — enabling bank staff to view, monitor, and manage client transactions across the platform.",
+            "Monitored live system behaviour, diagnosed frontend errors, and applied fixes to maintain uninterrupted workflows for bank operators.",
+            "Reported and escalated operational incidents to relevant departments, coordinating cross-team resolution of frontend issues.",
+            "Built a companion employee management portal for KienLong Bank, supporting internal staff administration alongside the core CMS."
+          ],
+          "technologies_used": ["React.js", "TypeScript", "JavaScript", "Vite", "Tailwind CSS", "Ant Design", "RESTful APIs", "React-i18next"]
+        }
+      ]
     }
   ],
   "personal_projects": [

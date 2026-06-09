@@ -225,6 +225,22 @@ def build(data: dict, output_path: str):
                 pdf._bullet(text.strip())
             if job.get("technologies_used"):
                 pdf._tech_line(job["technologies_used"])
+            for proj in job.get("projects", []):
+                pdf._gap(2)
+                pdf.set_draw_color(*RULE)
+                pdf.set_line_width(0.2)
+                pdf.line(pdf.l_margin, pdf.get_y(), pdf.w - pdf.r_margin, pdf.get_y())
+                pdf._gap(2)
+                pdf._set("BI", pdf.sz["job_title"])
+                pdf.cell(pdf._W(), pdf._lh(), f">>  {_clean(proj.get('name', ''))}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+                if proj.get("description"):
+                    pdf._set("I", pdf.sz["tech_line"], MUTED)
+                    pdf.multi_cell(pdf._W(), pdf._lh(), _clean(proj["description"]), new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+                pdf._gap(1)
+                for item in proj.get("responsibilities", []):
+                    pdf._bullet(item)
+                if proj.get("technologies_used"):
+                    pdf._tech_line(proj["technologies_used"])
             pdf._gap(3)
 
     # ── Personal Projects ─────────────────────────────────────────
