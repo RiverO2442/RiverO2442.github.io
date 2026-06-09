@@ -43,6 +43,7 @@
     "testing": ["Jest", "Vitest", "React Testing Library"],
     "other": [
       "RESTful APIs",
+      "NoSQL",
       "Micro-frontend architecture",
       "Atomic Design",
       "Component-based architecture",
