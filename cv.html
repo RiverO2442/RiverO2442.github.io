@@ -502,9 +502,10 @@ function renderCV(data) {
       var parts = [];
       if (p.phone)    parts.push('<span>' + p.phone + '</span>');
       if (p.email)    parts.push('<a href="mailto:' + p.email + '">' + p.email + '</a>');
-      if (p.github)   parts.push('<a href="https://' + p.github + '" target="_blank">' + p.github + '</a>');
-      if (p.linkedin) parts.push('<a href="https://' + p.linkedin + '" target="_blank">' + p.linkedin + '</a>');
-      if (p.location) parts.push('<span>' + p.location + '</span>');
+      if (p.github)    parts.push('<a href="https://' + p.github + '" target="_blank">' + p.github + '</a>');
+      if (p.linkedin)  parts.push('<a href="https://' + p.linkedin + '" target="_blank">' + p.linkedin + '</a>');
+      if (p.portfolio) parts.push('<a href="https://' + p.portfolio + '" target="_blank">' + p.portfolio + '</a>');
+      if (p.location)  parts.push('<span>' + p.location + '</span>');
       return '    ' + parts.join('<span class="sep">|</span>');
     })(),
     '  </div>',
