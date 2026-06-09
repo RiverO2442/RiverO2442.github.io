@@ -13,7 +13,7 @@
   "cv_subtitle": "Frontend Developer &nbsp;&middot;&nbsp; MSc Computer Science Candidate",
   "cv_year": "CV 2026",
   "cv_role": "Frontend Developer",
-  "profile": "Frontend developer with 2+ years building production applications — a real-time parking management platform and a live banking dashboard used by external partner banks. Currently completing an MSc in Computer Science at the University of Lincoln (Distinction). Interested in understanding how things work under the hood: JavaScript engine behaviour, browser rendering, and HTTP — and applying that to write reliable, performant UI. Builds with React and modern tooling; comfortable owning work from design through deployment.",
+  "profile": "Frontend developer with hl{2+ years} building hl{production applications} — a real-time parking management platform and a live banking dashboard used by external partner banks. Currently completing an MSc in Computer Science at the University of Lincoln (hl{Distinction}). Interested in understanding how things work under the hood: JavaScript engine behaviour, browser rendering, and HTTP — and applying that to write reliable, performant UI. Builds with React and modern tooling; comfortable owning work from design through deployment.",
   "technical_skills": {
     "frontend": [
       "React.js",
@@ -60,7 +60,7 @@
       "duration": "Mar 2024 – Jan 2025",
       "responsibilities": [
         "Built the operator dashboard for a B2B parking management platform — enabling apartment and commercial clients to monitor space availability, manage automated ticket machines, and review transaction history across sites. Structured the UI using React Router for navigation and hl{Atomic Design} principles for component organisation.",
-        "Integrated the frontend with hardware APIs for automated entry and exit machines, handling real-time polling and async state to keep the UI synchronised with physical machine events.",
+        "Integrated the frontend with hl{hardware APIs} for automated entry and exit machines, handling real-time polling and async state to keep the UI synchronised with physical machine events.",
         "Added test coverage with Jest and Vitest to previously untested core modules, establishing a regression baseline and catching integration issues before deployment.",
         "Structured the parking dashboard as an independent micro-frontend module, decoupling its deployment from other product areas and enabling releases without cross-team coordination.",
         "Built cross-platform mobile views using React Native for on-site operators, and implemented multi-language support via React-i18next.",
@@ -96,7 +96,7 @@
       "company": "Unicloud",
       "duration": "Jan 2022 – Dec 2023",
       "responsibilities": [
-        "Built and owned the transaction dashboards, data entry forms, and real-time financial views on a hl{production banking platform} used by external partner banks.",
+        "Built and owned the transaction dashboards, data entry forms, and real-time financial views on a hl{production banking platform} used by hl{external partner banks}.",
         "Developed reusable React components following hl{Atomic Design} principles — structuring UI from atoms through to page-level compositions — to maintain consistency and long-term maintainability across the banking platform.",
         "Integrated the frontend with RESTful APIs end-to-end — defining interface contracts with backend teams and owning the full data flow from request to rendered view.",
         "Diagnosed and resolved cross-browser compatibility issues and performance regressions to keep the platform reliable across all supported browsers."
@@ -123,10 +123,10 @@
       "description": "Full-stack web application for gamified diabetes education — MSc Computer Science project, University of Lincoln. Sole owner from idea to production.",
       "duration": "Jun 2025 – Sep 2025",
       "responsibilities": [
-        "Took full ownership from idea to production: designed the architecture with hl{Atomic Design} component structure, built the frontend (React/Vite/Tailwind/shadcn) and backend (FastAPI/PostgreSQL), and deployed to Microsoft Azure.",
+        "Took hl{full ownership from idea to production}: designed the architecture with hl{Atomic Design} component structure, built the frontend (React/Vite/Tailwind/shadcn) and backend (FastAPI/PostgreSQL), and deployed to Microsoft Azure.",
         "Automated the build and deployment pipeline using Docker and Azure CI/CD, enabling reliable and repeatable deployments from day one.",
         "Implemented secure authentication, guest access, and usage analytics.",
-        "Delivered a tested, working product on schedule as a solo project across the full stack."
+        "Delivered a tested, working product on schedule as a hl{solo project} across the full stack."
       ],
       "technologies_used": [
         "React",
