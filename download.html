@@ -265,13 +265,13 @@ function renderCV(data) {
     '<section class="section"><div class="section-title">Profile</div><p class="profile-text">' + enhance(data.profile) + '</p></section>',
     '<section class="section"><div class="section-title">Technical Skills</div><div class="skills-grid">' + skillRows + '</div></section>',
     '<section class="section"><div class="section-title">Work Experience</div>' + renderExp(data.work_experience) + '</section>',
+    data.personal_projects && data.personal_projects.length
+      ? '<section class="section"><div class="section-title">Personal Project</div>' + projects + '</section>' : '',
+    '<section class="section"><div class="section-title">Education</div>' + education + '</section>',
     (function() {
       var hasProjects = (data.work_experience || []).some(function(j) { return j.projects && j.projects.length; });
       return hasProjects ? '<section class="section"><div class="section-title">Projects</div>' + renderCompanyProjects(data.work_experience) + '</section>' : '';
     })(),
-    data.personal_projects && data.personal_projects.length
-      ? '<section class="section"><div class="section-title">Personal Project</div>' + projects + '</section>' : '',
-    '<section class="section"><div class="section-title">Education</div>' + education + '</section>',
     '<div class="cv-footer"><span>' + p.full_name + ' &middot; ' + (data.cv_year || 'CV 2026') + '</span><span>' + (data.cv_role || '') + '</span></div>',
   ].join('\n');
 }

@@ -136,7 +136,6 @@
 
     /* ── Highlighted tech keywords (auto from technical_skills) ── */
     .kw {
-      font-weight: 600;
       color: #1a1a1a;
     }
 
@@ -455,14 +454,6 @@ function renderCV(data) {
     renderExp(data.work_experience),
     '</section>',
 
-    /* Company Projects */
-    (function() {
-      var hasProjects = (data.work_experience || []).some(function(j) { return j.projects && j.projects.length; });
-      return hasProjects
-        ? '<section class="section"><div class="section-title">Projects</div>' + renderCompanyProjects(data.work_experience) + '</section>'
-        : '';
-    })(),
-
     /* Personal Projects */
     data.personal_projects && data.personal_projects.length
       ? '<section class="section"><div class="section-title">Personal Project</div>' + projects + '</section>'
@@ -473,6 +464,14 @@ function renderCV(data) {
     '  <div class="section-title">Education</div>',
     education,
     '</section>',
+
+    /* Company Projects */
+    (function() {
+      var hasProjects = (data.work_experience || []).some(function(j) { return j.projects && j.projects.length; });
+      return hasProjects
+        ? '<section class="section"><div class="section-title">Projects</div>' + renderCompanyProjects(data.work_experience) + '</section>'
+        : '';
+    })(),
 
     /* Footer */
     '<div class="cv-footer">',
