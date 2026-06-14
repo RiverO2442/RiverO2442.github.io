@@ -19,7 +19,8 @@
     { "id": "skills" },
     { "id": "education" },
     { "id": "experience" },
-    { "id": "personal_projects" }
+    { "id": "personal_projects" },
+    { "id": "company_projects" }
   ],
   "profile": "Frontend developer with hl{nearly 3 years} of production experience — built a real-time B2B parking management platform and a transaction system used by hl{external partner banks}. Completed an MSc in Computer Science at the University of Lincoln (hl{Distinction}). Works across the full React ecosystem; experienced in complex state management, hardware API integration, and diagnosing cross-browser and performance issues in live environments.",
   "technical_skills": {
