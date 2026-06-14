@@ -363,9 +363,7 @@
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  HIGHLIGHT HELPERS
-//  • metrics_regex  — from highlights.metrics_regex in JSON (config)
-//  • tech keywords  — auto-derived from technical_skills in JSON (content)
+//  HIGHLIGHT HELPER
 // ═══════════════════════════════════════════════════════════════
 
 function enhance(text) {
@@ -373,44 +371,87 @@ function enhance(text) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  RENDER — builds the Harvard-style CV from the JSON data object
+//  SECTION RENDERERS
+//  Add a new key to register a new section type.
+//  Each key: { default: fn, [styleName]: fn }
+//  Style is set per-section in the JSON: { "id": "skills", "style": "tags" }
 // ═══════════════════════════════════════════════════════════════
-function renderCV(data) {
-  var p  = data.personal_information;
-  var sk = data.technical_skills;
 
-  // ── Skills rows ─────────────────────────────────────────────
-  // If JSON provides a `skills` array [{label, values}] use it directly;
-  // otherwise fall back to the fixed technical_skills object mapping.
-  var skillRows;
-  if (Array.isArray(data.skills)) {
-    skillRows = data.skills
-      .filter(function(row) { return row.label && row.values && row.values.length > 0; })
-      .map(function(row) {
-        return '<span class="sk-label">' + row.label + '</span>'
-             + '<span class="sk-value">' + row.values.join(', ') + '</span>';
-      }).join('\n');
-  } else {
-    skillRows = [
-      { label: 'Frontend',    values: sk.frontend         || [] },
-      { label: 'Languages',   values: sk.languages        || [] },
-      { label: 'State Mgmt',  values: sk.state_management || [] },
-      { label: 'Build Tools', values: sk.build_tooling    || [] },
-      { label: 'Testing',     values: sk.testing          || [] },
-      { label: 'Other',       values: sk.other            || [] },
-    ].filter(function(row) { return row.values && row.values.length > 0; })
-    .map(function(row) {
-      return '<span class="sk-label">' + row.label + '</span>'
-           + '<span class="sk-value">' + row.values.join(', ') + '</span>';
-    }).join('\n');
+var RENDERERS = {};
+
+RENDERERS.profile = {
+  default: function(data) {
+    if (!data.profile) return '';
+    return '<section class="section">'
+      + '<div class="section-title">Profile</div>'
+      + '<p class="profile-text">' + enhance(data.profile) + '</p>'
+      + '</section>';
   }
+};
 
-  // ── Experience entries ───────────────────────────────────────
-  function renderExp(jobs) {
-    return jobs.map(function(job) {
-      var bullets = job.responsibilities.map(function(r) {
+RENDERERS.skills = {
+  default: function(data) {
+    var sk = data.technical_skills || {};
+    var rows;
+    if (Array.isArray(data.skills)) {
+      rows = data.skills
+        .filter(function(r) { return r.label && r.values && r.values.length; })
+        .map(function(r) {
+          return '<span class="sk-label">' + r.label + '</span>'
+               + '<span class="sk-value">' + r.values.join(', ') + '</span>';
+        }).join('');
+    } else {
+      rows = [
+        { label: 'Frontend',    values: sk.frontend         || [] },
+        { label: 'Languages',   values: sk.languages        || [] },
+        { label: 'State Mgmt',  values: sk.state_management || [] },
+        { label: 'Build Tools', values: sk.build_tooling    || [] },
+        { label: 'Testing',     values: sk.testing          || [] },
+        { label: 'Other',       values: sk.other            || [] },
+      ].filter(function(r) { return r.values.length; })
+       .map(function(r) {
+         return '<span class="sk-label">' + r.label + '</span>'
+              + '<span class="sk-value">' + r.values.join(', ') + '</span>';
+       }).join('');
+    }
+    return '<section class="section">'
+      + '<div class="section-title">' + (data.skills_section_title || 'Technical Skills') + '</div>'
+      + '<div class="skills-grid">' + rows + '</div>'
+      + '</section>';
+  }
+};
+
+RENDERERS.education = {
+  default: function(data) {
+    var ed = data.education || [];
+    if (!ed.length) return '';
+    var rows = ed.map(function(e) {
+      return '<div class="edu-entry">'
+        + '<div>'
+        +   '<div class="edu-degree">' + e.degree + '</div>'
+        +   '<div class="edu-inst">' + e.institution + ' &mdash; ' + e.location + '</div>'
+        + '</div>'
+        + '<div class="edu-right">'
+        +   '<div class="edu-date">' + e.duration + '</div>'
+        +   (e.grade ? '<div class="edu-grade"><span class="grade-badge">' + e.grade + '</span></div>' : '')
+        + '</div>'
+        + '</div>';
+    }).join('');
+    return '<section class="section">'
+      + '<div class="section-title">Education</div>'
+      + rows
+      + '</section>';
+  }
+};
+
+RENDERERS.experience = {
+  default: function(data) {
+    var xp = data.work_experience || [];
+    if (!xp.length) return '';
+    var entries = xp.map(function(job) {
+      var bullets = (job.responsibilities || []).map(function(r) {
         return '<li>' + enhance(r) + '</li>';
-      }).join('\n');
+      }).join('');
       var tech = job.technologies_used && job.technologies_used.length
         ? '<p class="exp-tech"><strong>Technologies:</strong> ' + job.technologies_used.join(', ') + '</p>'
         : '';
@@ -425,19 +466,63 @@ function renderCV(data) {
         + '<ul class="exp-bullets">' + bullets + '</ul>'
         + tech
         + '</div>';
-    }).join('\n');
+    }).join('');
+    return '<section class="section">'
+      + '<div class="section-title">Work Experience</div>'
+      + entries
+      + '</section>';
   }
+};
 
-  function renderCompanyProjects(jobs) {
+RENDERERS.personal_projects = {
+  default: function(data) {
+    var pj = data.personal_projects || [];
+    if (!pj.length) return '';
+    var entries = pj.map(function(proj) {
+      var bullets = (proj.responsibilities || []).map(function(r) {
+        return '<li>' + enhance(r) + '</li>';
+      }).join('');
+      var subtitle = proj.subtitle || proj.description
+        ? '<p class="proj-subtitle">'
+            + (proj.subtitle ? proj.subtitle + ' &middot; ' : '')
+            + (proj.description || '')
+            + '</p>'
+        : '';
+      var tech = proj.technologies_used && proj.technologies_used.length
+        ? '<p class="exp-tech"><strong>Technologies:</strong> ' + proj.technologies_used.join(', ') + '</p>'
+        : '';
+      return '<div class="exp-entry">'
+        + '<div class="exp-company-line">'
+        +   '<span class="exp-company">' + proj.name
+        +     (proj.subtitle ? ' &mdash; <span class="exp-role">' + proj.subtitle + '</span>' : '')
+        +   '</span>'
+        +   '<span class="exp-date">' + proj.duration + '</span>'
+        + '</div>'
+        + subtitle
+        + '<ul class="exp-bullets">' + bullets + '</ul>'
+        + tech
+        + '</div>';
+    }).join('');
+    return '<section class="section">'
+      + '<div class="section-title">Personal Project</div>'
+      + entries
+      + '</section>';
+  }
+};
+
+RENDERERS.company_projects = {
+  default: function(data) {
+    var xp = data.work_experience || [];
     var entries = [];
-    jobs.forEach(function(job) {
+    xp.forEach(function(job) {
       (job.projects || []).forEach(function(proj) {
-        var pbullets = (proj.responsibilities || []).map(function(r) {
+        var bullets = (proj.responsibilities || []).map(function(r) {
           return '<li>' + enhance(r) + '</li>';
-        }).join('\n');
-        var ptech = proj.technologies_used && proj.technologies_used.length
-          ? '<p class="exp-tech"><strong>Technologies:</strong> ' + proj.technologies_used.join(', ') + '</p>' : '';
-        var pdesc = proj.description
+        }).join('');
+        var tech = proj.technologies_used && proj.technologies_used.length
+          ? '<p class="exp-tech"><strong>Technologies:</strong> ' + proj.technologies_used.join(', ') + '</p>'
+          : '';
+        var desc = proj.description
           ? '<p class="proj-subtitle">' + proj.description + '</p>' : '';
         entries.push('<div class="exp-entry">'
           + '<div class="exp-company-line">'
@@ -446,123 +531,79 @@ function renderCV(data) {
           +   '</span>'
           +   '<span class="exp-date">' + job.duration + '</span>'
           + '</div>'
-          + pdesc
-          + '<ul class="exp-bullets">' + pbullets + '</ul>'
-          + ptech + '</div>');
+          + desc
+          + '<ul class="exp-bullets">' + bullets + '</ul>'
+          + tech
+          + '</div>');
       });
     });
-    return entries.join('\n');
+    if (!entries.length) return '';
+    return '<section class="section">'
+      + '<div class="section-title">Projects</div>'
+      + entries.join('')
+      + '</section>';
   }
+};
 
-  // ── Projects ─────────────────────────────────────────────────
-  var projects = (data.personal_projects || []).map(function(proj) {
-    var bullets = proj.responsibilities.map(function(r) {
-      return '<li>' + enhance(r) + '</li>';
-    }).join('\n');
-    var subtitle = proj.subtitle || proj.description
-      ? '<p class="proj-subtitle">' + (proj.subtitle ? proj.subtitle + ' &middot; ' : '') + (proj.description || '') + '</p>'
-      : '';
-    var tech = proj.technologies_used
-      ? '<p class="exp-tech"><strong>Technologies:</strong> ' + proj.technologies_used.join(', ') + '</p>'
-      : '';
-    return '<div class="exp-entry">'
-      + '<div class="exp-company-line">'
-      +   '<span class="exp-company">' + proj.name + (proj.subtitle ? ' &mdash; <span class="exp-role">' + proj.subtitle + '</span>' : '') + '</span>'
-      +   '<span class="exp-date">' + proj.duration + '</span>'
-      + '</div>'
-      + subtitle
-      + '<ul class="exp-bullets">' + bullets + '</ul>'
-      + tech
-      + '</div>';
-  }).join('\n');
+// ═══════════════════════════════════════════════════════════════
+//  DEFAULT SECTION ORDER
+//  Used when the JSON has no "sections" key.
+// ═══════════════════════════════════════════════════════════════
 
-  // ── Education ────────────────────────────────────────────────
-  var education = (data.education || []).map(function(edu) {
-    return '<div class="edu-entry">'
-      + '<div>'
-      +   '<div class="edu-degree">' + edu.degree + '</div>'
-      +   '<div class="edu-inst">' + edu.institution + ' &mdash; ' + edu.location + '</div>'
-      + '</div>'
-      + '<div class="edu-right">'
-      +   '<div class="edu-date">' + edu.duration + '</div>'
-      +   '<div class="edu-grade"><span class="grade-badge">' + edu.grade + '</span></div>'
-      + '</div>'
-      + '</div>';
-  }).join('\n');
+var DEFAULT_SECTIONS = [
+  { id: 'profile' },
+  { id: 'skills' },
+  { id: 'education' },
+  { id: 'experience' },
+  { id: 'personal_projects' }
+];
 
-  // ── Assemble full HTML ────────────────────────────────────────
-  document.getElementById('cv-page').innerHTML = [
+// ═══════════════════════════════════════════════════════════════
+//  RENDER — section order and style driven by data.sections
+// ═══════════════════════════════════════════════════════════════
 
-    /* Header */
-    '<div class="cv-header">',
-    '  <div class="cv-name">' + p.full_name + '</div>',
-    data.cv_subtitle ? '  <div class="cv-title">' + data.cv_subtitle + '</div>' : '',
-    '  <div class="cv-contact">',
-    (function() {
-      var parts = [];
-      if (p.phone)    parts.push('<span>' + p.phone + '</span>');
-      if (p.email)    parts.push('<a href="mailto:' + p.email + '">' + p.email + '</a>');
-      if (p.github)    parts.push('<a href="https://' + p.github + '" target="_blank">' + p.github + '</a>');
-      if (p.linkedin)  parts.push('<a href="https://' + p.linkedin + '" target="_blank">' + p.linkedin + '</a>');
-      if (p.portfolio) parts.push('<a href="https://' + p.portfolio + '" target="_blank">' + p.portfolio + '</a>');
-      if (p.location)  parts.push('<span>' + p.location + '</span>');
-      return '    ' + parts.join('<span class="sep">|</span>');
-    })(),
-    '  </div>',
-    '</div>',
+function renderCV(data) {
+  var p = data.personal_information;
 
-    '<hr class="header-rule" />',
-    '<hr class="header-rule-thin" />',
+  var parts = [];
+  if (p.phone)     parts.push('<span>' + p.phone + '</span>');
+  if (p.email)     parts.push('<a href="mailto:' + p.email + '">' + p.email + '</a>');
+  if (p.github)    parts.push('<a href="https://' + p.github + '" target="_blank">' + p.github + '</a>');
+  if (p.linkedin)  parts.push('<a href="https://' + p.linkedin + '" target="_blank">' + p.linkedin + '</a>');
+  if (p.portfolio) parts.push('<a href="https://' + p.portfolio + '" target="_blank">' + p.portfolio + '</a>');
+  if (p.location)  parts.push('<span>' + p.location + '</span>');
 
-    /* Profile */
-    '<section class="section">',
-    '  <div class="section-title">Profile</div>',
-    '  <p class="profile-text">' + enhance(data.profile) + '</p>',
-    '</section>',
+  var html = '<div class="cv-header">'
+    + '<div class="cv-name">' + p.full_name + '</div>'
+    + (data.cv_subtitle ? '<div class="cv-title">' + data.cv_subtitle + '</div>' : '')
+    + '<div class="cv-contact">' + parts.join('<span class="sep">|</span>') + '</div>'
+    + '</div>'
+    + '<hr class="header-rule" />'
+    + '<hr class="header-rule-thin" />';
 
-    /* Skills */
-    '<section class="section">',
-    '  <div class="section-title">' + (data.skills_section_title || 'Technical Skills') + '</div>',
-    '  <div class="skills-grid">' + skillRows + '</div>',
-    '</section>',
+  var sections = data.sections || DEFAULT_SECTIONS;
+  sections.forEach(function(sec) {
+    var id    = typeof sec === 'string' ? sec : sec.id;
+    var style = (typeof sec === 'object' && sec.style) ? sec.style : 'default';
+    var renderer = RENDERERS[id];
+    if (renderer) {
+      var fn = renderer[style] || renderer['default'];
+      if (fn) html += fn(data);
+    }
+  });
 
-    /* Experience */
-    '<section class="section">',
-    '  <div class="section-title">Work Experience</div>',
-    renderExp(data.work_experience),
-    '</section>',
+  html += '<div class="cv-footer">'
+    + '<span>' + p.full_name + ' &middot; ' + (data.cv_year || 'CV 2026') + '</span>'
+    + '<span>' + (data.cv_role || 'Frontend Developer') + '</span>'
+    + '</div>';
 
-    /* Personal Projects */
-    data.personal_projects && data.personal_projects.length
-      ? '<section class="section"><div class="section-title">Personal Project</div>' + projects + '</section>'
-      : '',
-
-    /* Education */
-    '<section class="section">',
-    '  <div class="section-title">Education</div>',
-    education,
-    '</section>',
-
-    /* Company Projects */
-    (function() {
-      var hasProjects = (data.work_experience || []).some(function(j) { return j.projects && j.projects.length; });
-      return hasProjects
-        ? '<section class="section"><div class="section-title">Projects</div>' + renderCompanyProjects(data.work_experience) + '</section>'
-        : '';
-    })(),
-
-    /* Footer */
-    '<div class="cv-footer">',
-    '  <span>' + p.full_name + ' &middot; ' + (data.cv_year || 'CV 2025') + '</span>',
-    '  <span>' + (data.cv_role || 'Frontend Developer') + '</span>',
-    '</div>',
-
-  ].join('\n');
+  document.getElementById('cv-page').innerHTML = html;
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  BOOT — fetch JSON and render
+//  BOOT
 // ═══════════════════════════════════════════════════════════════
+
 fetch('anh_hao_nguyen_cv_data.json?v=' + Date.now())
   .then(function(r) { return r.json(); })
   .then(function(data) { renderCV(data); initSettings(); })
@@ -572,15 +613,13 @@ fetch('anh_hao_nguyen_cv_data.json?v=' + Date.now())
   });
 
 // ═══════════════════════════════════════════════════════════════
-//  UPLOAD — drag a tailored JSON onto the page to preview it
+//  UPLOAD
 // ═══════════════════════════════════════════════════════════════
+
 function handleJSONUpload(event) {
   var file = event.target.files[0];
   if (!file) return;
-  if (!file.name.endsWith('.json')) {
-    showToast('Please upload a .json file', 3000);
-    return;
-  }
+  if (!file.name.endsWith('.json')) { showToast('Please upload a .json file', 3000); return; }
   var reader = new FileReader();
   reader.onload = function(e) {
     try {
@@ -592,13 +631,13 @@ function handleJSONUpload(event) {
     }
   };
   reader.readAsText(file);
-  // Reset so same file can be re-uploaded
   event.target.value = '';
 }
 
 // ═══════════════════════════════════════════════════════════════
 //  Toast
 // ═══════════════════════════════════════════════════════════════
+
 function showToast(msg, ms) {
   var t = document.getElementById('toast');
   t.textContent = msg;
@@ -610,6 +649,7 @@ function showToast(msg, ms) {
 // ═══════════════════════════════════════════════════════════════
 //  FONT SETTINGS PANEL
 // ═══════════════════════════════════════════════════════════════
+
 var DEFAULTS = { body: 10.5, job: 11.5, section: 12.5, name: 26, lh: 1.65 };
 
 function initSettings() {
@@ -630,7 +670,6 @@ function applySettings() {
   var lh      = parseFloat(document.getElementById('sl-lh').value);
 
   var r = document.documentElement.style;
-  r.setProperty('--sz-body',    body    + 'px');
   r.setProperty('--sz-profile', body    + 'px');
   r.setProperty('--sz-bullet',  body    + 'px');
   r.setProperty('--sz-skills',  body    + 'px');
