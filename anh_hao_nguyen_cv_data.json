@@ -139,13 +139,13 @@
     },
     {
       "name": "L.I.V.E",
-      "subtitle": "Learn. Improve. Visualise. Empower",
+      "subtitle": "github.com/RiverO2442/L.I.V.E",
       "description": "Full-stack web application for gamified diabetes education — MSc Computer Science project, University of Lincoln. Sole owner from design to production deployment.",
       "duration": "Jun 2025 – Sep 2025",
       "responsibilities": [
-        "Took hl{full ownership from design to production}: architected the system using hl{Atomic Design}, built the frontend (React/Vite/Tailwind/shadcn) and backend (FastAPI/PostgreSQL), and deployed to Microsoft Azure.",
+        "Took hl{full ownership from design to production}: architected the system using hl{Atomic Design}, built the frontend (React/Vite/Tailwind/shadcn) and backend (FastAPI/MongoDB), and deployed to Microsoft Azure.",
         "Built to hl{WCAG 2.1 AA} accessibility standards throughout — ensuring full compliance for keyboard navigation, screen reader support, and colour contrast.",
-        "Automated the build and deployment pipeline using hl{Docker and Azure CI/CD}, enabling reliable, repeatable deployments from day one.",
+        "Automated the build and deployment pipeline using hl{Docker and GitHub Actions}, enabling reliable, repeatable deployments to Azure from day one.",
         "Implemented hl{JWT-based authentication} with role-based access control and a guest user flow — allowing unauthenticated users to explore core features without registration."
       ],
       "technologies_used": [
@@ -155,10 +155,10 @@
         "Tailwind CSS",
         "shadcn/ui",
         "FastAPI",
-        "PostgreSQL",
+        "MongoDB",
         "Docker",
-        "Azure",
-        "CI/CD"
+        "GitHub Actions",
+        "Azure"
       ]
     }
   ],
