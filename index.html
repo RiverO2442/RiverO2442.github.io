@@ -69,6 +69,19 @@
       padding: 80px 0 60px;
       position: relative; overflow: hidden;
     }
+    .hero-inner { display: flex; align-items: center; gap: 64px; }
+    .hero-photo {
+      flex-shrink: 0;
+      width: 220px; height: 280px;
+      object-fit: cover; object-position: center top;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      filter: grayscale(18%);
+    }
+    @media (max-width: 680px) {
+      .hero-inner { flex-direction: column; gap: 32px; }
+      .hero-photo { width: 140px; height: 180px; }
+    }
     .hero::before {
       content: '';
       position: absolute; inset: 0;
@@ -251,18 +264,23 @@
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="wrap hero-content fade-in">
-    <p class="hero-eyebrow">Portfolio</p>
-    <h1 class="hero-name">Anh Hao<br>Nguyen</h1>
-    <p class="hero-role">Software Developer &nbsp;·&nbsp; MSc Computer Science Candidate</p>
-    <p class="hero-desc">
-      2+ years shipping consumer and enterprise web products — from architecture to deployment.
-      Currently completing an MSc at the University of Lincoln (Distinction).
-      I care about clean code, good tests, and building things that actually work.
-    </p>
-    <div class="hero-btns">
-      <a class="btn-primary" href="cv.html">View CV</a>
-      <a class="btn-ghost" href="https://github.com/RiverO2442" target="_blank">GitHub ↗</a>
-      <a class="btn-ghost" href="https://linkedin.com/in/anhhaonguyen" target="_blank">LinkedIn ↗</a>
+    <div class="hero-inner">
+      <img class="hero-photo" src="photo.png" alt="Anh Hao Nguyen" />
+      <div>
+        <p class="hero-eyebrow">Portfolio</p>
+        <h1 class="hero-name">Anh Hao<br>Nguyen</h1>
+        <p class="hero-role">Frontend Developer &nbsp;·&nbsp; MSc Computer Science</p>
+        <p class="hero-desc">
+          Nearly 3 years shipping production web applications — from architecture to deployment.
+          MSc Computer Science, University of Lincoln (Distinction).
+          I care about clean code, good tests, and building things that actually work.
+        </p>
+        <div class="hero-btns">
+          <a class="btn-primary" href="cv.html">View CV</a>
+          <a class="btn-ghost" href="https://github.com/RiverO2442" target="_blank">GitHub ↗</a>
+          <a class="btn-ghost" href="https://linkedin.com/in/anhhaonguyen" target="_blank">LinkedIn ↗</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
