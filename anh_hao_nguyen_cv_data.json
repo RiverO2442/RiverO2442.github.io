@@ -118,6 +118,26 @@
   ],
   "personal_projects": [
     {
+      "name": "Rex Movie",
+      "subtitle": "github.com/chauminhquang10/Rex-Movie",
+      "description": "Personal project — full-stack Netflix-style streaming platform with real-time AI chatbox, subscription and payment system, and separate user and developer access tiers.",
+      "duration": "2024",
+      "responsibilities": [
+        "Built the full stack using hl{React.js}, hl{Node.js}, and hl{NoSQL} — RESTful API backend with Material UI and Tailwind CSS on the frontend.",
+        "Integrated a hl{real-time AI chatbox} via WebSocket — enabling users to get content recommendations and in-app support without page reloads.",
+        "Implemented a hl{subscription and payment system} with separate user and developer tiers — handling plan management, billing flows, and role-based access control."
+      ],
+      "technologies_used": [
+        "React.js",
+        "Node.js",
+        "NoSQL",
+        "WebSocket",
+        "Material UI",
+        "Tailwind CSS",
+        "RESTful APIs"
+      ]
+    },
+    {
       "name": "L.I.V.E",
       "subtitle": "Learn. Improve. Visualise. Empower",
       "description": "Full-stack web application for gamified diabetes education — MSc Computer Science project, University of Lincoln. Sole owner from design to production deployment.",
