@@ -62,7 +62,8 @@
         "Built the operator dashboard for a B2B parking management platform serving hl{6 sites} — structured as an independent hl{micro-frontend} module to decouple deployments and enable the team to release without cross-team coordination.",
         "Integrated the frontend with hl{hardware APIs} for automated entry and exit machines — handling real-time polling and async state to keep the operator UI synchronised with physical machine events.",
         "Added hl{Jest and Vitest} coverage to previously untested core modules — establishing a regression baseline that caught hardware API edge cases before deployment.",
-        "Built cross-platform mobile views using hl{React Native} for on-site operators, and implemented multi-language support via React-i18next."
+        "Built cross-platform mobile views using hl{React Native} for on-site operators, and implemented multi-language support via React-i18next.",
+        "Integrated AI coding assistance into the development workflow — boosting personal delivery speed by hl{70%} and reducing time spent on repetitive implementation tasks."
       ],
       "technologies_used": [
         "React",
