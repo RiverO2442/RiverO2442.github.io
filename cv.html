@@ -452,9 +452,6 @@ RENDERERS.experience = {
       var bullets = (job.responsibilities || []).map(function(r) {
         return '<li>' + enhance(r) + '</li>';
       }).join('');
-      var tech = job.technologies_used && job.technologies_used.length
-        ? '<p class="exp-tech">' +job.technologies_used.join(', ') + '</p>'
-        : '';
       var title = job.company
         ? job.company + ' &mdash; <span class="exp-role">' + job.position + '</span>'
         : '<span class="exp-role">' + job.position + '</span>';
@@ -464,7 +461,6 @@ RENDERERS.experience = {
         +   '<span class="exp-date">' + job.duration + '</span>'
         + '</div>'
         + '<ul class="exp-bullets">' + bullets + '</ul>'
-        + tech
         + '</div>';
     }).join('');
     return '<section class="section">'
