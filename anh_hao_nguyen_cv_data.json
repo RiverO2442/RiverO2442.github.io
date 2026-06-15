@@ -34,7 +34,7 @@
       "React Bootstrap",
       "Ant Design"
     ],
-    "languages": ["JavaScript (ES6+)", "TypeScript", "Python"],
+    "languages": ["JavaScript (ES6+)", "TypeScript", "Node.js", "Express.js", "Python"],
     "state_management": [
       "Redux",
       "React Query"
