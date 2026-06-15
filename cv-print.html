@@ -140,7 +140,7 @@
 
     .proj-company-tag { font-weight: 400; font-style: italic; color: var(--muted); font-size: var(--sz-date); }
 
-    .proj-subtitle { font-size: var(--sz-tech); font-style: italic; color: var(--muted); margin-bottom: 4px; line-height: var(--lh-body); }
+    .proj-subtitle { font-size: var(--sz-bullet); font-style: normal; color: var(--body); margin-bottom: 4px; line-height: var(--lh-body); }
 
     /* ── Education ── */
     .edu-entry {
@@ -252,7 +252,7 @@ function renderCV(data) {
         return '<li>' + enhance(r) + '</li>';
       }).join('\n');
       var tech = job.technologies_used && job.technologies_used.length
-        ? '<p class="exp-tech"><strong>Technologies:</strong> ' + job.technologies_used.join(', ') + '</p>'
+        ? '<p class="exp-tech">' +job.technologies_used.join(', ') + '</p>'
         : '';
       var title = job.company
         ? job.company + ' &mdash; <span class="exp-role">' + job.position + '</span>'
@@ -372,6 +372,14 @@ function renderCV(data) {
     renderExp(data.work_experience),
     '</section>',
 
+    /* Company Projects */
+    (function() {
+      var hasProjects = (data.work_experience || []).some(function(j) { return j.projects && j.projects.length; });
+      return hasProjects
+        ? '<section class="section"><div class="section-title">Company Project</div>' + renderCompanyProjects(data.work_experience) + '</section>'
+        : '';
+    })(),
+
     /* Personal Projects */
     data.personal_projects && data.personal_projects.length
       ? '<section class="section"><div class="section-title">Personal Project</div>' + projects + '</section>'
@@ -382,14 +390,6 @@ function renderCV(data) {
     '  <div class="section-title">Education</div>',
     education,
     '</section>',
-
-    /* Company Projects */
-    (function() {
-      var hasProjects = (data.work_experience || []).some(function(j) { return j.projects && j.projects.length; });
-      return hasProjects
-        ? '<section class="section"><div class="section-title">Projects</div>' + renderCompanyProjects(data.work_experience) + '</section>'
-        : '';
-    })(),
 
     /* Footer */
     '<div class="cv-footer">',

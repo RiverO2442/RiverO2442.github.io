@@ -19,8 +19,8 @@
     { "id": "skills" },
     { "id": "education" },
     { "id": "experience" },
-    { "id": "personal_projects" },
-    { "id": "company_projects" }
+    { "id": "company_projects" },
+    { "id": "personal_projects" }
   ],
   "profile": "Frontend developer with hl{nearly 3 years} of production experience — built a real-time B2B parking management platform and a transaction system used by hl{external partner banks}. Completed an MSc in Computer Science at the University of Lincoln (hl{Distinction}). Works across the full React ecosystem; experienced in complex state management, hardware API integration, and diagnosing cross-browser and performance issues in live environments.",
   "technical_skills": {
@@ -87,7 +87,7 @@
             "Companion mobile app for on-site operators with real-time gate status and transaction management from the parking floor.",
             "Multi-language support serving operator teams across different partner locations."
           ],
-          "technologies_used": ["React.js", "Angular", "React Native", "TypeScript", "JavaScript", "Vite", "Tailwind CSS", "React Bootstrap", "React Query", "RESTful APIs", "React-i18next"]
+          "technologies_used": ["React.js", "Angular", "React Native", "TypeScript", "JavaScript", "React Router", "React Query", "Vite", "Tailwind CSS", "React Bootstrap", "RESTful APIs", "Jest", "Vitest", "React Testing Library", "React-i18next", "Node.js"]
         }
       ]
     },
@@ -111,7 +111,7 @@
             "Live system monitoring with frontend error detection and an incident response workflow to maintain uninterrupted bank operations.",
             "Companion employee management portal supporting internal staff administration alongside the core transaction CMS."
           ],
-          "technologies_used": ["React.js", "TypeScript", "JavaScript", "Vite", "Tailwind CSS", "Ant Design", "RESTful APIs", "React-i18next"]
+          "technologies_used": ["React.js", "TypeScript", "JavaScript", "Redux", "Ant Design", "Vite", "Tailwind CSS", "RESTful APIs", "React Testing Library", "React-i18next", "Node.js"]
         }
       ]
     }

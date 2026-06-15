@@ -194,7 +194,7 @@
 
     .proj-company-tag { font-weight: 400; font-style: italic; color: var(--muted); font-size: var(--sz-date); }
 
-    .proj-subtitle { font-size: var(--sz-tech); font-style: italic; color: var(--muted); margin-bottom: 4px; line-height: var(--lh-body); }
+    .proj-subtitle { font-size: var(--sz-bullet); font-style: normal; color: var(--body); margin-bottom: 4px; line-height: var(--lh-body); }
 
     /* ── Education ── */
     .edu-entry {
@@ -453,7 +453,7 @@ RENDERERS.experience = {
         return '<li>' + enhance(r) + '</li>';
       }).join('');
       var tech = job.technologies_used && job.technologies_used.length
-        ? '<p class="exp-tech"><strong>Technologies:</strong> ' + job.technologies_used.join(', ') + '</p>'
+        ? '<p class="exp-tech">' +job.technologies_used.join(', ') + '</p>'
         : '';
       var title = job.company
         ? job.company + ' &mdash; <span class="exp-role">' + job.position + '</span>'
@@ -539,7 +539,7 @@ RENDERERS.company_projects = {
     });
     if (!entries.length) return '';
     return '<section class="section">'
-      + '<div class="section-title">Company Projects</div>'
+      + '<div class="section-title">Company Project</div>'
       + entries.join('')
       + '</section>';
   }
