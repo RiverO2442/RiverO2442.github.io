@@ -22,17 +22,22 @@
     { "id": "company_projects" },
     { "id": "personal_projects" }
   ],
-  "profile": "Frontend developer with hl{nearly 3 years} of production experience — built a real-time B2B parking management platform and a transaction system used by hl{external partner banks}. Completed an MSc in Computer Science at the University of Lincoln (hl{Distinction}). Works across the full React ecosystem; experienced in complex state management, hardware API integration, and diagnosing cross-browser and performance issues in live environments.",
+  "profile": "Frontend developer with hl{nearly 3 years} of production experience — built a real-time B2B parking management platform and a transaction system used by hl{external partner banks}. Completed an MSc in Computer Science at the University of Lincoln (hl{Distinction}). Works across React with hl{React Router} and hl{React Query}; experienced in hl{Redux} for global state, hardware API integration, and diagnosing cross-browser and performance issues in live environments.",
   "technical_skills": {
     "frontend": [
       "React.js",
+      "Next.js",
       "Angular",
       "React Native",
+      "Electron",
       "React Router",
       "Tailwind CSS",
       "shadcn/ui",
+      "Storybook",
       "React Bootstrap",
-      "Ant Design"
+      "Ant Design",
+      "MUI",
+      "jQuery"
     ],
     "languages": ["JavaScript (ES6+)", "TypeScript", "Node.js", "Express.js", "Python"],
     "state_management": [
@@ -48,6 +53,10 @@
     "testing": ["Jest", "Vitest", "React Testing Library"],
     "other": [
       "RESTful APIs",
+      "gRPC",
+      "Protobuf",
+      "WordPress",
+      "MySQL",
       "WCAG / Accessibility",
       "Micro-frontend architecture",
       "Agile / Scrum"
@@ -63,7 +72,7 @@
         "Integrated the frontend with hl{hardware APIs} for automated entry and exit machines — handling real-time polling and async state to keep the operator UI synchronised with physical machine events.",
         "Added hl{Jest and Vitest} coverage to previously untested core modules — establishing a regression baseline that caught hardware API edge cases before deployment.",
         "Built cross-platform mobile views using hl{React Native} for on-site operators, and implemented multi-language support via React-i18next.",
-        "Integrated AI coding assistance into the development workflow — boosting personal delivery speed by hl{70%} and reducing time spent on repetitive implementation tasks."
+        "Used AI tooling to handle boilerplate and repetitive UI code — shifting focus to hl{architectural decisions and code review}, boosting personal delivery speed by hl{70%}."
       ],
       "technologies_used": [
         "React",
@@ -76,7 +85,8 @@
         "Jest",
         "Vitest",
         "React Testing Library",
-        "React-i18next"
+        "React-i18next",
+        "Node.js"
       ],
       "projects": [
         {
@@ -98,10 +108,12 @@
       "responsibilities": [
         "Built and maintained the transaction dashboards, data entry workflows, and real-time financial views on a hl{production banking platform} used by hl{external partner banks} — owning the operator-facing frontend from initial build through to live support.",
         "Designed and built the React component library hl{from scratch} using Atomic Design — establishing the shared UI foundation used across all product areas of the banking platform.",
-        "Led cross-browser compatibility and performance debugging across the platform — diagnosing and resolving rendering inconsistencies and regressions that affected reliability for operator workflows handling live financial data.",
-        "Integrated the frontend with hl{RESTful APIs} end-to-end — defining interface contracts with backend teams and building error-handling flows to ensure consistent, reliable data delivery across all financial views."
+        "Led cross-browser compatibility and performance optimisation across the platform — diagnosing rendering inconsistencies, applying hl{lazy loading} to reduce initial bundle weight, and resolving regressions that affected reliability for operator workflows handling live financial data.",
+        "Integrated the frontend with hl{RESTful APIs} end-to-end — defining interface contracts with backend teams and implementing hl{input validation, loading states, error notifications, and retry logic} to ensure consistent, reliable data delivery across all financial views.",
+        "Implemented hl{real-time data polling} across the transaction dashboard using hl{React Query} — configuring refetch intervals and stale-time strategies to keep financial data live while minimising redundant network requests.",
+        "Developed the kiosk UI for KienLong Bank's hl{Smart Teller Machine} using hl{React and Electron} — building self-service flows for customer account registration, cash deposit, and cash withdrawal, plus a hl{video call} feature connecting customers with remote bank operators."
       ],
-      "technologies_used": ["React", "Redux", "Ant Design", "REST APIs"],
+      "technologies_used": ["React", "Electron", "Redux", "React Query", "Ant Design", "MUI", "REST APIs", "gRPC", "Protobuf", "Node.js", "React Testing Library"],
       "projects": [
         {
           "name": "KienLong Bank CMS",
@@ -112,6 +124,18 @@
             "Companion employee management portal supporting internal staff administration alongside the core transaction CMS."
           ],
           "technologies_used": ["React.js", "TypeScript", "JavaScript", "Redux", "Ant Design", "Vite", "Tailwind CSS", "RESTful APIs", "React Testing Library", "React-i18next", "Node.js"]
+        },
+        {
+          "name": "KienLong Bank STM",
+          "description": "Desktop kiosk UI for KienLong Bank's Smart Teller Machine — self-service banking terminal deployed on physical STM hardware for customer-facing transactions.",
+          "responsibilities": [
+            "Built the kiosk interface using React and Electron — packaging the web frontend as a standalone desktop application running directly on the STM hardware.",
+            "Implemented self-service transaction flows for customer account registration, cash deposit, and cash withdrawal — guiding users step-by-step through each operation on the touchscreen.",
+            "Integrated a live video call feature connecting customers at the machine with a remote bank operator for assisted transactions and real-time identity verification.",
+            "Used MUI to build a touch-optimised, accessible interface suited to kiosk interaction patterns on the machine's embedded display.",
+            "Communicated with backend services via hl{gRPC and Protobuf} — handling typed, binary-encoded messaging between the kiosk frontend and the bank's transaction processing services."
+          ],
+          "technologies_used": ["React", "Electron", "TypeScript", "JavaScript", "Node.js", "MUI", "gRPC", "Protobuf", "HTML", "CSS"]
         }
       ]
     }
@@ -123,14 +147,17 @@
       "description": "Personal project — full-stack Netflix-style streaming platform with real-time AI chatbox, subscription and payment system, and separate user and developer access tiers.",
       "duration": "2024",
       "responsibilities": [
-        "Built the full stack using hl{React.js}, hl{Node.js}, and hl{NoSQL} — RESTful API backend with Material UI and Tailwind CSS on the frontend.",
-        "Integrated a hl{real-time AI chatbox} via WebSocket — enabling users to get content recommendations and in-app support without page reloads.",
-        "Implemented a hl{subscription and payment system} with separate user and developer tiers — handling plan management, billing flows, and role-based access control."
+        "Built the full stack using hl{React.js}, hl{Node.js}, hl{MongoDB}, and hl{Firebase} — RESTful API backend with Material UI and Tailwind CSS on the frontend.",
+        "Implemented server-side hl{pagination, sorting, and filtering} on MongoDB collections — designing query logic and index-aware data retrieval to maintain consistent response times as the dataset grows.",
+        "Integrated a hl{Facebook chatbox} for user support and a hl{WebSocket} direct messaging channel for real-time admin communication.",
+        "Implemented a hl{Stripe} subscription and payment system with separate user and developer tiers — handling plan management, billing flows, and role-based access control."
       ],
       "technologies_used": [
         "React.js",
         "Node.js",
-        "NoSQL",
+        "MongoDB",
+        "Firebase",
+        "Stripe",
         "WebSocket",
         "Material UI",
         "Tailwind CSS",
@@ -146,12 +173,11 @@
         "Took hl{full ownership from design to production}: architected the system using hl{Atomic Design}, built the frontend (React/Vite/Tailwind/shadcn) and backend (FastAPI/MongoDB), and deployed to Microsoft Azure.",
         "Built to hl{WCAG 2.1 AA} accessibility standards throughout — ensuring full compliance for keyboard navigation, screen reader support, and colour contrast.",
         "Automated the build and deployment pipeline using hl{Docker and GitHub Actions}, enabling reliable, repeatable deployments to Azure from day one.",
-        "Implemented hl{JWT-based authentication} with role-based access control and a guest user flow — allowing unauthenticated users to explore core features without registration."
+        "Implemented hl{JWT-based authentication} with role-based access control, hl{CORS configuration}, and a guest user flow — securing API access while allowing unauthenticated users to explore core features without registration."
       ],
       "technologies_used": [
         "React",
         "Vite",
-        "React Router",
         "Tailwind CSS",
         "shadcn/ui",
         "FastAPI",
@@ -175,7 +201,7 @@
       "institution": "University of Information Technology",
       "location": "Ho Chi Minh City, Vietnam",
       "duration": "Aug 2018 – Jun 2022",
-      "grade": "First Class"
+      "grade": "2:1"
     }
   ]
 }
