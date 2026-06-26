@@ -162,7 +162,8 @@
       display: flex; flex-direction: column;
       transition: border-color .2s, transform .2s;
     }
-    .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .project-card { --card-accent: var(--accent); --card-accent-dim: var(--accent-dim); }
+    .project-card:hover { border-color: var(--card-accent); transform: translateY(-3px); }
     .project-header {
       display: flex; justify-content: space-between; align-items: flex-start;
       margin-bottom: 16px;
@@ -175,7 +176,7 @@
     }
     .project-gh:hover { color: var(--accent); border-color: var(--accent); }
     .project-name { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-    .project-tagline { font-size: 12px; color: var(--accent); letter-spacing: .04em; margin-bottom: 14px; }
+    .project-tagline { font-size: 12px; color: var(--card-accent); letter-spacing: .04em; margin-bottom: 14px; }
     .project-desc { font-size: 13px; color: var(--muted); line-height: 1.75; flex: 1; margin-bottom: 22px; }
     .project-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
     .chip {
@@ -184,6 +185,90 @@
       background: var(--accent-dim); border: 1px solid rgba(201,168,76,.22);
       border-radius: 3px; color: var(--accent);
     }
+
+    .project-card .chip {
+      background: var(--card-accent-dim);
+      border-color: color-mix(in srgb, var(--card-accent) 25%, transparent);
+      color: var(--card-accent);
+    }
+    .company-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: 3px 9px; border: 1px solid var(--border); border-radius: 3px; color: var(--muted);
+    }
+    .projects-sub-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 20px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .projects-sub-group { margin-bottom: 48px; }
+    .projects-sub-group:last-child { margin-bottom: 0; }
+
+    /* ── Project Previews ── */
+    .proj-preview {
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,.07);
+      margin-bottom: 18px; background: #0d0d0d;
+      font-size: 11px;
+    }
+    @keyframes atm-blink {
+      0%, 100% { opacity: .9; } 50% { opacity: .2; }
+    }
+
+    /* ATM kiosk */
+    .atm-wrap { padding: 13px 14px 11px; }
+    .atm-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+    .atm-bank { color: var(--card-accent); font-weight: 700; letter-spacing: .08em; font-size: 11px; }
+    .atm-pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--card-accent); animation: atm-blink 1.8s ease-in-out infinite; }
+    .atm-sublabel { font-size: 9px; color: #3a3a3a; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
+    .atm-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 10px; }
+    .atm-opt {
+      background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 5px; padding: 7px 9px; color: #888; cursor: default;
+      transition: all .15s; font-size: 10px; line-height: 1.4;
+    }
+    .atm-opt:hover { border-color: var(--card-accent); color: #fff; background: var(--card-accent-dim); }
+    .atm-opt-ico { font-size: 13px; display: block; margin-bottom: 3px; }
+    .atm-opt.active { border-color: color-mix(in srgb, var(--card-accent) 50%, transparent); color: var(--card-accent); background: var(--card-accent-dim); }
+    .atm-foot { border-top: 1px solid rgba(255,255,255,.05); padding-top: 8px; display: flex; align-items: center; justify-content: space-between; }
+    .atm-card-row { display: flex; align-items: center; gap: 6px; }
+    .atm-slot { width: 28px; height: 3px; background: #1c1c1c; border: 1px solid #282828; border-radius: 1px; }
+    .atm-slot-lbl { font-size: 9px; color: #383838; letter-spacing: .1em; }
+    .atm-touch { font-size: 9px; color: #363636; letter-spacing: .1em; }
+
+    /* Parking dashboard */
+    .park-hdr { display: flex; justify-content: space-between; align-items: center; padding: 9px 13px; border-bottom: 1px solid rgba(255,255,255,.05); }
+    .park-title { color: var(--card-accent); font-weight: 700; font-size: 11px; letter-spacing: .05em; }
+    .park-live { font-size: 10px; color: var(--card-accent); opacity: .75; animation: atm-blink 2s infinite; }
+    .park-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; padding: 10px 13px; }
+    .park-site { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); border-radius: 5px; padding: 7px 8px; }
+    .park-site-id { color: #4a4a4a; font-size: 9px; letter-spacing: .08em; margin-bottom: 4px; }
+    .park-bar-bg { height: 2px; background: #1c1c1c; border-radius: 1px; margin-bottom: 4px; overflow: hidden; }
+    .park-bar { height: 100%; background: var(--card-accent); border-radius: 1px; }
+    .park-count { color: #777; font-size: 9px; }
+    .park-gates { display: flex; gap: 5px; padding: 0 13px 10px; }
+    .park-gate { flex: 1; padding: 5px 8px; border-radius: 4px; font-size: 9px; font-weight: 700; letter-spacing: .08em; text-align: center; }
+    .park-gate.on { background: rgba(61,214,140,.07); border: 1px solid rgba(61,214,140,.18); color: #3dd68c; }
+    .park-gate.off { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); color: #3a3a3a; }
+
+    /* CMS transaction dashboard */
+    .cms-hdr { display: flex; justify-content: space-between; align-items: center; padding: 9px 13px; border-bottom: 1px solid rgba(255,255,255,.05); }
+    .cms-title { color: var(--card-accent); font-weight: 700; font-size: 11px; letter-spacing: .05em; }
+    .cms-live { font-size: 10px; color: #34d399; animation: atm-blink 2s infinite; }
+    .cms-stats { display: flex; border-bottom: 1px solid rgba(255,255,255,.05); }
+    .cms-stat { flex: 1; padding: 8px 13px; text-align: center; }
+    .cms-stat + .cms-stat { border-left: 1px solid rgba(255,255,255,.05); }
+    .cms-stat-val { color: var(--card-accent); font-weight: 700; font-size: 13px; margin-bottom: 2px; }
+    .cms-stat-lbl { color: #424242; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+    .cms-rows { padding: 8px 13px; display: flex; flex-direction: column; gap: 4px; }
+    .cms-row { display: grid; grid-template-columns: 30px 1fr auto 10px; align-items: center; gap: 8px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,.03); }
+    .cms-row:last-child { border-bottom: none; }
+    .cms-badge { font-size: 8px; font-weight: 700; letter-spacing: .05em; text-align: center; padding: 2px 3px; border-radius: 3px; }
+    .cms-badge.dep { background: rgba(96,165,250,.1); color: #60a5fa; border: 1px solid rgba(96,165,250,.2); }
+    .cms-badge.wit { background: rgba(251,191,36,.08); color: #fbbf24; border: 1px solid rgba(251,191,36,.18); }
+    .cms-badge.reg { background: rgba(52,211,153,.08); color: #34d399; border: 1px solid rgba(52,211,153,.18); }
+    .cms-txn-id { color: #4a4a4a; font-size: 10px; }
+    .cms-txn-amt { color: #ccc; font-size: 10px; font-weight: 600; text-align: right; }
+    .cms-dot { width: 5px; height: 5px; border-radius: 50%; background: #34d399; justify-self: center; }
 
     /* ── Experience ── */
     .exp-list { border-top: 1px solid var(--border); }
@@ -374,49 +459,176 @@
   <div class="wrap">
     <p class="section-eyebrow fade-in">Work</p>
     <h2 class="section-title fade-in">Projects</h2>
-    <div class="projects-grid">
+    <div class="projects-sub-group fade-in">
+      <p class="projects-sub-label">Company Work</p>
+      <div class="projects-grid">
 
-      <div class="project-card fade-in">
-        <div class="project-header">
-          <span class="project-icon">🔬</span>
-          <a class="project-gh" href="https://github.com/RiverO2442" target="_blank">GitHub ↗</a>
+        <div class="project-card fade-in" style="--card-accent:#3dd68c;--card-accent-dim:rgba(61,214,140,.1)">
+          <div class="project-header">
+            <span class="project-icon">🅿️</span>
+            <span class="company-badge">Private · VETC</span>
+          </div>
+          <div class="proj-preview">
+            <div class="park-hdr">
+              <span class="park-title">VETC Smart Parking — Site Overview</span>
+              <span class="park-live">● LIVE</span>
+            </div>
+            <div class="park-grid">
+              <div class="park-site"><div class="park-site-id">SITE A</div><div class="park-bar-bg"><div class="park-bar" style="width:70%"></div></div><div class="park-count">42 / 60</div></div>
+              <div class="park-site"><div class="park-site-id">SITE B</div><div class="park-bar-bg"><div class="park-bar" style="width:45%"></div></div><div class="park-count">27 / 60</div></div>
+              <div class="park-site"><div class="park-site-id">SITE C</div><div class="park-bar-bg"><div class="park-bar" style="width:90%"></div></div><div class="park-count">54 / 60</div></div>
+              <div class="park-site"><div class="park-site-id">SITE D</div><div class="park-bar-bg"><div class="park-bar" style="width:30%"></div></div><div class="park-count">18 / 60</div></div>
+              <div class="park-site"><div class="park-site-id">SITE E</div><div class="park-bar-bg"><div class="park-bar" style="width:60%"></div></div><div class="park-count">36 / 60</div></div>
+              <div class="park-site"><div class="park-site-id">SITE F</div><div class="park-bar-bg"><div class="park-bar" style="width:80%"></div></div><div class="park-count">48 / 60</div></div>
+            </div>
+            <div class="park-gates">
+              <div class="park-gate on">● GATE 1 OPEN</div>
+              <div class="park-gate on">● GATE 2 OPEN</div>
+              <div class="park-gate off">GATE 3 CLOSED</div>
+            </div>
+          </div>
+          <div class="project-name">VETC Smart Parking</div>
+          <div class="project-tagline">B2B Parking Platform · Vietnam</div>
+          <p class="project-desc">
+            Operator dashboard for a B2B parking management platform serving 6 commercial sites. Partners monitor space availability, manage automated gate machines, and review transactions across sites — plus a companion React Native app for on-site operators.
+          </p>
+          <div class="project-chips">
+            <span class="chip">React</span>
+            <span class="chip">Angular</span>
+            <span class="chip">React Native</span>
+            <span class="chip">React Query</span>
+            <span class="chip">Tailwind CSS</span>
+            <span class="chip">Micro-frontend</span>
+          </div>
         </div>
-        <div class="project-name">L.I.V.E</div>
-        <div class="project-tagline">Learn · Improve · Visualise · Empower</div>
-        <p class="project-desc">
-          Full-stack web application for gamified diabetes education — MSc Computer Science project at the University of Lincoln.
-          Sole owner from idea to production: designed the architecture, built frontend and backend, automated CI/CD, and deployed to Azure.
-        </p>
-        <div class="project-chips">
-          <span class="chip">React</span>
-          <span class="chip">Vite</span>
-          <span class="chip">FastAPI</span>
-          <span class="chip">PostgreSQL</span>
-          <span class="chip">Docker</span>
-          <span class="chip">Azure</span>
+
+        <div class="project-card fade-in" style="--card-accent:#60a5fa;--card-accent-dim:rgba(96,165,250,.1)">
+          <div class="project-header">
+            <span class="project-icon">🏦</span>
+            <span class="company-badge">Private · Unicloud</span>
+          </div>
+          <div class="proj-preview">
+            <div class="cms-hdr">
+              <span class="cms-title">Transaction Monitor</span>
+              <span class="cms-live">● Live</span>
+            </div>
+            <div class="cms-stats">
+              <div class="cms-stat"><div class="cms-stat-val">2,847</div><div class="cms-stat-lbl">Today</div></div>
+              <div class="cms-stat"><div class="cms-stat-val">₫18.2B</div><div class="cms-stat-lbl">Volume</div></div>
+              <div class="cms-stat"><div class="cms-stat-val">99.8%</div><div class="cms-stat-lbl">Uptime</div></div>
+            </div>
+            <div class="cms-rows">
+              <div class="cms-row"><span class="cms-badge dep">DEP</span><span class="cms-txn-id">TXN-00194</span><span class="cms-txn-amt">+₫5,200,000</span><div class="cms-dot"></div></div>
+              <div class="cms-row"><span class="cms-badge wit">WIT</span><span class="cms-txn-id">TXN-00193</span><span class="cms-txn-amt">-₫2,000,000</span><div class="cms-dot"></div></div>
+              <div class="cms-row"><span class="cms-badge reg">REG</span><span class="cms-txn-id">TXN-00192</span><span class="cms-txn-amt">New Account</span><div class="cms-dot"></div></div>
+            </div>
+          </div>
+          <div class="project-name">KienLong Bank CMS</div>
+          <div class="project-tagline">Banking Transaction Platform · Vietnam</div>
+          <p class="project-desc">
+            Production banking platform for KienLong Bank operators — real-time transaction monitoring, data entry workflows, and live financial views. Built the React component library from scratch using Atomic Design as the shared UI foundation across all product areas.
+          </p>
+          <div class="project-chips">
+            <span class="chip">React</span>
+            <span class="chip">Redux</span>
+            <span class="chip">React Query</span>
+            <span class="chip">Ant Design</span>
+            <span class="chip">REST APIs</span>
+            <span class="chip">Node.js</span>
+          </div>
         </div>
+
+        <div class="project-card fade-in" style="--card-accent:#c084fc;--card-accent-dim:rgba(192,132,252,.1)">
+          <div class="project-header">
+            <span class="project-icon">🖥️</span>
+            <span class="company-badge">Private · Unicloud</span>
+          </div>
+          <div class="proj-preview">
+            <div class="atm-wrap">
+              <div class="atm-top">
+                <span class="atm-bank">KienLong Bank</span>
+                <span class="atm-pulse"></span>
+              </div>
+              <div class="atm-sublabel">Smart Teller Machine — Main Menu</div>
+              <div class="atm-opts">
+                <div class="atm-opt"><span class="atm-opt-ico">📋</span>Account Registration</div>
+                <div class="atm-opt"><span class="atm-opt-ico">💵</span>Cash Deposit</div>
+                <div class="atm-opt"><span class="atm-opt-ico">🏧</span>Cash Withdrawal</div>
+                <div class="atm-opt active"><span class="atm-opt-ico">📹</span>Video Call</div>
+              </div>
+              <div class="atm-foot">
+                <div class="atm-card-row">
+                  <div class="atm-slot"></div>
+                  <span class="atm-slot-lbl">CARD</span>
+                </div>
+                <span class="atm-touch">TOUCH TO SELECT</span>
+              </div>
+            </div>
+          </div>
+          <div class="project-name">KienLong Bank STM</div>
+          <div class="project-tagline">Smart Teller Machine Kiosk · Vietnam</div>
+          <p class="project-desc">
+            Desktop kiosk UI for KienLong Bank's Smart Teller Machine — self-service banking terminal on physical hardware. Customers register accounts, deposit and withdraw cash, and connect with remote bank operators via live video call from the touchscreen.
+          </p>
+          <div class="project-chips">
+            <span class="chip">React</span>
+            <span class="chip">Electron</span>
+            <span class="chip">MUI</span>
+            <span class="chip">gRPC</span>
+            <span class="chip">Protobuf</span>
+            <span class="chip">TypeScript</span>
+          </div>
+        </div>
+
       </div>
+    </div>
 
-      <div class="project-card fade-in">
-        <div class="project-header">
-          <span class="project-icon">📄</span>
-          <a class="project-gh" href="cv.html" target="_blank">View ↗</a>
+    <div class="projects-sub-group fade-in">
+      <p class="projects-sub-label">Personal Projects</p>
+      <div class="projects-grid">
+
+        <div class="project-card fade-in">
+          <div class="project-header">
+            <span class="project-icon">🔬</span>
+            <a class="project-gh" href="https://github.com/RiverO2442" target="_blank">GitHub ↗</a>
+          </div>
+          <div class="project-name">L.I.V.E</div>
+          <div class="project-tagline">Learn · Improve · Visualise · Empower</div>
+          <p class="project-desc">
+            Full-stack web application for gamified diabetes education — MSc Computer Science project at the University of Lincoln.
+            Sole owner from idea to production: designed the architecture, built frontend and backend, automated CI/CD, and deployed to Azure.
+          </p>
+          <div class="project-chips">
+            <span class="chip">React</span>
+            <span class="chip">Vite</span>
+            <span class="chip">FastAPI</span>
+            <span class="chip">PostgreSQL</span>
+            <span class="chip">Docker</span>
+            <span class="chip">Azure</span>
+          </div>
         </div>
-        <div class="project-name">Interactive CV</div>
-        <div class="project-tagline">JSON-driven · Live preview · PDF export</div>
-        <p class="project-desc">
-          A CV renderer built entirely in vanilla HTML/CSS/JS — no frameworks.
-          Reads from a JSON data file and renders a styled, print-ready CV in the browser.
-          Supports uploading any tailored JSON to preview a custom version instantly.
-        </p>
-        <div class="project-chips">
-          <span class="chip">HTML</span>
-          <span class="chip">CSS</span>
-          <span class="chip">JavaScript</span>
-          <span class="chip">JSON</span>
+
+        <div class="project-card fade-in">
+          <div class="project-header">
+            <span class="project-icon">📄</span>
+            <a class="project-gh" href="cv.html" target="_blank">View ↗</a>
+          </div>
+          <div class="project-name">Interactive CV</div>
+          <div class="project-tagline">JSON-driven · Live preview · PDF export</div>
+          <p class="project-desc">
+            A CV renderer built entirely in vanilla HTML/CSS/JS — no frameworks.
+            Reads from a JSON data file and renders a styled, print-ready CV in the browser.
+            Supports uploading any tailored JSON to preview a custom version instantly.
+          </p>
+          <div class="project-chips">
+            <span class="chip">HTML</span>
+            <span class="chip">CSS</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">JSON</span>
+          </div>
         </div>
+
       </div>
-
     </div>
   </div>
 </section>
