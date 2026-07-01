@@ -195,6 +195,8 @@
       font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
       padding: 3px 9px; border: 1px solid var(--border); border-radius: 3px; color: var(--muted);
     }
+    .company-logo { height: 26px; width: auto; object-fit: contain; }
+    .proj-photo { width: 100%; height: 160px; object-fit: cover; object-position: center top; display: block; }
     .projects-sub-label {
       font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
       color: var(--muted); margin-bottom: 20px; padding-bottom: 12px;
@@ -779,7 +781,7 @@
         <div class="project-card fade-in" style="--card-accent:#60a5fa;--card-accent-dim:rgba(96,165,250,.1)">
           <div class="project-header">
             <span class="project-icon">🏦</span>
-            <span class="company-badge">Private · Unicloud</span>
+            <img class="company-logo" src="unicloud-logo.png" alt="Unicloud" />
           </div>
           <div class="proj-preview">
             <div class="cms-hdr">
@@ -815,29 +817,10 @@
         <div class="project-card fade-in" style="--card-accent:#c084fc;--card-accent-dim:rgba(192,132,252,.1)">
           <div class="project-header">
             <span class="project-icon">🖥️</span>
-            <span class="company-badge">Private · Unicloud</span>
+            <img class="company-logo" src="unicloud-logo.png" alt="Unicloud" />
           </div>
           <div class="proj-preview">
-            <div class="atm-wrap">
-              <div class="atm-top">
-                <span class="atm-bank">KienLong Bank</span>
-                <span class="atm-pulse"></span>
-              </div>
-              <div class="atm-sublabel">Smart Teller Machine — Main Menu</div>
-              <div class="atm-opts">
-                <div class="atm-opt"><span class="atm-opt-ico">📋</span>Account Registration</div>
-                <div class="atm-opt"><span class="atm-opt-ico">💵</span>Cash Deposit</div>
-                <div class="atm-opt"><span class="atm-opt-ico">🏧</span>Cash Withdrawal</div>
-                <div class="atm-opt active"><span class="atm-opt-ico">📹</span>Video Call</div>
-              </div>
-              <div class="atm-foot">
-                <div class="atm-card-row">
-                  <div class="atm-slot"></div>
-                  <span class="atm-slot-lbl">CARD</span>
-                </div>
-                <span class="atm-touch">TOUCH TO SELECT</span>
-              </div>
-            </div>
+            <img class="proj-photo" src="stm-machine.png" alt="KienLong Bank Smart Teller Machine" />
           </div>
           <div class="project-name">KienLong Bank STM</div>
           <div class="project-tagline">Smart Teller Machine Kiosk · Vietnam</div>
