@@ -196,7 +196,7 @@
       padding: 3px 9px; border: 1px solid var(--border); border-radius: 3px; color: var(--muted);
     }
     .company-logo { height: 26px; width: auto; object-fit: contain; }
-    .proj-photo { width: 100%; height: 160px; object-fit: cover; object-position: center top; display: block; }
+    .proj-photo { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
     .projects-sub-label {
       font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
       color: var(--muted); margin-bottom: 20px; padding-bottom: 12px;
@@ -211,6 +211,7 @@
       border: 1px solid rgba(255,255,255,.07);
       margin-bottom: 18px; background: #0d0d0d;
       font-size: 11px;
+      height: 162px; display: flex; flex-direction: column; justify-content: center;
     }
     @keyframes atm-blink {
       0%, 100% { opacity: .9; } 50% { opacity: .2; }
