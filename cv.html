@@ -71,6 +71,24 @@
     .btn.outline:hover { background: #000; color: #fff; }
     .btn:disabled { opacity: .5; cursor: not-allowed; }
 
+    /* ── Overflow indicator ── */
+    .overflow-badge {
+      position: fixed;
+      top: 58px;
+      right: 24px;
+      font-family: var(--serif);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      padding: 4px 10px;
+      border: 1.5px solid;
+      z-index: 100;
+      pointer-events: none;
+    }
+    .overflow-badge.ok   { background: #f0fdf4; border-color: #16a34a; color: #16a34a; }
+    .overflow-badge.over { background: #fef2f2; border-color: #dc2626; color: #dc2626; }
+    .overflow-badge:empty { display: none; }
+
     /* ── Upload label as button ── */
     .btn-upload {
       font-family: var(--serif);
@@ -329,6 +347,7 @@
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
+      .overflow-badge { display: none !important; }
     }
 
     @media (max-width: 640px) {
@@ -342,6 +361,7 @@
 <body>
 
 <div class="toast" id="toast"></div>
+<div class="overflow-badge" id="overflow-badge"></div>
 
 <div class="settings-panel hidden" id="settings-panel">
   <h3>Font Settings</h3>
@@ -625,7 +645,7 @@ function renderCV(data) {
 
 fetch('anh_hao_nguyen_cv_data.json?v=' + Date.now())
   .then(function(r) { return r.json(); })
-  .then(function(data) { renderCV(data); initSettings(); })
+  .then(function(data) { renderCV(data); initSettings(); checkOverflow(); })
   .catch(function(err) {
     document.getElementById('cv-page').innerHTML =
       '<p style="color:red;padding:20px;">Failed to load CV data: ' + err.message + '</p>';
@@ -644,6 +664,7 @@ function handleJSONUpload(event) {
     try {
       var data = JSON.parse(e.target.result);
       renderCV(data);
+      checkOverflow();
       showToast('✓ CV updated from ' + file.name, 3000);
     } catch (err) {
       showToast('Invalid JSON: ' + err.message, 4000);
@@ -708,6 +729,7 @@ function applySettings() {
   document.getElementById('val-lh').textContent      = lh;
 
   localStorage.setItem('cvFontSettings', JSON.stringify({ body, job, section, name, lh }));
+  checkOverflow();
 }
 
 function resetSettings() {
@@ -722,6 +744,32 @@ function resetSettings() {
 
 function toggleSettings() {
   document.getElementById('settings-panel').classList.toggle('hidden');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  OVERFLOW CHECK — compares rendered page height to A4 (297mm)
+// ═══════════════════════════════════════════════════════════════
+
+function checkOverflow() {
+  var page  = document.getElementById('cv-page');
+  var badge = document.getElementById('overflow-badge');
+  if (!page || !badge) return;
+
+  var ref = document.createElement('div');
+  ref.style.cssText = 'position:absolute;visibility:hidden;width:0;height:297mm;top:0;left:0;pointer-events:none';
+  document.body.appendChild(ref);
+  var a4px = ref.offsetHeight;
+  document.body.removeChild(ref);
+
+  var pageH = page.offsetHeight;
+  if (pageH <= a4px + 2) {
+    badge.textContent = '✓ Fits A4';
+    badge.className = 'overflow-badge ok';
+  } else {
+    var overMm = Math.round((pageH - a4px) / (a4px / 297));
+    badge.textContent = '↑ ' + overMm + 'mm over A4 — reduce font size';
+    badge.className = 'overflow-badge over';
+  }
 }
 
 </script>
