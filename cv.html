@@ -190,6 +190,8 @@
       background: #fef9c3;
       padding: 0 1.5px;
       border-radius: 1px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
     .exp-tech { font-size: var(--sz-tech); color: var(--muted); font-style: italic; }
@@ -306,16 +308,26 @@
     .settings-reset:hover { background: #000; color: #fff; }
     @media print {
       .settings-panel, .toolbar, .toast { display: none !important; }
-      body { background: #fff; padding: 0; }
-      .page { box-shadow: none; width: 100%; padding: 12mm 16mm; min-height: 0; display: block; }
+      body { background: #fff; padding: 0; margin: 0; }
+      .page {
+        box-shadow: none;
+        width: 210mm;
+        padding: 18mm 20mm 18mm 20mm;
+        min-height: 0;
+        display: block;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
       @page { size: A4; margin: 0; }
       .cv-footer {
         position: fixed;
-        bottom: 12mm;
-        left: 16mm;
-        right: 16mm;
+        bottom: 18mm;
+        left: 20mm;
+        right: 20mm;
         background: #fff;
         margin-top: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
     }
 
